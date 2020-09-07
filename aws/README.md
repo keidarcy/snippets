@@ -1,32 +1,5 @@
 ### AWS S3 + CloudWatch + Lambda + APIGatewat with ts
 
-#### dependency
-```json
-{
-  "scripts": {
-    "deploy": "ts-node scripts/deploy.ts",
-  },
-  "devDependencies": {
-    "@types/aws-lambda": "^8.10.61",
-    "@types/aws-sdk": "^2.7.0",
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.8",
-    "@types/filesize": "^5.0.0",
-    "@types/node": "^14.6.4",
-    "@types/ora": "^3.2.0",
-    "@vercel/ncc": "^0.24.0",
-    "aws-sdk": "^2.746.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "filesize": "^6.1.0",
-    "jszip": "^3.5.0",
-    "ora": "^5.0.0",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.2"
-  }
-}
-
-```
 #### Complile ts, zip, update lambda function => scripts/deply.ts
 
 ```ts
@@ -192,4 +165,39 @@ export const handler: APIGatewayProxyHandler = async (
   }
   return res;
 };
+```
+
+#### Dependency, Execution
+```bash
+yarn add -D @types/aws-lambda @types/aws-sdk @types/dotenv @types/filesize @types/node @types/ora @vercle/ncc aws-sdk dotenv filesize jszip ora ts-node typescript
+```
+
+```bash
+node --max-old-space-size=4096 -- node_modules/.bin/ts-node -P tsconfig.json scripts/deploy.ts
+```
+```json
+{
+  "scripts": {
+    "deploy": "ts-node scripts/deploy.ts",
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.61",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.8",
+    "@types/filesize": "^5.0.0",
+    "@types/node": "^14.6.4",
+    "@types/ora": "^3.2.0",
+    "@vercel/ncc": "^0.24.0",
+    "aws-sdk": "^2.746.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "filesize": "^6.1.0",
+    "jszip": "^3.5.0",
+    "ora": "^5.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}
+
 ```
