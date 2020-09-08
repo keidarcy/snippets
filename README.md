@@ -60,3 +60,13 @@ input `./dist/index.js myqpp --name=fun`
 output `{ mydir: 'myqpp', myname: 'fun' }`
 ```
 
+### MySql
+```
+# bin
+/usr/local/opt/mysql@5.7/bin/mysql
+```
+
+```
+show global variables like "%datadir%";
+```
+
