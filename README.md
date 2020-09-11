@@ -147,3 +147,18 @@ http {
     }
 }
 ```
+
+
+### Git
+
+ - Update forked repository to original repository latest
+
+```
+git remote add upstream https://github.com/original/repository.git
+
+git fetch upstream
+
+git rebase upstream/master
+
+git push origin master --force
+```
