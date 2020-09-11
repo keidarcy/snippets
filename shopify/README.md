@@ -59,7 +59,7 @@ yarn add multipass-js
 ```ts
 import { Multipass } from "multipass-js"
 
-const SHOPIFY_STORE_MULTIPASS_SECRET = 'xxx'; // GET from admin page setting => payment => enable Multipass loginultip
+const SHOPIFY_STORE_MULTIPASS_SECRET = 'xxx'; // GET from admin page setting => checkout => enable Multipass loginultip
 const multipass = new Multipass(SHOPIFY_STORE_MULTIPASS_SECRET);
 
 // Create your customer data hash
