@@ -72,9 +72,9 @@ show global variables like "%datadir%";
 
 #### Nginx
 
- - location directive
+ - Location Directive
  
->Priority high -> low
+>Priority high => low
 
 ```
 http {
@@ -98,7 +98,7 @@ http {
 }
 ```
 
- - Reverse proxy
+ - Reverse Proxy
 ```
 http {
     server {
@@ -119,7 +119,7 @@ http {
 /a/** => http://192.168.0.12:80/a/**;
 /b/** => http://192.168.0.12:81/**;
 
- - load balancer
+ - Load Balancer
  
 ```
  http {
