@@ -64,9 +64,11 @@ const multipass = new Multipass(SHOPIFY_STORE_MULTIPASS_SECRET);
 
 // Create your customer data hash
 const customerData = {
-    email: email,
-    user: "your database user id",
-    customer: "any custom data you want"
+    //user: "your database user id",
+    //customer: "any custom data you want",
+    //identifier: "bob123",
+    //remote_ip: "107.00.000.000",
+    //return_to: "http://yourstore.com/some_specific_site",
     // ...
     email: 'bob@bob.com',
     created_at: '2013-04-11T15:16:23-04:00',
