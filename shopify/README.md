@@ -55,10 +55,12 @@ yarn add multipass-js
 
 ```ts
 import { Multipass } from "multipass-js"
+
+const SHOPIFY_STORE_MULTIPASS_SECRET = 'xxx'; // GET from admin page setting => payment => enable Multipass loginultip
 const multipass = new Multipass(SHOPIFY_STORE_MULTIPASS_SECRET);
 
 // Create your customer data hash
-const email = `woojoo@softmarshmallow.com`
+const email = `bob@bob.com`
 const customerData = {
     email: email,
     user: "your database user id",
@@ -66,8 +68,15 @@ const customerData = {
     // ...
 };
 
+const url = multipass
+  .withCustomerData(customerData)
+  .withDomain('xxxxx.myshopify.com/')
+  .withRedirect('/products/adidas-smith')
+  .url();
 
-const url = multipass.withCustomerData(customerData).withdomain("mystore.shopify.com").withRedirect("products/primary").url();
+console.log(url);
+// https://xxx.myshopify.com//account/login/multipass/[LONG_LONG_STRING]
+
 
 // client may access shopify with `url`
 // will give you URL like:  https://store.myshopify.com/account/login/multipass/<MULTIPASS-TOKEN>
