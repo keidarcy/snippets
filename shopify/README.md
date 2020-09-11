@@ -46,3 +46,30 @@ headers: {'Authorization': 'Basic ' + btoa('apiKey:password')}})
 .then(response => response.json())
 .then(json => console.log(json));
 ```
+
+### multipass
+
+```
+yarn add multipass-js
+```
+
+```ts
+import { Multipass } from "multipass-js"
+const multipass = new Multipass(SHOPIFY_STORE_MULTIPASS_SECRET);
+
+// Create your customer data hash
+const email = `woojoo@softmarshmallow.com`
+const customerData = {
+    email: email,
+    user: "your database user id",
+    customer: "any custom data you want"
+    // ...
+};
+
+
+const url = multipass.withCustomerData(customerData).withdomain("mystore.shopify.com").withRedirect("products/primary").url();
+
+// client may access shopify with `url`
+// will give you URL like:  https://store.myshopify.com/account/login/multipass/<MULTIPASS-TOKEN>
+// with optional redirection
+```
