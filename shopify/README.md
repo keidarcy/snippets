@@ -49,8 +49,8 @@ headers: {'Authorization': 'Basic ' + btoa('apiKey:password')}})
 
 ### multipass
 
- - (multipass-js)[https://github.com/softmarshmallow/multipass-js]
- - (multipass-doc)[https://shopify.dev/docs/admin-api/rest/reference/plus/multipass]
+ - [multipass-js](https://github.com/softmarshmallow/multipass-js)
+ - [multipass-doc](https://shopify.dev/docs/admin-api/rest/reference/plus/multipass)
 
 ```
 yarn add multipass-js
