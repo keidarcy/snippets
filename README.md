@@ -60,7 +60,7 @@ input `./dist/index.js myqpp --name=fun`
 output `{ mydir: 'myqpp', myname: 'fun' }`
 ```
 
-### MySql
+#### MySql
 ```
 # bin
 /usr/local/opt/mysql@5.7/bin/mysql
@@ -70,3 +70,80 @@ output `{ mydir: 'myqpp', myname: 'fun' }`
 show global variables like "%datadir%";
 ```
 
+#### Nginx
+
+ - location directive
+ 
+>Priority high -> low
+
+```
+http {
+    sever {
+        location = /a {
+          echo "=/a";
+        }
+
+        location ^~ /a {
+          echo "^~ /a";
+        }
+
+        location ~ /\w {
+          echo "/\w";
+        }
+
+        location / {
+          echo ="/";
+        }
+    }
+}
+```
+
+ - Reverse proxy
+```
+http {
+    server {
+        listen    80;
+        server_name localhost;
+        default_type   text/html;
+        
+        location /a {
+            proxy_pass http://192.168.0.12:80;   
+        }
+        
+        location /b/ {
+            proxy_pass http://192.168.0.12:81/;
+        }
+    }
+}
+```
+/a/** => http://192.168.0.12:80/a/**;
+/b/** => http://192.168.0.12:81/**;
+
+ - load balancer
+ 
+```
+ http {
+ 
+    upstream_group1 {
+        server 192.168.0.12:80;
+        server 192.168.0.12:81;
+    }
+    //upstream_group1 {
+    //  server 192.168.0.12:80 weight=10;
+    //  server 192.168.0.12:81 weight=1;
+    //}
+    server {
+        listen    80;
+        server_name localhost;
+        default_type   text/html;
+        
+        location / {
+            echo "/";
+        }
+        
+        location /a {
+            proxy_pass http://group1/;   
+        }
+    }
+}
+```
