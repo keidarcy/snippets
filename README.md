@@ -63,7 +63,17 @@ console.log({ mydir, myname });
 input `./dist/index.js myqpp --name=fun`
 output `{ mydir: 'myqpp', myname: 'fun' }`
 ```
+### Download file
 
+```js
+const filename = '1.txt'
+const a = document.createElement('a')
+const blob = new Blob(['hello world!'])
+a.download = filename
+a.href = URL.createObjectURL(blob)
+a.click()
+URL.revokeObjectURL(blob)
+```
 
 ### Cors
 
