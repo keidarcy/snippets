@@ -162,3 +162,14 @@ git rebase upstream/master
 
 git push origin master --force
 ```
+
+### Cors
+
+```
+[withCredentials=true] => [Access-Control-Allow-Origin] must be the address
+
+[withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
+
+if request header is added, [Access-Control-Allow-Headers] must be allowed
+
+```
