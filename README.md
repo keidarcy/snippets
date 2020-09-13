@@ -1,5 +1,7 @@
 # snippets
 
+## js/ts
+
 #### Generate zip file from string
 
 ```ts
@@ -45,7 +47,9 @@ class C{
 
 new C().method('koko')
 ```
-#### Node cli parameter
+### Node 
+
+#### Cli Parameters
 
 ```ts
 #! /usr/bin/env node
@@ -60,7 +64,19 @@ input `./dist/index.js myqpp --name=fun`
 output `{ mydir: 'myqpp', myname: 'fun' }`
 ```
 
-#### MySql
+
+### Cors
+
+```
+[withCredentials=true] => [Access-Control-Allow-Origin] must be the address
+
+[withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
+
+if request header is added, [Access-Control-Allow-Headers] must be allowed
+
+```
+
+## MySql
 ```
 # bin
 /usr/local/opt/mysql@5.7/bin/mysql
@@ -70,7 +86,7 @@ output `{ mydir: 'myqpp', myname: 'fun' }`
 show global variables like "%datadir%";
 ```
 
-#### Nginx
+## Nginx
 
  - Location Directive
  
@@ -149,7 +165,7 @@ http {
 ```
 
 
-### Git
+## Git
 
  - Update forked repository to original repository latest
 
@@ -169,22 +185,12 @@ git push origin master --force
 nah='git reset --hard;git clean -df;'
 ```
 
-### Cors
 
-```
-[withCredentials=true] => [Access-Control-Allow-Origin] must be the address
-
-[withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
-
-if request header is added, [Access-Control-Allow-Headers] must be allowed
-
-```
-
-### Regex
+## Regex
 
  - [regexr](https://regexr.com/)
 
-#### Basic
+### Basic
  
  - `.` => Matches any character except line breaks.
  - `^` => Begining of the string.
@@ -197,7 +203,7 @@ if request header is added, [Access-Control-Allow-Headers] must be allowed
  - `{0, } <=> *` => Match between 0 to unlimited times.
  - `{1, } <=> +` => Match between 1 to unlimited times.
 
-#### Group
+### Group
 
  - use group
  ```
@@ -244,7 +250,7 @@ if request header is added, [Access-Control-Allow-Headers] must be allowed
  ```
  
  
-#### Example
+### Example
 
  - match email address
 `^[a-zA-Z0-9]\w*@gmail\.com$` => `xx@gmail.com`
@@ -254,3 +260,10 @@ if request header is added, [Access-Control-Allow-Headers] must be allowed
 
  - match two separate part
  `'/api/xxxx/edit?uu=xxxx&id=1&type=&page='.replace(/\/api|edit.*/g, '') // /xxxx/`
+
+
+## Shell
+
+ - `node (eval):1: command not found: _node` zsh problem
+ - update omz `upgrade_oh_my_zsh`
+ - delete all caches `rm ~/.zcompdump*`
