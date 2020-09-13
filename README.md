@@ -290,6 +290,8 @@ scp pi_rsa.pub pi@0.0.0.000:/home/pi/.ssh
 
 # in pi
 cat pi_rsa.pub >> authorized_keys
+
+scp -i {{keypath}} {{filename}} {{user}}@{{host}}:{{targetpath}}
 ```
 
 ## [Xpath](http://xpather.com/)
