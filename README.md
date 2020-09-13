@@ -163,6 +163,12 @@ git rebase upstream/master
 git push origin master --force
 ```
 
+ - Clean current branch
+ 
+```
+nah='git reset --hard;git clean -df;'
+```
+
 ### Cors
 
 ```
@@ -213,7 +219,31 @@ if request header is added, [Access-Control-Allow-Headers] must be allowed
  ```
  ^(?<first>\d+)\k<first>$
  ```
-
+ 
+ - `(?=` Positive lookahead
+ 
+ ```js
+ 'foobar, foopoo'.replace(/foo(?=bar)/g, 'replaced') // "replacedbar, foopoo"
+ ```
+ - `(?!` Negative lookahead
+ 
+ ```js
+ 'foobar, foopoo'.replace(/foo(?!bar)/g, 'replaced') // "foobar, replacedpoo"
+ ```
+ 
+ - `(?<=` Positive lookbehiend
+ 
+ ```js
+'foobar, foopoo'.replace(/(?<=foo)bar/g, 'replaced') // "fooreplaced, foopoo"
+ ```
+ 
+  - `(?<!` Negative lookbehiend
+ 
+ ```js
+'foobar, foopoo'.replace(/(?<=foo)bar/g, 'replaced') // "foobar, fooreplaced"
+ ```
+ 
+ 
 #### Example
 
  - match email address
