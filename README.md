@@ -264,7 +264,7 @@ nah='git reset --hard;git clean -df;'
  ```
  
  
-### Example
+### Examples
 
  - match email address
 `^[a-zA-Z0-9]\w*@gmail\.com$` => `xx@gmail.com`
@@ -278,6 +278,18 @@ nah='git reset --hard;git clean -df;'
 
 ## Shell
 
- - `node (eval):1: command not found: _node` zsh problem
+#### `node (eval):1: command not found: _node` zsh problem
  - update omz `upgrade_oh_my_zsh`
  - delete all caches `rm ~/.zcompdump*`
+
+#### ssh in pi from mac without password
+
+```
+# from mac
+scp pi_rsa.pub pi@0.0.0.000:/home/pi/.ssh
+
+# in pi
+cat pi_rsa.pub >> authorized_keys
+```
+
+## [Xpath](http://xpather.com/)
