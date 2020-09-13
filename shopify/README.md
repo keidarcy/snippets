@@ -106,3 +106,16 @@ console.log(url);
 // will give you URL like:  https://store.myshopify.com/account/login/multipass/<MULTIPASS-TOKEN>
 // with optional redirection
 ```
+
+### Pass liquid data to Vue instance
+
+```
+<script id="data" type="application/json">{{ product | json }}</script>
+```
+```
+const data = JSON.parse(document.getElementById('data').innerHTML);
+new Vue({
+  extends: MyComponent,
+  propsData: data,
+})
+```
