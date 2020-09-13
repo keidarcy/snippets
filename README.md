@@ -173,3 +173,34 @@ git push origin master --force
 if request header is added, [Access-Control-Allow-Headers] must be allowed
 
 ```
+
+### Regex
+
+#### Basic
+ 
+`.` => Matches any character except line breaks.
+`^` => Begining of the string.
+`$` => End of the string.
+`[^]` => Negataed set.
+`[]{3, }` => Match between 3 to unlimited characters.
+`\d <=> [0-9]`, `\D <=> [^0-9]`, `\w <=> [a-zA-Z0-9_]` // (alphanumeric & underscore).
+`\s <=> [\r\n\t\v ]` => Matches any whitespace character (spaces, tabs, line breaks).
+`{0,1} <=> ?` => Match between 0 and 1 times.
+`{0, } <=> *` => Match between 0 to unlimited times.
+`{1, } <=> +` => Match between 1 to unlimited times.
+
+
+
+#### Group
+
+
+#### Example
+
+ - match email address
+`^[a-zA-Z0-9]\w*@gmail\.com$` => `xx@gmail.com`
+
+ - match float string and get fixed 
+`'rgba(100,150,200,.72312332)'.replace(/(\.\d{2})[0-9]*/,"$1"); // rgba(100,150,200,.72)`
+
+ - match two separate part
+ `'/api/xxxx/edit?uu=xxxx&id=1&type=&page='.replace(/\/api|edit.*/g, '') // /xxxx/`
