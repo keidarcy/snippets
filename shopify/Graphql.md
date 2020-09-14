@@ -23,7 +23,7 @@ query VariantWithMeta($id: ID!){
 }
 ```
 
-#### 
+#### Update product metafields
 
 ```graphql
 
@@ -40,9 +40,23 @@ mutation($input: ProductInput!) {
 }
 
 {
-      'id' => "gid://shopify/Product/id",
-      'metafields' => {
-      },
+    "id": "gid://shopify/Product/id",
+    "metafields" => [
+        {
+            "id": "gid://shopify/Metafield/id",
+            "key": "string",
+            "value": "string",
+            "valueType" "STRING",
+            "namespace": "string"
+        },
+        {
+            "id": "gid://shopify/Metafield/id",
+            "key": "string",
+            "value": "string",
+            "valueType" "STRING",
+            "namespace": "string"
+        }
+    ]
 }
 
 ```
