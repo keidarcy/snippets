@@ -17,8 +17,32 @@ query VariantWithMeta($id: ID!){
 
 ```
 
-```
+```graphql
 {
   "id": "gid://shopify/ProductVariant/id"
 }
+```
+
+#### 
+
+```graphql
+
+mutation($input: ProductInput!) {
+    productUpdate(input: $input) {
+        product {
+            id
+        }
+        userErrors {
+            field
+            message
+        }
+    }
+}
+
+{
+      'id' => "gid://shopify/Product/id",
+      'metafields' => {
+      },
+}
+
 ```
