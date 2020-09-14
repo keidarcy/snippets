@@ -66,6 +66,40 @@ console.log(map);
 
 > Key won't be garbage-collected
 
+#### Set
+
+- Set
+
+> The Set object lets you store **unique** values of any type, whether primitive values or object references.
+
+> Set objects are collections of values. You can iterate through the elements of a set in **insertion order**. A value in the Set may **only occur once**; it is unique in the Set's collection.
+
+```js
+const set = new Set([1, 2, 4]);
+set.add(1).add(2);
+// set has no order
+for (let val of set) {
+  console.log(val);
+}
+console.log(set);
+```
+
+```js
+const arr = [1, 2, 2, 3];
+const newArr = [...new Set[arr]()]; //[1,2,3]
+const newArr = [Array.from(new Set[arr]())]; //[1,2,3]
+```
+
+- WeakSet
+
+```js
+const ws = new WeakSet([{ a: 1 }, { b: 2 }]);
+
+for (let val of ws) {
+  console.log(val); // ERROR => WeakSet is not iterable.
+}
+```
+
 ### Nodejs
 
 - `Ctrl + L` clean screen, similar to `process.stdout.write("\u001b[2J\u001b[0;0H");`
