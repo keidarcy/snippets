@@ -213,3 +213,10 @@ scp -i {{keypath}} {{filename}} {{user}}@{{host}}:{{targetpath}}
 ## [Xpath](http://xpather.com/)
 
 ## [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
+
+## MacOs
+
+ - Install broken app
+```
+sudo xattr -r -d com.apple.quarantine /Applications/XXX.app
+```
