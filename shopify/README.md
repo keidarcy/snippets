@@ -119,3 +119,19 @@ new Vue({
   propsData: data,
 })
 ```
+
+### Show products on other page
+
+```liquid
+ {% for product in collections['ADIDAS'].products limit: 6 %}
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | img_url }}" alt="" srcset="">
+          <h1>{{ product.title }}</h1>
+        </a>
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+        <input min="1" type="number" id="quantity" name="quantity" value="1"/>
+        <input type="submit" value="Add to cart" class="btn" />
+      </form> 
+{% endfor %}
+```
