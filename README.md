@@ -1,6 +1,8 @@
 # snippets
 
 - [js](./js/README.md)
+- [shopify](./shopify/README.md)
+- [liquid](./shopify/Liquid.md)
 
 ## MySql
 
