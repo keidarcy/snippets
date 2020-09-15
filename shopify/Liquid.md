@@ -1,5 +1,6 @@
- - [member only page](#member-only-page)
- - [show product and add cart](#show-products-add-cart)
+ - [Member only page](#member-only-page)
+ - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
+ - [Show product and add cart](#show-products-add-cart)
 
 
 ### Member only page
@@ -15,6 +16,35 @@
 {% if send_to_login %}
 <meta content="0; url=/account/login?checkout_url=/" http-equiv="refresh" />
 {% else %}
+
+CONTENT
+
+
+{% endif %}
+```
+
+### Member only and special tagged customer only
+```liquid
+{% if customer %}
+  {% for tag in customer.tags %}
+    {% unless tag contains 'multipass'  %}
+      <script type="text/javascript">
+        location.href = "/";
+      </script>
+    {% endunless %}
+  {% endfor %}
+  {% if customer.tags.size == 0 %}
+	  <script type="text/javascript">
+        location.href = "/";
+      </script>
+  {% endif %}
+{% else %}
+  <script type="text/javascript">
+    location.href = "/";
+  </script>
+{% endif %}
+
+
 ```
 
 
