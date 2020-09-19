@@ -4,6 +4,13 @@
 - [shopify](./shopify/README.md)
 - [liquid](./shopify/Liquid.md)
 
+### Little tips
+
+- global installed npm packages
+```
+npm list -g --depth=0
+```
+
 ## MySql
 
 ```
