@@ -78,8 +78,53 @@ services:
     environment:
     - MYSQL_ROOT_PASSWORD=123456
 ```
+
+## Dockerfile
+
+ - basic
+```
+FROM alpine
+WORKDIR /app
+COPY src/ /app
+RUN echo 321 >> 1.txt
+CMD tail -f 1.txt
+```
+
+- similar
+```
+COPY vs ADD (ADD for url resource)
+ENTRYPOINT vs CMD
+```
+- intermediate
+```
+EXPOSE
+VOLUMN /a/b
+ENV
+ARG
+LABEL
+```
+- example
+
+```
+FROM alpine
+LABEL key="value" key1="value1"
+WORKDIR /app
+COPY src/ /app
+RUN echo 321 >> 1.txt
+ONBUILD ENV C=100
+CMD echo $c
+```
+
+- Unusual
+
+```
+STOPSIGNAL # INT KILL .etc
+HEALTHCHECK
+SHELL
+USER
+```
  
- ## Reset All the Local Resources
+## Reset All the Local Resources
 
 ```
 docker system prune -a
