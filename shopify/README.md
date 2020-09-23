@@ -119,3 +119,5 @@ new Vue({
   propsData: data,
 })
 ```
+
+### [process](https://docs.google.com/spreadsheets/d/1gqvWtquj9W-bKcxDwMojYvIszXoVKonjOx5wAHZyMtk/edit#gid=1390331955)
