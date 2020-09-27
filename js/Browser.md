@@ -1,3 +1,11 @@
+- Event and CustomEvent
+
+```
+$0.dispatchEvent(new Event('newEvent'))
+$0.dispatchEvent(new CustomEvent('newEvent', { detail: 'my detail' })
+
+```
+ 
  - Go to top
  
  ```
