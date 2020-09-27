@@ -2,6 +2,49 @@
 
 ### Basic
 
+
+#### Proxy
+- [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+
+>The Proxy object enables you to create a proxy for another object, which can intercept and redefine fundamental operations 
+for that object.
+
+```js 
+let data = { count: 1 };
+
+let proxy = new Proxy(data, {
+  get(target, key) {
+    console.log('getting...');
+    return target[key];
+  },
+  set(target, key, value) {
+    console.log('setting...');
+    target[key] = value;
+    return true;
+  }
+});
+
+```
+
+#### With
+
+- [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with)
+>The with statement extends the scope chain for a statement.
+
+
+```js
+let person = {
+  name: 'JANE',
+  age: 25
+}
+
+let expression = "`${name} is ${age} years old`"
+
+with(person){
+    console.log(eval(expression))
+}
+```
+
 #### Iterator
 
 ```js
