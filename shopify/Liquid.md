@@ -1,3 +1,4 @@
+ - [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
  - [Member only page](#member-only-page)
  - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
  - [Show product and add cart](#show-products-add-cart)
