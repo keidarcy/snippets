@@ -41,3 +41,11 @@ module.exports = {
 };
 
 ```
+
+- Upload image
+
+```
+const fd = new FormData()
+fd.append('image', file, file.name)
+const res = await axios.post(apiPath, fd)
+```
