@@ -133,4 +133,19 @@ docker system prune -a
  - [wp example gist](https://gist.github.com/bradtraversy/faa8de544c62eef3f31de406982f1d42)
 
 
- 
+## Connect local service to container
+
+ 1. In MacOs desktop docker it expose `host.docker.internal` to let container connect `localhost`
+ 2. Map local ip to container by `extra_hosts` with docker-compose
+ 3. Map local ip to container by `--network="host"` with docker run
+
+ - docker-compose.yml sample
+```
+export LOCAL_HOST_IP=`ifconfig | grep 'inet 192'| awk '{ print $2}'`
+```
+```yml
+services:
+  app:
+   extra_hosts:
+     - 'machost:$LOCAL_HOST_IP'
+```
