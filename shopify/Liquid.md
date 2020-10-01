@@ -2,6 +2,7 @@
  - [Member only page](#member-only-page)
  - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
  - [Show product and add cart](#show-products-add-cart)
+ - [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
 
 
 ### Member only page
