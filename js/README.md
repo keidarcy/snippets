@@ -206,11 +206,33 @@ URL.revokeObjectURL(blob);
 
 ### Cors
 
+- [withCredentials=true] => [Access-Control-Allow-Origin] must be the address
+
+- [withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
+
+- if request header is added, [Access-Control-Allow-Headers] must be allowed
+
+
+#### Express example
+
+say express run on http:localhost:3000, and react runs on http://localhost:3000.
+
+```js
+router.get(
+  '',
+  async (req: Request, res: Response) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization, access_token'
+    );
+    const products = await Product.find({});
+    res.json(products);
+  });
 ```
-[withCredentials=true] => [Access-Control-Allow-Origin] must be the address
+OR  `add this to package.json of frontend project `
 
-[withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
-
-if request header is added, [Access-Control-Allow-Headers] must be allowed
-
+```
+"proxy": "http://127.0.0.1:5000",
 ```
