@@ -217,6 +217,8 @@ URL.revokeObjectURL(blob);
 
 say express run on http:localhost:3000, and react runs on http://localhost:3000.
 
+1. Add header setting to allow.
+
 ```js
 router.get(
   '',
@@ -231,8 +233,51 @@ router.get(
     res.json(products);
   });
 ```
-OR  `add this to package.json of frontend project `
+2. Add `proxy` tp package.json of frontend project.
 
 ```
 "proxy": "http://127.0.0.1:5000",
+```
+
+3. Add `cors` middleware to handler.
+
+`yarn add cors`
+
+```
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+app.use(cors())
+```
+
+OR
+
+```
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+app.get('/user/:userId', cors(), function (req, res, next) {
+  res.json({result: 'Possible to access from any where'})
+})
+
+```
+
+OR add `cors` configuration
+ - option:`origin、methods、allowedHeaders、exposedHeaders、credentials、maxAge、preflightContinue、optionsSuccessStatus`.
+ 
+```
+const express = require('express')
+const  cors = require('cors')
+const app = express()
+
+const corsOptions = {
+  origin: 'http://example.com',
+  optionsSuccessStatus: 200 
+}
+
+app.get('/user/:userId', cors(corsOptions), function (req, res, next) {
+  res.json({msg: 'Possible to access from http://example.com'})
+})
 ```
