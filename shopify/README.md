@@ -1,5 +1,6 @@
 ### How theme urls map
 
+```
  - /thisisntarealurl → 404.liquid
  - /blogs/{blog-name}/{article-id-handle} → article.liquid
  - /blogs/{blog-name} → blog.liquid
@@ -12,6 +13,7 @@
  - /products → list-collections.liquid
  - /products/{product-handle} → product.liquid
  - /search?q={search-term} → search.liquid
+```
 
 ### Resources list with node
 
