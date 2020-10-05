@@ -1,3 +1,18 @@
+### How theme urls map
+
+ - /thisisntarealurl → 404.liquid
+ - /blogs/{blog-name}/{article-id-handle} → article.liquid
+ - /blogs/{blog-name} → blog.liquid
+ - /cart → cart.liquid
+ - /collections → list-collections.liquid
+ - /collections/{collection-handle} → collection.liquid
+ - /collections/{collection-handle}/{tag} → collection.liquid
+ - / → index.liquid
+ - /pages/{page-handle} → page.liquid
+ - /products → list-collections.liquid
+ - /products/{product-handle} → product.liquid
+ - /search?q={search-term} → search.liquid
+
 ### Resources list with node
 
 #### nodejs with `shopify-api-node` package for `private` app with Admin Rest
