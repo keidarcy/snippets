@@ -1,3 +1,9 @@
+### Multiple currencies
+> money filter depends on admin setting `/admin/settings/general`.
+ - [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
+ - [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
+ - [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
+
 ### How theme urls map
 
 ```
