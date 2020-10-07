@@ -7,6 +7,8 @@
 ### How theme urls map
 
 ```
+{{ request.page_type }} will be 404 | blog | cart ...
+
  - /thisisntarealurl → 404.liquid
  - /blogs/{blog-name}/{article-id-handle} → article.liquid
  - /blogs/{blog-name} → blog.liquid
@@ -19,6 +21,10 @@
  - /products → list-collections.liquid
  - /products/{product-handle} → product.liquid
  - /search?q={search-term} → search.liquid
+ - /account/login → customers/login.liquid
+ - /account → customers/account
+ - /account/addresses  → customers/addresses.liquid
+ - /account/register →  customers/register.liquid
 ```
 
 ### Resources list with node
