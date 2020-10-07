@@ -4,6 +4,27 @@
  - [Show product and add cart](#show-products-add-cart)
  - [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
 
+### Multiple Currency
+```
+  {{ shop.name }} process all orders in {{ shop.currency }}.
+  While the content of your cart is currently displayed in {{ cart.currency.iso_code }}
+  <span class="selected-currency"></span>,
+  you will checkout using {{ shop.currency }} at the most current exchange rate.
+```
+
+```
+  {% form 'currency' %}
+    <select name="currency">
+      {% for currency in shop.enabled_currencies %}
+	{% if currency == cart.currency %}
+	  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+	  {% else %}
+	  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+	{% endif %}
+      {% endfor %}
+    </select>
+  {% endform %}
+```
 
 ### Member only page
 ```liquid
