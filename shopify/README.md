@@ -7,7 +7,7 @@
 ### How theme urls map
 
 ```
-{{ request.page_type }} will be 404 | blog | cart ...
+{{ request.page_type }} == {{ template }} which will be 404 | blog | cart ...
 
  - /thisisntarealurl → 404.liquid
  - /blogs/{blog-name}/{article-id-handle} → article.liquid
