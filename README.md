@@ -13,9 +13,10 @@
   - [reactjs](./js/React.md)
   - [reactivity](./js/Reactivity.md)
   - [browswer](./js/Browser.md)
-- [graphql](./shopify/graphql/README.md)
-- [theme](./shopify/theme/README.md)
 - [shopify](./shopify/README.md)
+  - [api](./shopify/api/README.md)
+  - [graphql](./shopify/graphql/README.md)
+  - [theme](./shopify/theme/README.md)
 
 ### External Links
 - [Xpath](http://xpather.com/)
