@@ -1,7 +1,7 @@
 ## Admin API
 #### Get product list with requirement
 
-```
+```graphql
 {
   products(first: 30, query: "",  after:"{{ the cursor you want to use }}") {
     pageInfo {
@@ -94,7 +94,7 @@ mutation($input: ProductInput!) {
 
 #### Shop information
 
-```
+```graphql
 query {
   shop{
     primaryDomain{
@@ -115,7 +115,7 @@ query {
 
 #### Get price with different currencies(which are setted in admin page)
  
-```
+```graphql
 {
   productByHandle(handle: "adidas-classic-backpack") {
     id
