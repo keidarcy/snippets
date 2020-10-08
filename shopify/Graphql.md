@@ -1,3 +1,33 @@
+## Admin API
+#### Get product list with requirement
+
+```
+{
+  products(first: 30, query: "",  after:"{{ the cursor you want to use }}") {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        title
+        images(first: 1) {
+          edges {
+            node {
+              originalSrc
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+
 #### Get variant with metafields
 
 ```graphql
@@ -58,5 +88,69 @@ mutation($input: ProductInput!) {
         }
     ]
 }
+```
 
+## Storefront Api
+
+#### Shop information
+
+```
+query {
+  shop{
+    primaryDomain{
+      host
+      sslEnabled
+      url
+    }
+    description
+    paymentSettings{
+      countryCode
+      acceptedCardBrands
+      enabledPresentmentCurrencies
+    }
+    moneyFormat
+  }
+}
+```
+
+#### Get price with different currencies(which are setted in admin page)
+ 
+```
+{
+  productByHandle(handle: "adidas-classic-backpack") {
+    id
+    title
+    variants(first: 1) {
+      edges {
+        node {
+          presentmentPrices(first: 1, presentmentCurrencies: [USD, CNY]) {
+            edges {
+              node {
+                compareAtPrice {
+                  amount
+                  currencyCode
+                }
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+          unitPrice {
+            amount
+          }
+          requiresShipping
+          availableForSale
+          id
+          title
+          priceV2 {
+            currencyCode
+            amount
+          }
+        }
+      }
+    }
+  }
+}
 ```
