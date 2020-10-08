@@ -79,10 +79,47 @@ CONTENT
           <img src="{{ product.featured_image | img_url }}" alt="" srcset="">
           <h1>{{ product.title }}</h1>
         </a>
-      <form method="post" action="/cart/add">
-        <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-        <input min="1" type="number" id="quantity" name="quantity" value="1"/>
-        <input type="submit" value="Add to cart" class="btn" />
-      </form> 
+	<form method="post" action="/cart/add">
+	    {% unless product.has_only_default_variant %}
+	    <div class="selector-wrapper js product-form__item">
+		<p>地域</p>
+		<label {% if option.name == 'default' %}class="label--hidden"
+		    {% endif %}for="SingleOptionSelector-{{ forloop.index0 }}">
+		    {{ option.name }}
+		</label>
+		<select name="id" data-productid="{{ product.id }}" id="ProductSelect-{{ section.id }}">
+		    {% for variant in product.variants %}
+		    <option value="{{ variant.id }}" {%- if variant == current_variant %} selected="selected"
+			{%- endif -%}>
+			{{ variant.title }} {%- if variant.available == false %} -
+			{{ 'products.product.sold_out' | t }}{% endif %}
+		    </option>
+		    {% endfor %}
+		</select>
+	    </div>
+	    {% else %}
+		<input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+	    {% endunless %}
+
+
+	    <div class="product-form__controls-group">
+		<div class="product-form__item">
+		    <div>数量</div>
+		    <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1"
+			pattern="[0-9]*" class="product-form__input product-form__input--quantity"
+			data-quantity-input>
+		</div>
+	    </div>
+
+	    <button class="btn product-form__cart-submit btn--secondary-accent" type="submit" name="add"
+		{% if product.available %}{% else %}disabled{% endif %}>
+		{% unless product.available %}
+		{{ 'products.product.sold_out' | t }}
+		{% else %}
+		{{ 'products.product.add_to_cart' | t }}
+		{% endunless %}
+	    </button>
+	    <a class="btn" href="{{ product.url }}">詳しく見る</a>
+	</form>
 {% endfor %}
 ```
