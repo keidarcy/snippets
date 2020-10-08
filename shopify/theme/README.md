@@ -1,36 +1,43 @@
 # Shopify Theme Liquid Code Snippets
 
 - [Shopify Theme Liquid Code Snippets](#shopify-theme-liquid-code-snippets)
-	- [Multiple Currency](#multiple-currency)
+	- [Multiple currency selector](#multiple-currency-selector)
 	- [Member only page](#member-only-page)
 	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
 	- [Show full featured collection of products](#show-full-featured-collection-of-products)
 	- [Find current handle](#find-current-handle)
 	- [Find current url](#find-current-url)
 
->[other snippets](https://github.com/vikrantnegi/shopify-code-snippets)
+> [other snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
-## Multiple Currency
+## Multiple currency selector
 
-```
-  {{ shop.name }} process all orders in {{ shop.currency }}.
-  While the content of your cart is currently displayed in {{ cart.currency.iso_code }}
-  <span class="selected-currency"></span>,
-  you will checkout using {{ shop.currency }} at the most current exchange rate.
-```
-
-```
+```liquid
   {% form 'currency' %}
-    <select name="currency">
-      {% for currency in shop.enabled_currencies %}
-	{% if currency == cart.currency %}
-	  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
-	  {% else %}
-	  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
-	{% endif %}
-      {% endfor %}
-    </select>
+    {{ form | currency_selector }}
   {% endform %}
+```
+
+```liquid
+{% form 'currency' %}
+  <select name="currency">
+    {% for currency in shop.enabled_currencies %}
+{% if currency == cart.currency %}
+  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+  {% else %}
+  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+{% endif %}
+    {% endfor %}
+  </select>
+{% endform %}
+```
+
+```js
+$('.shopify-currency-form select').on('change', function() {
+  $(this)
+    .parents('form')
+    .submit();
+});
 ```
 
 ## Member only page
@@ -148,6 +155,7 @@ CONTENT
 ```
 
 ## Find current handle
+
 ```
 {% assign current_handle = '' %}
 
@@ -166,6 +174,7 @@ CONTENT
 ```
 
 ## Find current url
+
 ```
 {% assign current_handle = '' %}
 
