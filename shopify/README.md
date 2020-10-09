@@ -1,16 +1,42 @@
-### External Links
+# Useful shopify notes
 
-* [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
-* [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
+## External Links
 
+- [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
+- [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
 
-### Multiple currencies
+## Private app auth for admin api and storefront api
+
+- Admin API
+  - graphql endpoint `/admin/api/2020-10/graphql.json`
+  - access token -> `Admin API` -> `password`
+```
+curl --request POST \
+  --url https://STORE.myshopify.com/admin/api/2020-10/graphql.json \
+  --header 'content-type: application/json' \
+  --header 'x-shopify-access-token: TOKEN' \
+  --data '{"query":"query {\n  shop{\n    id\n    primaryDomain{\n      host\n      sslEnabled\n      url\n    }\n    description\n    paymentSettings{\n       supportedDigitalWallets\n    }\n  }\n}"}'
+```
+- Storefront API
+  - graphql endponint `/api/2020-07/graphql.json`
+  - access token -> `Storefront API` -> `Storefront access token`
+
+```
+curl --request POST \
+  --url https://STORE.myshopify.com/api/2020-07/graphql.json \
+  --header 'accept: application/json' \
+  --header 'content-type: application/json' \
+  --header 'x-shopify-storefront-access-token: TOKEN' \
+  --data '{"query":"query {\n  shop{\n    primaryDomain{\n      host\n      sslEnabled\n      url\n    }\n    description\n    paymentSettings{\n      countryCode\n      acceptedCardBrands\n      enabledPresentmentCurrencies\n    }\n    moneyFormat\n  }\n}"}'
+```
+
+## Multiple currencies
 > money filter depends on admin setting `/admin/settings/general`.
  - [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
  - [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
  - [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
 
-### How theme urls map
+## How theme urls map
 
 ```
 {{ request.page_type }} == {{ template }} which will be 404 | blog | cart ...
@@ -38,60 +64,7 @@
  - [multipass-js](https://github.com/softmarshmallow/multipass-js)
  - [multipass-doc](https://shopify.dev/docs/admin-api/rest/reference/plus/multipass)
 
-```
-yarn add multipass-js
-```
 
-```ts
-import { Multipass } from "multipass-js"
-
-const SHOPIFY_STORE_MULTIPASS_SECRET = 'xxx'; // GET from admin page setting => checkout => enable Multipass loginultip
-const multipass = new Multipass(SHOPIFY_STORE_MULTIPASS_SECRET);
-
-// Create your customer data hash
-const customerData = {
-    //user: "your database user id",
-    //customer: "any custom data you want",
-    //identifier: "bob123",
-    //remote_ip: "107.00.000.000",
-    //return_to: "http://yourstore.com/some_specific_site",
-    // ...
-    email: 'bob@bob.com',
-    created_at: '2013-04-11T15:16:23-04:00',
-    first_name: 'Bob',
-    last_name: 'Bobsen',
-    tag_string: 'canadian, premium',
-    addresses: [
-      {
-        address1: '123 Oak St',
-        city: 'Ottawa',
-        country: 'Canada',
-        first_name: 'Bob',
-        last_name: 'Bobsen',
-        phone: '555-1212',
-        province: 'Ontario',
-        zip: '123 ABC',
-        province_code: 'ON',
-        country_code: 'CA',
-        default: true
-      }
-    ]
-};
-
-const url = multipass
-  .withCustomerData(customerData)
-  .withDomain('xxxxx.myshopify.com/')
-  .withRedirect('/products/adidas-smith')
-  .url();
-
-console.log(url);
-// https://xxx.myshopify.com//account/login/multipass/[LONG_LONG_STRING]
-
-
-// client may access shopify with `url`
-// will give you URL like:  https://store.myshopify.com/account/login/multipass/<MULTIPASS-TOKEN>
-// with optional redirection
-```
 
 ### Pass liquid data to Vue instance
 
