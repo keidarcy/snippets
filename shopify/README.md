@@ -30,12 +30,6 @@ curl --request POST \
   --data '{"query":"query {\n  shop{\n    primaryDomain{\n      host\n      sslEnabled\n      url\n    }\n    description\n    paymentSettings{\n      countryCode\n      acceptedCardBrands\n      enabledPresentmentCurrencies\n    }\n    moneyFormat\n  }\n}"}'
 ```
 
-## Multiple currencies
-> money filter depends on admin setting `/admin/settings/general`.
- - [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
- - [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
- - [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
-
 ## How theme urls map
 
 ```
@@ -59,14 +53,31 @@ curl --request POST \
  - /account/register →  customers/register.liquid
 ```
 
-### multipass
+## Checkout process
+
+- "checkout_token": TOKEN
+
+```
+https://STORE.myshopify.com/NUMBER/checkouts/TOKEN
+https://STORE.myshopify.com/NUMBER/checkouts/TOKEN?previous_step=contact_information&step=shipping_method
+https://STORE.myshopify.com/NUMBER/checkouts/TOKEN?previous_step=shipping_method&step=payment_method
+https://STORE.myshopify.com/NUMBER/checkouts/TOKEN/thank_you
+# order_status_url
+https://STORE.myshopify.com/NUMBER/orders/token
+```
+
+## Multipass
 
  - [multipass-js](https://github.com/softmarshmallow/multipass-js)
  - [multipass-doc](https://shopify.dev/docs/admin-api/rest/reference/plus/multipass)
+ 
+## Multiple currencies
+> money filter depends on admin setting `/admin/settings/general`.
+ - [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
+ - [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
+ - [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
 
-
-
-### Pass liquid data to Vue instance
+## Pass liquid data to Vue instance
 
 ```
 <script id="data" type="application/json">{{ product | json }}</script>
