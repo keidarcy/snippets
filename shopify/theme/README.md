@@ -33,10 +33,8 @@
 ```
 
 ```js
-$('.shopify-currency-form select').on('change', function() {
-  $(this)
-    .parents('form')
-    .submit();
+$('.shopify-currency-form select').on('change', function () {
+  $(this).parents('form').submit();
 });
 ```
 

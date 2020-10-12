@@ -1,15 +1,13 @@
-## JS
+# Javascript Basic
 
-### Basic
+## Proxy
 
-
-#### Proxy
 - [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 
->The Proxy object enables you to create a proxy for another object, which can intercept and redefine fundamental operations 
-for that object.
+> The Proxy object enables you to create a proxy for another object, which can intercept and redefine fundamental operations
+> for that object.
 
-```js 
+```js
 let data = { count: 1 };
 
 let proxy = new Proxy(data, {
@@ -23,29 +21,27 @@ let proxy = new Proxy(data, {
     return true;
   }
 });
-
 ```
 
-#### With
+## With
 
 - [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with)
->The with statement extends the scope chain for a statement.
-
+  > The with statement extends the scope chain for a statement.
 
 ```js
 let person = {
   name: 'JANE',
   age: 25
-}
+};
 
-let expression = "`${name} is ${age} years old`"
+let expression = '`${name} is ${age} years old`';
 
-with(person){
-    console.log(eval(expression))
+with (person) {
+  console.log(eval(expression));
 }
 ```
 
-#### Iterator
+## Iterator
 
 ```js
 let i = [1, 2, 3, 4];
@@ -58,7 +54,7 @@ console.log(iterator.next());
 console.log(iterator.next());
 ```
 
-#### Generator
+## Generator
 
 ```js
 function* generator() {
@@ -77,7 +73,7 @@ console.log(iterator.next());
 console.log(iterator.next());
 ```
 
-#### Map
+## Map
 
 - Map
   > The Map object holds key-value pairs and **remembers** the original insertion order of the keys. Any value (both **objects** and primitive values) may be used as either a key or a value.
@@ -109,7 +105,7 @@ console.log(map);
 
 > Key won't be garbage-collected
 
-#### Set
+## Set
 
 - Set
 
@@ -143,141 +139,190 @@ for (let val of ws) {
 }
 ```
 
-### Nodejs
+## Async javascript
 
-- `Ctrl + L` clean screen, similar to `process.stdout.write("\u001b[2J\u001b[0;0H");`
+### Callback
 
-#### Generate zip file from string
+```js
+let greeting = (name) => cosnole.log(`Hello ${name}!`);
 
-```ts
-import jszip from 'jszip';
+const userInfo = (firstName, lastName, callback) => {
+  const fullName = `${firstName} ${lastName}`;
+  callback(fullName);
+};
 
-const createZip = async (code: string): Promise<void> => {
-  const zip = new jszip();
-  zip.file('index.js', code);
-  const content = zip.generateAsync({ type: 'string' });
-  console.log(content);
-  zip
-    .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-    .pipe(fs.createWriteStream('./dist/out.zip'))
-    .on('finish', function () {
-      console.log('out.zip written.');
-    });
+userInfo('John', 'Doe', greeting);
+```
+
+### Promise
+
+```js
+const hasMeeting = false;
+const meeting = new Promise((resolve, reject) => {
+  if (!hasMeeting) {
+    const meetingDetails = {
+      name: 'Maketing Meeting',
+      location: 'Skype',
+      time: '1:00 pm'
+    };
+    resolve(meetingDetails);
+  } else {
+    reject(new Error('Meeting already scheduled'));
+  }
+});
+
+meeting.then((res) => console.log(res)).catch((err) => console.error(err));
+```
+
+- chain promise
+
+```js
+const addToCalendar = (meetingDetails) => {
+  const calendar = `${meetingDetails.name} is scheduled at ${meetingDetails.time} on ${meetingDetails.location}`;
+  return Promise.resolve(calendar);
+};
+
+meeting
+  .then(addToCalendar)
+  .then((res) => console.log(res))
+  .catch((err) => console.error(err));
+```
+
+#### Promise.all, Promise.race
+
+```js
+const promise1 = Promise.resolve('Promise 1 complete');
+const promise2 = Promise.resolve('Promise 2 complete');
+
+promise1.then((res) => console.log(res));
+promise2.then((res) => console.log(res));
+// Promise 1 complete
+// Promise 2 complete
+
+// excute when all promise fulfilled
+Promise.all([promise1, promise2]).then((res) => console.log(res));
+// ["Promise 1 complete", "Promise 2 complete"]
+
+// excute when first promise fulfilled
+Promise.race([promise1, promise2]).then((res) => console.log(res));
+// Promise 1 complete
+```
+
+### async/await
+
+```js
+const myMeeting = async () => {
+  try {
+    const meetingDetails = await meeting;
+    const message = await addToCalendar(meetingDetails);
+    console.log(message);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+myMeeting();
+```
+
+## IIFE(Immediately Invoked Function Expression)
+
+- normal function
+
+```js
+function multiply(a, b) {
+  return a * b;
+}
+console.log(mutiply(2, 5));
+```
+
+- IIFE function
+
+```js
+(function (a, b) {
+  return a * b;
+})(2, 5);
+```
+
+- IIFE arrow function
+
+```js
+((a, b) => {
+  return a * b;
+})(2, 5);
+```
+
+- Variable scope with IIFE
+
+```js
+var name = 'JOE'(function (a, b) {
+  var name = 'BOB';
+  console.log(name); // BOB
+})(2, 5);
+console.log(name); // JOE
+```
+
+- Compare with normal situation and es6
+
+```js
+var name = 'JOE';
+{
+  var name = 'BOB';
+  console.log(name); // BOB
+}
+console.log(name); // BOB
+```
+
+```js
+let name = 'JOE';
+{
+  let name = 'BOB';
+  console.log(name); // BOB
+}
+console.log(name); // JOE
+```
+
+## this
+
+- `this` === current execution context
+
+```js
+const user = {
+  name: 'john',
+  whodis: function () {
+    console.log(this); // user
+  },
+  butWhoAmI: () => console.log(this) // global
 };
 ```
 
-#### TS decorator
+### bind, call, apply
 
-```ts
-function time(name: string) {
-  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
-    const fn = descriptor.value;
-    descriptor.value = (...args) => {
-      console.time(name);
-      const v = fn(...args);
-      console.timeEnd(name);
-      return v;
-    };
+```js
+function showFace() {
+  return this.face;
+}
+const user = {
+  face: 'smile'
+};
+
+const showUserFace = showFace.bind(user);
+
+console.log(showUserFace());
+console.log(showFace.call(user, 1, 2, 3));
+console.log(showFace.call(user, ...[1, 2, 3]));
+console.log(showFace.apply(user, [1, 2, 3]));
+```
+
+### constructor
+
+```js
+function Horse(name) {
+  this.name = name;
+  this.voice = function () {
+    console.log('yoyo');
+    return this;
   };
 }
 
-class C {
-  @time('C.method')
-  method(name: string) {
-    console.log('method called', name);
-    for (let i = 0; i < 1000000000; i++) {}
-  }
-}
-
-new C().method('koko');
-```
-
-### Download file
-
-```js
-const filename = '1.txt';
-const a = document.createElement('a');
-const blob = new Blob(['hello world!']);
-a.download = filename;
-a.href = URL.createObjectURL(blob);
-a.click();
-URL.revokeObjectURL(blob);
-```
-
-### Cors
-
-- [withCredentials=true] => [Access-Control-Allow-Origin] must be the address
-
-- [withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
-
-- if request header is added, [Access-Control-Allow-Headers] must be allowed
-
-
-#### Express example
-
-say express run on http:localhost:3000, and react runs on http://localhost:3000.
-
-1. Add header setting to allow.
-
-```js
-router.get(
-  '',
-  async (req: Request, res: Response) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Content-Type, Authorization, access_token'
-    );
-    const products = await Product.find({});
-    res.json(products);
-  });
-```
-2. Add `proxy` tp package.json of frontend project.
-
-```
-"proxy": "http://127.0.0.1:5000",
-```
-
-3. Add `cors` middleware to handler.
-
-`yarn add cors`
-
-```
-const express = require('express')
-const cors = require('cors')
-const app = express()
-
-app.use(cors())
-```
-
-OR
-
-```
-const express = require('express')
-const cors = require('cors')
-const app = express()
-
-app.get('/user/:userId', cors(), function (req, res, next) {
-  res.json({result: 'Possible to access from any where'})
-})
-
-```
-
-OR add `cors` configuration
- - option:`origin、methods、allowedHeaders、exposedHeaders、credentials、maxAge、preflightContinue、optionsSuccessStatus`.
- 
-```
-const express = require('express')
-const  cors = require('cors')
-const app = express()
-
-const corsOptions = {
-  origin: 'http://example.com',
-  optionsSuccessStatus: 200 
-}
-
-app.get('/user/:userId', cors(corsOptions), function (req, res, next) {
-  res.json({msg: 'Possible to access from http://example.com'})
-})
+const myHorse = new Horse('yuyu');
+myHorse.voice().voice();
 ```
