@@ -89,3 +89,10 @@ new Vue({
   propsData: data,
 })
 ```
+
+## Theme editor
+ 
+ - the name of `/admin/themes/id/editor?picker=section` is `presets.name.en`
+```
+
+```
