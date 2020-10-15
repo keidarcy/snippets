@@ -96,3 +96,26 @@ new Vue({
 ```
 
 ```
+
+## Cart attribute
+
+```html
+<p class="cart-attribute__field">
+  <label for="name">name</label>
+  <input id="name" type="text" name="attributes[name]" value="{{ cart.attributes["name"] }}">
+</p>
+```
+- `name` attribute will be add to shopify order
+
+```json
+{
+"order": {
+"id": ID,
+"note_attributes": [
+{
+"name": "name",
+"value": "value"
+}
+]}
+}
+```
