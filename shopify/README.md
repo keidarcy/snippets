@@ -109,13 +109,23 @@ new Vue({
 
 ```json
 {
-"order": {
-"id": ID,
-"note_attributes": [
-{
-"name": "name",
-"value": "value"
+  "order": {
+  "id": ID,
+  "note_attributes": [
+    {
+    "name": "name",
+    "value": "value"
+    }]
+  }
 }
-]}
-}
+```
+
+## Additional scripts order status page
+
+ - [customize-order-status](https://help.shopify.com/en/manual/orders/status-tracking/customize-order-status)
+
+```
+{% if first_time_accessed %}
+  // Conversion scripts you want to run only once
+{% endif %}
 ```
