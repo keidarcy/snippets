@@ -5,10 +5,14 @@
 	- [Member only page](#member-only-page)
 	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
 	- [Show full featured collection of products](#show-full-featured-collection-of-products)
-	- [Find current handle](#find-current-handle)
-	- [Find current url](#find-current-url)
+	- [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
+		- [Find current handle](#find-current-handle)
+		- [Find current url](#find-current-url)
+		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
 
-> [other snippets](https://github.com/vikrantnegi/shopify-code-snippets)
+> [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
+
+> [extra snippets](https://github.com/freakdesign/Shopify-code-snippets)
 
 ## Multiple currency selector
 
@@ -152,9 +156,11 @@ CONTENT
 {% endfor %}
 ```
 
-## Find current handle
+## Show theme information in console with theme.liquid
 
-```
+### Find current handle
+
+```liquid
 {% assign current_handle = '' %}
 
 {% case template %}
@@ -171,21 +177,31 @@ CONTENT
 {% endcase %}
 ```
 
-## Find current url
+### Find current url
 
-```
-{% assign current_handle = '' %}
+```liquid
+{% assign current_url = '' %}
 
 {% case template %}
 	{% when 'page' %}
-		{% assign current_handle = page.handle %}
+		{% assign current_url = page.url %}
 	{% when 'blog' %}
-		{% assign current_handle = blog.handle %}
+		{% assign current_url = blog.url %}
 	{% when 'article' %}
-		{% assign current_handle = blog.handle %}
+		{% assign current_url = blog.url %}
 	{% when 'collection' %}
-		{% assign current_handle = collection.handle %}
+		{% assign current_url = collection.url %}
 	{% when 'product' %}
-		{% assign current_handle = product.handle %}
+		{% assign current_url = product.url %}
 {% endcase %}
+```
+
+### Show current page template and theme info
+
+```html
+<script>
+  console.log('template: {{ template }}, theme.name: {{ theme.name }}');
+  console.log('current_handle: {{ current_handle }}');
+  console.log('current_url: {{ current_url }}');
+</script>
 ```
