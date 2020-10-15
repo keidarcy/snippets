@@ -96,3 +96,36 @@ new Vue({
 ```
 
 ```
+
+## Cart attribute
+
+```html
+<p class="cart-attribute__field">
+  <label for="name">name</label>
+  <input id="name" type="text" name="attributes[name]" value="{{ cart.attributes["name"] }}">
+</p>
+```
+- `name` attribute will be add to shopify order
+
+```json
+{
+  "order": {
+  "id": ID,
+  "note_attributes": [
+    {
+    "name": "name",
+    "value": "value"
+    }]
+  }
+}
+```
+
+## Additional scripts order status page
+
+ - [customize-order-status](https://help.shopify.com/en/manual/orders/status-tracking/customize-order-status)
+
+```
+{% if first_time_accessed %}
+  // Conversion scripts you want to run only once
+{% endif %}
+```
