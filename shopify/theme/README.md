@@ -9,6 +9,7 @@
 		- [Find current handle](#find-current-handle)
 		- [Find current url](#find-current-url)
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
+	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
 
 > [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
@@ -203,5 +204,44 @@ CONTENT
   console.log('template: {{ template }}, theme.name: {{ theme.name }}');
   console.log('current_handle: {{ current_handle }}');
   console.log('current_url: {{ current_url }}');
+</script>
+```
+
+## Add recommend section in product page with alphinejs
+
+```html
+<ul class="brandList" x-data="recommendData()" x-init="init()">
+  <template x-for="recommend in recommendedProducts" :key="recommend.id">
+    <li>
+      <a :href="recommend.url">
+        <div class="photoBox">
+          <img :src="recommend.featured_image" :alt="recommend.title" />
+        </div>
+        <p class="ttl" x-text="recommend.title"></p>
+        <p class="price" x-text="recommend.price"></p>
+        <p class="tag" x-text="recommend.vendor"></p>
+        {% render 'sake-stars' %}
+      </a>
+    </li>
+  </template>
+</ul>
+<script>
+  const URL =
+    '{{ routes.product_recommendations_url }}' +
+    '.json?product_id=' +
+    '{{ product.id }}' +
+    '&limit=4';
+  function recommendData() {
+    return {
+      recommendedProducts: [],
+      init() {
+        fetch(URL)
+          .then((response) => response.json())
+          .then((response) => {
+            this.recommendedProducts = response.products;
+          });
+      }
+    };
+  }
 </script>
 ```

@@ -10,6 +10,7 @@
 - Admin API
   - graphql endpoint `/admin/api/2020-10/graphql.json`
   - access token -> `Admin API` -> `password`
+
 ```
 curl --request POST \
   --url https://STORE.myshopify.com/admin/api/2020-10/graphql.json \
@@ -17,6 +18,7 @@ curl --request POST \
   --header 'x-shopify-access-token: TOKEN' \
   --data '{"query":"query {\n  shop{\n    id\n    primaryDomain{\n      host\n      sslEnabled\n      url\n    }\n    description\n    paymentSettings{\n       supportedDigitalWallets\n    }\n  }\n}"}'
 ```
+
 - Storefront API
   - graphql endponint `/api/2020-07/graphql.json`
   - access token -> `Storefront API` -> `Storefront access token`
@@ -32,9 +34,10 @@ curl --request POST \
 
 ## How theme urls map
 
+### url - template
+
 ```
 {{ request.page_type }} == {{ template }} which will be 404 | blog | cart ...
-
  - /thisisntarealurl → 404.liquid
  - /blogs/{blog-name}/{article-id-handle} → article.liquid
  - /blogs/{blog-name} → blog.liquid
@@ -53,6 +56,13 @@ curl --request POST \
  - /account/register →  customers/register.liquid
 ```
 
+### hidden url
+
+```
+# recommendation api endpoint per product
+https://STORE.myshopify.com/recommendations/products.json?product_id=ID&limit=4
+```
+
 ## Checkout process
 
 - "checkout_token": TOKEN
@@ -68,20 +78,23 @@ https://STORE.myshopify.com/NUMBER/orders/token
 
 ## Multipass
 
- - [multipass-js](https://github.com/softmarshmallow/multipass-js)
- - [multipass-doc](https://shopify.dev/docs/admin-api/rest/reference/plus/multipass)
- 
+- [multipass-js](https://github.com/softmarshmallow/multipass-js)
+- [multipass-doc](https://shopify.dev/docs/admin-api/rest/reference/plus/multipass)
+
 ## Multiple currencies
+
 > money filter depends on admin setting `/admin/settings/general`.
- - [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
- - [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
- - [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
+
+- [liquid money filter](https://shopify.dev/docs/themes/liquid/reference/filters/money-filters)
+- [liquid tutorials](https://shopify.dev/tutorials/customize-theme-support-multiple-currencies)
+- [storefront api](https://shopify.dev/tutorials/support-multiple-currencies-with-storefront-api)
 
 ## Pass liquid data to Vue instance
 
 ```
 <script id="data" type="application/json">{{ product | json }}</script>
 ```
+
 ```
 const data = JSON.parse(document.getElementById('data').innerHTML);
 new Vue({
@@ -91,8 +104,9 @@ new Vue({
 ```
 
 ## Theme editor
- 
- - the name of `/admin/themes/id/editor?picker=section` is `presets.name.en`
+
+- the name of `/admin/themes/id/editor?picker=section` is `presets.name.en`
+
 ```
 
 ```
@@ -102,27 +116,30 @@ new Vue({
 ```html
 <p class="cart-attribute__field">
   <label for="name">name</label>
-  <input id="name" type="text" name="attributes[name]" value="{{ cart.attributes["name"] }}">
+  <input id="name" type="text" name="attributes[name]" value="{{ cart.attributes["name"]
+  }}">
 </p>
 ```
+
 - `name` attribute will be add to shopify order
 
 ```json
 {
   "order": {
-  "id": ID,
-  "note_attributes": [
-    {
-    "name": "name",
-    "value": "value"
-    }]
+    "id": ID,
+    "note_attributes": [
+      {
+        "name": "name",
+        "value": "value"
+      }
+    ]
   }
 }
 ```
 
 ## Additional scripts order status page
 
- - [customize-order-status](https://help.shopify.com/en/manual/orders/status-tracking/customize-order-status)
+- [customize-order-status](https://help.shopify.com/en/manual/orders/status-tracking/customize-order-status)
 
 ```
 {% if first_time_accessed %}
