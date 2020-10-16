@@ -141,3 +141,38 @@ app.get('/user/:userId', cors(corsOptions), function (req, res, next) {
   res.json({msg: 'Possible to access from http://example.com'})
 })
 ```
+
+## Alphinejs fetch and render loop
+
+```html
+<div 
+     x-data="gistsData()" 
+     x-init="init()"
+>
+  <ul> 
+    <template x-for="gist in gists" :key="gist.id">
+      <li>
+        <h1 x-text="gist.public"></h1>
+        <a x-bind:href="gist.html_url" class="font-bold">url</a>
+        <br>
+        <small x-text="gist.description"></small>
+      </li>
+    </template>
+  </ul>
+</div>
+<script>
+function gistsData() {
+  return {
+    title: 'Latest Gists',
+    gists: [],
+    init() {
+      fetch('https://api.github.com/users/keidarcy/gists')
+        .then(response => response.json())
+        .then(response => {
+          this.gists = response;
+      });
+    }
+  };
+}
+</script>
+```
