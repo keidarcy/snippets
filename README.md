@@ -9,7 +9,7 @@
 - [sql](./server/SQL.md)
 - [js](./js/README.md)
   - [typescript](./js/Typescript.md)
-  - [browswer](./js/Browser.md)
+  - [browser](./js/Browser.md)
   - [nodejs](./js/Nodejs.md)
   - [reactjs](./js/React.md)
   - [reactivity](./js/Reactivity.md)
