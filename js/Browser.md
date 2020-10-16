@@ -1,4 +1,4 @@
-# Browswer related javascript
+# Browser related javascript
 
 ## Event and CustomEvent
 
