@@ -2,16 +2,16 @@
 
 ## Markdown
 
-- [basic]
-  - [macos]('./others/MacOS.md')
-  - [basic]('./others/Basic.md')
-  - [python]('./others/Python.md')
-  - [regex]('./others/Regex.md')
-  - [ruby]('./others/Ruby.md')
-- [Devops]
-  - [git](./Devops/Git.md)
-  - [aws](./Devops/README.md)
-- [server]
+- basic
+  - [macos]('./basic/MacOS.md')
+  - [basic]('./basic/Basic.md')
+  - [python]('./basic/Python.md')
+  - [regex]('./basic/Regex.md')
+  - [ruby]('./basic/Ruby.md')
+- DevOps
+  - [git](./DevOps/Git.md)
+  - [aws](./DevOps/README.md)
+- server
   - [git](./server/Git.md)
   - [nginx](./server/Nginx.md)
   - [sql](./server/SQL.md)

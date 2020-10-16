@@ -10,6 +10,7 @@
 		- [Find current url](#find-current-url)
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
 	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
+		- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
 
 > [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
@@ -243,5 +244,18 @@ CONTENT
       }
     };
   }
+</script>
+```
+
+### Use money formatter with multiple currenies
+
+- `{{ "{{ this " }}}}` => `{{ this }}` in liquid.
+
+```html
+<script>
+  var theme = {
+  	moneyFormat: {{ shop.money_format | json }}
+  }
+  theme.moneyFormat.replace(/{{ "{{[a-zA-Z0-9_]*" }}}}/, p.price)
 </script>
 ```
