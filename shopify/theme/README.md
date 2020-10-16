@@ -161,7 +161,7 @@ CONTENT
 ### Find current handle
 
 ```liquid
-{% assign current_handle = '' %}
+	{% assign current_handle = '' %}
 
 {% case template %}
 	{% when 'page' %}
