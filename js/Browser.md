@@ -170,15 +170,66 @@ app.get('/user/:userId', cors(corsOptions), function (req, res, next) {
 
 ## DOM storage
 
+- cookies 4kb
+- indexedDB 250MB per domain
+- localstorage | sessionstorage 5mb per domain
+
+### localstorage
+
+- hold when browser close
+- cross in same origin
+
+### sessionstorage
+
+- lose when browser close
+- not cross even same origin
+
 ### indexedDB
 
 - [Dexie](https://github.com/dfahlander/Dexie.js/)
 
+```js
+const db = new Dexie('mydb');
+db.version(1).store({ person: '++id, name, age' });
+
+db.person.add({ name: 'john', age: 20 });
+db.person.add({ name: 'mary', age: 23, email: 'd@e.com' });
+
+db.person.put({ name: 'john', age: 28 });
+
+await db.person.get(1);
+
+await db.person.where('age').above(30).toArray(); // age > 30
+
+db.close();
+```
+
 ### Cookies
+
+- in request header everytime
+
+#### get and set
+
+```js
+document.cookie;
+
+document.cookie = 'key=value';
+```
+
+#### js-cookie
 
 - [js-cookie](https://github.com/js-cookie/js-cookie)
 
-- get cookies object with vanilla js
+```js
+import Cookies from 'js-cookie';
+
+Cookies.set('foo', 'bar');
+Cookies.set('name', 'value', { expires: 7, path: '' });
+Cookies.get('name'); // => 'value'
+Cookies.get('nothing'); // => undefined
+```
+
+#### get cookies object with vanilla js
 
 ```js
 let cookies = document.cookie
