@@ -12,6 +12,8 @@
 	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
 		- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
 
+> [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
+
 > [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
 > [extra snippets](https://github.com/freakdesign/Shopify-code-snippets)
