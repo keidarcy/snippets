@@ -4,6 +4,7 @@
 	- [Multiple currency selector](#multiple-currency-selector)
 	- [Member only page](#member-only-page)
 	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
+	- [Minimal product form](#minimal-product-form)
 	- [Show full featured collection of products](#show-full-featured-collection-of-products)
 	- [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
 		- [Find current handle](#find-current-handle)
@@ -86,6 +87,27 @@ CONTENT
   </script>
 {% endif %}
 
+
+```
+
+## Minimal product form
+
+```liquid
+<form action="/cart/add" method="post">
+  <select name="id">
+    {% for variant in product.variants %}
+    {% if variant.available %}
+    <option value="{{ variant.id }}">
+      {{ variant.title }}
+    </option>
+    {% else %}
+    <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+    {% endif %}
+    {% endfor %}
+  </select>
+  <input type="number" name="quantity" value="1" min="1" class="QuantityInput">
+  <button type="submit">カートにテスト追加</button>
+</form>
 
 ```
 
