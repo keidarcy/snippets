@@ -5,12 +5,13 @@
 		- [Add fields to product form](#add-fields-to-product-form)
 		- [Add fields to cart form](#add-fields-to-cart-form)
 		- [Add fields to the customer registration form](#add-fields-to-the-customer-registration-form)
+	- [Product form](#product-form)
+		- [Minimal product form](#minimal-product-form)
+		- [Show full featured collection of products](#show-full-featured-collection-of-products)
+	- [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
 	- [Multiple currency selector](#multiple-currency-selector)
 	- [Member only page](#member-only-page)
 	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
-	- [Minimal product form](#minimal-product-form)
-	- [Show full featured collection of products](#show-full-featured-collection-of-products)
-	- [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
 		- [Find current handle](#find-current-handle)
 		- [Find current url](#find-current-url)
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
@@ -56,78 +57,9 @@
 />
 ```
 
-## Multiple currency selector
+## Product form
 
-```liquid
-  {% form 'currency' %}
-    {{ form | currency_selector }}
-  {% endform %}
-```
-
-```liquid
-{% form 'currency' %}
-  <select name="currency">
-    {% for currency in shop.enabled_currencies %}
-{% if currency == cart.currency %}
-  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
-  {% else %}
-  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
-{% endif %}
-    {% endfor %}
-  </select>
-{% endform %}
-```
-
-```js
-$('.shopify-currency-form select').on('change', function () {
-  $(this).parents('form').submit();
-});
-```
-
-## Member only page
-
-```liquid
-{% unless customer %}
-    {% if template contains 'customers' %}
-        {% assign send_to_login = false %}
-    {% else %}
-        {% assign send_to_login = true %}
-    {% endif %}
-{% endunless %}
-
-{% if send_to_login %}
-<meta content="0; url=/account/login?checkout_url=/" http-equiv="refresh" />
-{% else %}
-CONTENT
-{% endif %}
-```
-
-## Member only and special tagged customer only
-
-```liquid
-{% if customer %}
-  {% for tag in customer.tags %}
-    {% unless tag contains 'multipass'  %}
-      <script type="text/javascript">
-        location.href = "/";
-      </script>
-    {% endunless %}
-  {% endfor %}
-  {% if customer.tags.size == 0 %}
-	  <script type="text/javascript">
-        location.href = "/";
-      </script>
-  {% endif %}
-{% else %}
-  <script type="text/javascript">
-    location.href = "/";
-  </script>
-{% endif %}
-
-
-```
-
-## Minimal product form
+### Minimal product form
 
 ```liquid
 <form action="/cart/add" method="post">
@@ -148,7 +80,7 @@ CONTENT
 
 ```
 
-## Show full featured collection of products
+### Show full featured collection of products
 
 ```liquid
  {% for product in collections['ADIDAS'].products limit: 6 %}
@@ -220,6 +152,77 @@ CONTENT
 ```
 
 ## Show theme information in console with theme.liquid
+
+## Multiple currency selector
+
+```liquid
+  {% form 'currency' %}
+    {{ form | currency_selector }}
+  {% endform %}
+```
+
+```liquid
+{% form 'currency' %}
+  <select name="currency">
+    {% for currency in shop.enabled_currencies %}
+{% if currency == cart.currency %}
+  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+  {% else %}
+  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+{% endif %}
+    {% endfor %}
+  </select>
+{% endform %}
+```
+
+```js
+$('.shopify-currency-form select').on('change', function () {
+  $(this).parents('form').submit();
+});
+```
+
+## Member only page
+
+```liquid
+{% unless customer %}
+    {% if template contains 'customers' %}
+        {% assign send_to_login = false %}
+    {% else %}
+        {% assign send_to_login = true %}
+    {% endif %}
+{% endunless %}
+
+{% if send_to_login %}
+<meta content="0; url=/account/login?checkout_url=/" http-equiv="refresh" />
+{% else %}
+CONTENT
+{% endif %}
+```
+
+## Member only and special tagged customer only
+
+```liquid
+{% if customer %}
+  {% for tag in customer.tags %}
+    {% unless tag contains 'multipass'  %}
+      <script type="text/javascript">
+        location.href = "/";
+      </script>
+    {% endunless %}
+  {% endfor %}
+  {% if customer.tags.size == 0 %}
+	  <script type="text/javascript">
+        location.href = "/";
+      </script>
+  {% endif %}
+{% else %}
+  <script type="text/javascript">
+    location.href = "/";
+  </script>
+{% endif %}
+
+
+```
 
 ### Find current handle
 
