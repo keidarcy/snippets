@@ -1,6 +1,10 @@
 # Shopify Theme Liquid Code Snippets
 
 - [Shopify Theme Liquid Code Snippets](#shopify-theme-liquid-code-snippets)
+	- [Add custom fileds](#add-custom-fileds)
+		- [Add fields to product form](#add-fields-to-product-form)
+		- [Add fields to cart form](#add-fields-to-cart-form)
+		- [Add fields to the customer registration form](#add-fields-to-the-customer-registration-form)
 	- [Multiple currency selector](#multiple-currency-selector)
 	- [Member only page](#member-only-page)
 	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
@@ -11,13 +15,46 @@
 		- [Find current url](#find-current-url)
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
 	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
-		- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
+	- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
 > [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
 > [extra snippets](https://github.com/freakdesign/Shopify-code-snippets)
+
+## Add custom fileds
+
+### Add fields to product form
+
+```html
+<p class="line-item-property__field">
+  <label for="your-name">Your name</label>
+  <input id="your-name" type="text" name="properties[Your name]" />
+</p>
+```
+
+### Add fields to cart form
+
+```html
+<p class="cart-attribute__field">
+  <label for="your-name">Your name</label>
+  <input id="your-name" type="text" name="attributes[Your name]" value="{{
+  cart.attributes["Your name"] }}">
+</p>
+```
+
+### Add fields to the customer registration form
+
+```html
+<label for="CustomerFormAllergies">Allergies</label>
+<input
+  type="text"
+  id="CustomerFormAllergies"
+  name="customer[note][Allergies]"
+  placeholder="Allergies"
+/>
+```
 
 ## Multiple currency selector
 
@@ -271,7 +308,7 @@ CONTENT
 </script>
 ```
 
-### Use money formatter with multiple currenies
+## Use money formatter with multiple currenies
 
 - `{{ "{{ this " }}}}` => `{{ this }}` in liquid.
 
