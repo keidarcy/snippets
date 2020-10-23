@@ -17,6 +17,7 @@
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
 	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
 	- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
+	- [Render cart attribute](#render-cart-attribute)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -322,4 +323,26 @@ CONTENT
   }
   theme.moneyFormat.replace(/{{ "{{[a-zA-Z0-9_]*" }}}}/, p.price)
 </script>
+```
+
+## Render cart attribute
+
+```html
+{% if order.attributes %}
+<ul>
+  {% for attribute in order.attributes %}
+  <li><strong>{{ attribute | first }}</strong>: {{ attribute | last }}</li>
+  <script>
+    console.log('{{ attribute }}');
+  </script>
+  {% endfor %}
+</ul>
+{% endif %}
+```
+
+```
+deliveryDate2020-10-31
+deliveryTime16～18
+deliveryCode1618
+
 ```
