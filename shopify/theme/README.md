@@ -17,7 +17,9 @@
 		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
 	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
 	- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
-	- [Render cart attribute](#render-cart-attribute)
+	- [Cart attribute](#cart-attribute)
+		- [Add cart attribute](#add-cart-attribute)
+		- [Render added cart attribute](#render-added-cart-attribute)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -325,7 +327,36 @@ CONTENT
 </script>
 ```
 
-## Render cart attribute
+## Cart attribute
+
+### Add cart attribute
+
+- cart note
+
+```html
+<div>
+  <label>Add a note to your order</label>
+  <textarea name="note"></textarea>
+</div>
+```
+
+```html
+<p class="cart-attribute__field">
+  <label for="your-name">memo1</label>
+  <textarea id="your-name" name="attributes[memo1]">
+{{ cart.attributes["memo1"] }}</textarea
+  >
+</p>
+
+<p class="cart-attribute__field">
+  <label for="your-name">memo2</label>
+  <textarea id="your-name" name="attributes[memo2]">
+{{ cart.attributes["memo2"] }}</textarea
+  >
+</p>
+```
+
+### Render added cart attribute
 
 ```html
 {% if order.attributes %}
