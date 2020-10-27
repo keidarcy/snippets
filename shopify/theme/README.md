@@ -1,25 +1,26 @@
 # Shopify Theme Liquid Code Snippets
 
 - [Shopify Theme Liquid Code Snippets](#shopify-theme-liquid-code-snippets)
-	- [Add custom fileds](#add-custom-fileds)
-		- [Add fields to product form](#add-fields-to-product-form)
-		- [Add fields to cart form](#add-fields-to-cart-form)
-		- [Add fields to the customer registration form](#add-fields-to-the-customer-registration-form)
-	- [Product form](#product-form)
-		- [Minimal product form](#minimal-product-form)
-		- [Show full featured collection of products](#show-full-featured-collection-of-products)
-	- [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
-	- [Multiple currency selector](#multiple-currency-selector)
-	- [Member only page](#member-only-page)
-	- [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
-		- [Find current handle](#find-current-handle)
-		- [Find current url](#find-current-url)
-		- [Show current page template and theme info](#show-current-page-template-and-theme-info)
-	- [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
-	- [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
-	- [Cart attribute](#cart-attribute)
-		- [Add cart attribute](#add-cart-attribute)
-		- [Render added cart attribute](#render-added-cart-attribute)
+  - [Add custom fileds](#add-custom-fileds)
+    - [Add fields to product form](#add-fields-to-product-form)
+    - [Add fields to cart form](#add-fields-to-cart-form)
+    - [Add fields to the customer registration form](#add-fields-to-the-customer-registration-form)
+  - [Product form](#product-form)
+    - [Minimal product form](#minimal-product-form)
+    - [Show full featured collection of products](#show-full-featured-collection-of-products)
+  - [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
+  - [Multiple currency selector](#multiple-currency-selector)
+  - [Member only page](#member-only-page)
+  - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
+    - [Find current handle](#find-current-handle)
+    - [Find current url](#find-current-url)
+    - [Show current page template and theme info](#show-current-page-template-and-theme-info)
+  - [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
+  - [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
+  - [Cart attribute](#cart-attribute)
+    - [Add cart attribute](#add-cart-attribute)
+    - [Render added cart attribute](#render-added-cart-attribute)
+  - [Add item to cart with fetch()](#add-item-to-cart-with-fetch)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -376,4 +377,37 @@ deliveryDate2020-10-31
 deliveryTime16～18
 deliveryCode1618
 
+```
+
+## Add item to cart with fetch()
+
+```js
+(function () {
+  var addData = {
+    id: 21373873027 /* for testing, change this to a variant ID on your store */,
+    quantity: 1
+  };
+
+  fetch('/cart/add.js', {
+    body: JSON.stringify(addData),
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With':
+        'xmlhttprequest' /* XMLHttpRequest is ok too, it's case insensitive */
+    },
+    method: 'POST'
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (json) {
+      /* we have JSON */
+      console.log(json);
+    })
+    .catch(function (err) {
+      /* uh oh, we have error. */
+      console.error(err);
+    });
+})();
 ```
