@@ -10,12 +10,16 @@
   </li>
 </ul>
 
-<template x-if.transition.in="selectedTab === 'tab1'">
-  <p>tab1</p>
-</template>
-<template x-if.transition.in="selectedTab === 'tab2'">
-  <p>tab2</p>
-</template>
+<div x-show.transition="selectedTab === 'tab1'">
+  <template :key="index" x-for="(item, index) in items">
+    <p>tab1</p>
+  </template>
+</div>
+<div x-show.transition="selectedTab === 'tab2'">
+  <template :key="index" x-for="(product, index) in products">
+    <p>tab2</p>
+  </template>
+</div>
 <script>
   function data() {
     return {
