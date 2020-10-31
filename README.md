@@ -20,6 +20,7 @@
   - [browser](./js/Browser.md)
   - [nodejs](./js/Nodejs.md)
   - [reactjs](./js/React.md)
+  - [alpinejs](./js/Alpinejs.md)
   - [reactivity](./js/Reactivity.md)
 - [shopify](./shopify/README.md)
   - [api](./shopify/api/README.md)
