@@ -21,6 +21,7 @@
     - [Add cart attribute](#add-cart-attribute)
     - [Render added cart attribute](#render-added-cart-attribute)
   - [Add item to cart with fetch()](#add-item-to-cart-with-fetch)
+  - [Create product handles array and render product list](#create-product-handles-array-and-render-product-list)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -410,4 +411,19 @@ deliveryCode1618
       console.error(err);
     });
 })();
+```
+
+## Create product handles array and render product list
+
+```liquid
+{% assign prodlist = '' %}
+{% for item in items limit: limit %}
+    {% prodlist = prodlist | append: item.handle | append: ';' %}
+{% endfor %}
+{% assign myproducts = prodlist | remove_last: ';' | split: ';' %}
+{% for handle in myproducts %}
+  {{ handle }}
+  {{ all_products[ handle ].title }}
+{% endfor%}
+
 ```
