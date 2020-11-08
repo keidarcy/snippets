@@ -1,7 +1,7 @@
- - Simplest implemention of redux
- 
- ```js
- function createStore(reducer) {
+- Simplest implemention of redux
+
+```js
+function createStore(reducer) {
   let state = { state: 1 };
 
   let listeners = [];
@@ -48,5 +48,17 @@ store.dispatch({ type: 'action', payload: 2 });
 const result = store.getState();
 
 console.log(result);
- 
- ```
+```
+
+## Get query paramater with react router
+
+```tsx
+const useQuery = () => {
+  const location = useLocation();
+  return new URLSearchParams(location.search);
+};
+
+const query = useQuery();
+
+query.get('id');
+```
