@@ -1,6 +1,7 @@
 # Shopify Theme Liquid Code Snippets
 
 - [Shopify Theme Liquid Code Snippets](#shopify-theme-liquid-code-snippets)
+  - [New theme helper](#new-theme-helper)
   - [Add custom fileds](#add-custom-fileds)
     - [Add fields to product form](#add-fields-to-product-form)
     - [Add fields to cart form](#add-fields-to-cart-form)
@@ -12,9 +13,6 @@
   - [Multiple currency selector](#multiple-currency-selector)
   - [Member only page](#member-only-page)
   - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
-    - [Find current handle](#find-current-handle)
-    - [Find current url](#find-current-url)
-    - [Show current page template and theme info](#show-current-page-template-and-theme-info)
   - [Add recommend section in product page with alphinejs](#add-recommend-section-in-product-page-with-alphinejs)
   - [Use money formatter with multiple currenies](#use-money-formatter-with-multiple-currenies)
   - [Cart attribute](#cart-attribute)
@@ -28,6 +26,46 @@
 > [extra snippets](https://github.com/vikrantnegi/shopify-code-snippets)
 
 > [extra snippets](https://github.com/freakdesign/Shopify-code-snippets)
+
+## New theme helper
+
+```html
+{{ 'main.min.css' | asset_url | stylesheet_tag }}
+{{ 'main.min.js' | asset_url | script_tag }}
+<script>
+// TODO: remove this helper
+{% assign current_handle = '' %}
+{% case template %}
+  {% when 'page' %}
+    {% assign current_handle = page.handle %}
+  {% when 'blog' %}
+    {% assign current_handle = blog.handle %}
+  {% when 'article' %}
+    {% assign current_handle = blog.handle %}
+  {% when 'collection' %}
+    {% assign current_handle = collection.handle %}
+  {% when 'product' %}
+    {% assign current_handle = product.handle %}
+{% endcase %}
+{% assign current_url = '' %}
+
+{% case template %}
+  {% when 'page' %}
+    {% assign current_url = page.url %}
+  {% when 'blog' %}
+    {% assign current_url = blog.url %}
+  {% when 'article' %}
+    {% assign current_url = blog.url %}
+  {% when 'collection' %}
+    {% assign current_url = collection.url %}
+  {% when 'product' %}
+    {% assign current_url = product.url %}
+{% endcase %}
+  console.log('template: {{ template }}, theme.name: {{ theme.name }}');
+  console.log('current_handle: {{ current_handle }}');
+  console.log('current_url: {{ current_url }}');
+</script>
+```
 
 ## Add custom fileds
 
@@ -227,54 +265,6 @@ CONTENT
 {% endif %}
 
 
-```
-
-### Find current handle
-
-```liquid
-	{% assign current_handle = '' %}
-
-{% case template %}
-	{% when 'page' %}
-		{% assign current_handle = page.handle %}
-	{% when 'blog' %}
-		{% assign current_handle = blog.handle %}
-	{% when 'article' %}
-		{% assign current_handle = blog.handle %}
-	{% when 'collection' %}
-		{% assign current_handle = collection.handle %}
-	{% when 'product' %}
-		{% assign current_handle = product.handle %}
-{% endcase %}
-```
-
-### Find current url
-
-```liquid
-{% assign current_url = '' %}
-
-{% case template %}
-	{% when 'page' %}
-		{% assign current_url = page.url %}
-	{% when 'blog' %}
-		{% assign current_url = blog.url %}
-	{% when 'article' %}
-		{% assign current_url = blog.url %}
-	{% when 'collection' %}
-		{% assign current_url = collection.url %}
-	{% when 'product' %}
-		{% assign current_url = product.url %}
-{% endcase %}
-```
-
-### Show current page template and theme info
-
-```html
-<script>
-  console.log('template: {{ template }}, theme.name: {{ theme.name }}');
-  console.log('current_handle: {{ current_handle }}');
-  console.log('current_url: {{ current_url }}');
-</script>
 ```
 
 ## Add recommend section in product page with alphinejs
