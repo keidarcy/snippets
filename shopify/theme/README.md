@@ -2,6 +2,7 @@
 
 - [Shopify Theme Liquid Code Snippets](#shopify-theme-liquid-code-snippets)
   - [New theme helper](#new-theme-helper)
+  - [Add link loop](#add-link-loop)
   - [Add custom fileds](#add-custom-fileds)
     - [Add fields to product form](#add-fields-to-product-form)
     - [Add fields to cart form](#add-fields-to-cart-form)
@@ -30,41 +31,49 @@
 ## New theme helper
 
 ```html
-{{ 'main.min.css' | asset_url | stylesheet_tag }}
-{{ 'main.min.js' | asset_url | script_tag }}
+{{ 'main.min.css' | asset_url | stylesheet_tag }} {{ 'main.min.js' | asset_url |
+script_tag }}
 <script>
-// TODO: remove this helper
-{% assign current_handle = '' %}
-{% case template %}
-  {% when 'page' %}
-    {% assign current_handle = page.handle %}
-  {% when 'blog' %}
-    {% assign current_handle = blog.handle %}
-  {% when 'article' %}
-    {% assign current_handle = blog.handle %}
-  {% when 'collection' %}
-    {% assign current_handle = collection.handle %}
-  {% when 'product' %}
-    {% assign current_handle = product.handle %}
-{% endcase %}
-{% assign current_url = '' %}
+  // TODO: remove this helper
+  {% assign current_handle = '' %}
+  {% case template %}
+    {% when 'page' %}
+      {% assign current_handle = page.handle %}
+    {% when 'blog' %}
+      {% assign current_handle = blog.handle %}
+    {% when 'article' %}
+      {% assign current_handle = blog.handle %}
+    {% when 'collection' %}
+      {% assign current_handle = collection.handle %}
+    {% when 'product' %}
+      {% assign current_handle = product.handle %}
+  {% endcase %}
+  {% assign current_url = '' %}
 
-{% case template %}
-  {% when 'page' %}
-    {% assign current_url = page.url %}
-  {% when 'blog' %}
-    {% assign current_url = blog.url %}
-  {% when 'article' %}
-    {% assign current_url = blog.url %}
-  {% when 'collection' %}
-    {% assign current_url = collection.url %}
-  {% when 'product' %}
-    {% assign current_url = product.url %}
-{% endcase %}
-  console.log('template: {{ template }}, theme.name: {{ theme.name }}');
-  console.log('current_handle: {{ current_handle }}');
-  console.log('current_url: {{ current_url }}');
+  {% case template %}
+    {% when 'page' %}
+      {% assign current_url = page.url %}
+    {% when 'blog' %}
+      {% assign current_url = blog.url %}
+    {% when 'article' %}
+      {% assign current_url = blog.url %}
+    {% when 'collection' %}
+      {% assign current_url = collection.url %}
+    {% when 'product' %}
+      {% assign current_url = product.url %}
+  {% endcase %}
+    console.log('template: {{ template }}, theme.name: {{ theme.name }}');
+    console.log('current_handle: {{ current_handle }}');
+    console.log('current_url: {{ current_url }}');
 </script>
+```
+
+## Add link loop
+
+```
+{% for category in linklists.category.links %}
+  {{ category.title }}
+{% endfor %}
 ```
 
 ## Add custom fileds

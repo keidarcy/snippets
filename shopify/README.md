@@ -2,8 +2,10 @@
 
 ## External Links
 
-- [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
 - [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
+- [schema types](https://shopify.dev/docs/themes/settings)
+- [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
+- [webhook](https://shopify.dev/tutorials/manage-webhooks)
 
 ## Private app auth for admin api and storefront api
 
