@@ -6,6 +6,7 @@
 - [schema types](https://shopify.dev/docs/themes/settings)
 - [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)
 - [webhook](https://shopify.dev/tutorials/manage-webhooks)
+- [image lazyload](https://github.com/aFarkas/lazysizes)
 
 ## Private app auth for admin api and storefront api
 
