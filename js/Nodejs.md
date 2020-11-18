@@ -38,9 +38,3 @@ const createZip = async (code: string): Promise<void> => {
 ## Node cli clean screen
 
 - `Ctrl + L` clean screen, similar to `process.stdout.write("\u001b[2J\u001b[0;0H");`
-
-## Get file name without extension
-
-```js
-arr.split('.').slice(0, -1).join('.');
-```

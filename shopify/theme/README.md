@@ -21,6 +21,7 @@
     - [Render added cart attribute](#render-added-cart-attribute)
   - [Add item to cart with fetch()](#add-item-to-cart-with-fetch)
   - [Create product handles array and render product list](#create-product-handles-array-and-render-product-list)
+  - [Nested for loop get index](#nested-for-loop-get-index)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -425,4 +426,15 @@ deliveryCode1618
   {{ all_products[ handle ].title }}
 {% endfor%}
 
+```
+
+## Nested for loop get index
+
+```liquid
+{% for outerItem in outerItems %}
+    {% assign outer_forloop = forloop %}
+    {% for item in items%}
+        <div>{{ outer_forloop.counter }}.&nbsp;{{ item }}</div>
+    {% endfor %}
+{% endfor %}
 ```
