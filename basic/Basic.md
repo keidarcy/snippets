@@ -1,4 +1,3 @@
-
 ## Quick server
 
 ```
@@ -15,5 +14,19 @@ ruby -run -e httpd . -p 8080
 ## Development enviroment bar
 
 ```html
-<div style="background-color:#ff0;color:#111;padding:10px;text-align:center;font-size:12px;font-weight:bold;">DEVELOPMENT</div>
+<div
+  style="background-color:#ff0;color:#111;padding:10px;text-align:center;font-size:12px;font-weight:bold;"
+>
+  DEVELOPMENT
+</div>
+```
+
+## Flexbox
+
+```
+`justify` is for main axis
+`align` is for cross axis
+
+`◯◯-content` is for blank
+`◯◯-items` is for items
 ```
