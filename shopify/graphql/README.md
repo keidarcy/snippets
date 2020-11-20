@@ -1,9 +1,53 @@
+## Basic
+
+### Operation Names and Variables
+
+```graphql
+query ProductTitleAndDescription($id: ID!) {
+  product(id: $id){
+    title
+    description
+  }
+}
+
+{
+  "id": "gid://shopify/Product/xxx"
+}
+
+# Operation Names => ProductTitleAndDescription
+# Variables => $id: ID!
+```
+
+#### node version
+
+```js
+require('dotenv').config()
+const {GraphQLClient, gql} = require('graphql-request')
+const {Header} = require('cross-fetch')
+
+global.Headers = global.Headers || Headers
+
+async function main() {
+  const URL = {{store}}/admin/api/2020-10/graphql.json;
+
+  const graphQLClient = new GraphQLClient(URL, {
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": process.env.API_PASSWORD
+    }
+    }
+  })
+}
+
+```
+
 ## Admin API
+
 #### Get product list with requirement
 
 ```graphql
 {
-  products(first: 30, query: "",  after:"{{ the cursor you want to use }}") {
+  products(first: 30, query: "", after: "{{ the cursor you want to use }}") {
     pageInfo {
       hasNextPage
       hasPreviousPage
@@ -24,27 +68,24 @@
     }
   }
 }
-
 ```
-
 
 #### Get variant with metafields
 
 ```graphql
-query VariantWithMeta($id: ID!){
-      productVariant(id: $id) {
-          metafields(first:10){
-              edges {
-                  node {
-                      id
-                      key
-                      value
-                  }
-              }
-          }
+query VariantWithMeta($id: ID!) {
+  productVariant(id: $id) {
+    metafields(first: 10) {
+      edges {
+        node {
+          id
+          key
+          value
+        }
       }
+    }
   }
-
+}
 ```
 
 ```graphql
@@ -96,14 +137,14 @@ mutation($input: ProductInput!) {
 
 ```graphql
 query {
-  shop{
-    primaryDomain{
+  shop {
+    primaryDomain {
       host
       sslEnabled
       url
     }
     description
-    paymentSettings{
+    paymentSettings {
       countryCode
       acceptedCardBrands
       enabledPresentmentCurrencies
@@ -114,7 +155,7 @@ query {
 ```
 
 #### Get price with different currencies(which are setted in admin page)
- 
+
 ```graphql
 {
   productByHandle(handle: "adidas-classic-backpack") {
