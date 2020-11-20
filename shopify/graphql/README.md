@@ -31,10 +31,10 @@ async function main() {
   const URL = {{store}}/admin/api/2020-10/graphql.json;
 
   const graphQLClient = new GraphQLClient(URL, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Access-Token": process.env.API_PASSWORD
-    }
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Access-Token": process.env.API_PASSWORD
+      }
     }
   })
 }

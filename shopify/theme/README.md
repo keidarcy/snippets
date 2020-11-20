@@ -22,6 +22,7 @@
   - [Add item to cart with fetch()](#add-item-to-cart-with-fetch)
   - [Create product handles array and render product list](#create-product-handles-array-and-render-product-list)
   - [Nested for loop get index](#nested-for-loop-get-index)
+  - [Show tagged articles with limited number](#show-tagged-articles-with-limited-number)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -436,5 +437,21 @@ deliveryCode1618
     {% for item in items%}
         <div>{{ outer_forloop.counter }}.&nbsp;{{ item }}</div>
     {% endfor %}
+{% endfor %}
+```
+
+## Show tagged articles with limited number
+
+```liquid
+{% assign count = 1 %}
+{% for article in blogs["handle"].articles %}
+  {% if article.tags contains 'tag name' and count < 9 %}
+  {% assign count = count | plus: 1 %}
+  <li><a href="{{ article.url }}"><div class="photo"><img src="{{ article | img_url: 'master' }}" alt="{{ article.title }}"></div><div class="txtInner">
+    <p class="ttl">{{ article.title }}</p>
+    <p>{{ article.metafields.global.products }}</p>
+    <p class="link"><span>detail</span></p>
+  </div></a></li>
+  {% endif %}
 {% endfor %}
 ```
