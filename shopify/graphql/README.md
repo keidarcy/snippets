@@ -1,5 +1,8 @@
 ## Basic
 
+- [QueryRoot](https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index)
+- [Search Syntax](https://shopify.dev/concepts/about-apis/search-syntax)
+
 ### Operation Names and Variables
 
 ```graphql
@@ -21,22 +24,184 @@ query ProductTitleAndDescription($id: ID!) {
 #### node version
 
 ```js
-require('dotenv').config()
-const {GraphQLClient, gql} = require('graphql-request')
-const {Header} = require('cross-fetch')
-
-global.Headers = global.Headers || Headers
+require('dotenv').config();
+const { GraphQLClient, gql } = require('graphql-request');
 
 async function main() {
-  const URL = {{store}}/admin/api/2020-10/graphql.json;
+  const endpoint = process.env.SHOPIFY_URL;
 
-  const graphQLClient = new GraphQLClient(URL, {
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Access-Token": process.env.API_PASSWORD
+  const graphqlClient = new GraphQLClient(endpoint, {
+    headers: {
+      'Content-type': 'application/json',
+      'X-Shopify-Access-Token': process.env.SHOPIFY_API_PASSWORD
+    }
+  });
+
+  const query = gql`
+    query getProduct($id: ID!) {
+      product(id: $id) {
+        id
+        title
       }
     }
-  })
+  `;
+
+  const variables = {
+    id: 'gid://shopify/Product/XXX'
+  };
+
+  const data = await graphqlClient.request(query, variables);
+  console.log(JSON.stringify(data, undefined, 2));
+}
+
+main().catch((error) => console.error(error));
+```
+
+### Aliases
+
+- usage
+
+```graphql
+query ProductTitleAndDescription($id: ID!) {
+  product(id: $id) {
+    myRenamedAliasesTitle: title
+    description
+  }
+}
+```
+
+- usage
+
+```graphql
+query  {
+  product1:product(id: 'gid://shopify/Product/XXX') {
+    title
+    description
+  }
+  product2:product(id: 'gid://shopify/Product/XXX') {
+    title
+    description
+  }
+}
+```
+
+### Fragments
+
+```graphql
+query  {
+  product1:product(id: 'gid://shopify/Product/XXX') {
+    ...TitleAndDescription
+  }
+  product2:product(id: 'gid://shopify/Product/XXX') {
+    ...TitleAndDescription
+  }
+}
+fragment TitleAndDescription on Product {
+  title
+  description
+  featuredImage {
+    src
+  }
+}
+```
+
+- inline fragment
+
+```graphql
+mutation tagsAdd($id: ID!, $tags: [String!]!) {
+  tagsAdd(id: $id, tags: $tags) {
+    node {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "id": "Z2lkOi8vU2hvcGlmeS9FeGFtcGxlLzE=",
+  "tags": [
+    "placeholder"
+  ]
+}
+```
+
+_Customer_ and _Product_ object implments _node_ interface, so use inline fragment to query field in _Customer_ and _Product_ value.
+
+```graphql
+mutation tagsAdd($id: ID!, $tags: [String!]!) {
+  tagsAdd(id: $id, tags: $tags) {
+    node {
+      id
+      ... on Product {
+        title
+        tags
+      }
+      ... on Customer {
+        email
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+```
+
+### Pagination
+
+```graphql
+query threeProducts {
+  products(first: 3) {
+    edges {
+      cursor
+      node {
+        id
+        title
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+
+query threeProducts {
+  products(first: 3, after: "xxxx") {
+    edges {
+      cursor
+      node {
+        id
+        title
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+```
+
+### Query argument
+
+- find products that tagged with 'a' AND not tagged with 'b'
+
+```graphql
+query taggedProducts {
+  products(first: 3, query: '-tag: a AND tag: b') {
+    edges {
+      node {
+        title
+        description
+        tags
+      }
+    }
+  }
 }
 
 ```
