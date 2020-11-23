@@ -55,3 +55,9 @@ type Partial<T> = {
 
 type PartialPerson = Partial<Person>;
 ```
+
+## For those packages that have no type definition
+
+- create a fold called `@types`
+- create a file name with same with libaray name, like `aws-amplify-react.ts`
+- write `declare modul "aws-amplify-react"`
