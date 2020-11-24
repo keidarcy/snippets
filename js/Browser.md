@@ -243,3 +243,16 @@ let cookies = document.cookie
     {}
   );
 ```
+
+### Click others(usually toggle overlay)
+
+```js
+  $('body').on('click', function (event) {
+    if (
+      !$.contains(document.querySelector('.js-sidebar'), $(event.target)[0]) &&
+      sidebarShow
+    ) {
+      sidebar.slideLeft(500);
+      sidebarShow = false;
+
+```
