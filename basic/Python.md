@@ -56,3 +56,9 @@ range(1,5)
 ```
 [...Array(5).keys()].splice(1)
 ```
+
+### lambda 
+
+```py
+getBoolean = lambda x: x == '○'
+```
