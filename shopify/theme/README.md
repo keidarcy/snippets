@@ -23,6 +23,9 @@
   - [Create product handles array and render product list](#create-product-handles-array-and-render-product-list)
   - [Nested for loop get index](#nested-for-loop-get-index)
   - [Show tagged articles with limited number](#show-tagged-articles-with-limited-number)
+  - [Storefront search sytax](#storefront-search-sytax)
+    - [search](#search)
+    - [collection filter](#collection-filter)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -455,3 +458,23 @@ deliveryCode1618
   {% endif %}
 {% endfor %}
 ```
+
+## Storefront search sytax
+
+### search
+
+- [Storefront search](https://shopify.dev/tutorials/use-advanced-query-parameters-in-shopify-online-store-search)
+- [Searching your store](https://help.shopify.com/en/manual/online-store/os/storefront-search)
+
+`https://xxx.myshopify.com/search?q=classic+tag%3A女性%2C+adidas+product_type%3AACCESSORIES+vendor%3Aadidas&options%5Bprefix%5D=last`
+`classic tag:女性, adidas product_type:ACCESSORIES vendor:adidas`
+
+### collection filter
+
+- [customize-theme-filter-collections-with-product-tags](https://shopify.dev/tutorials/customize-theme-filter-collections-with-product-tags)
+- [URL filters](https://shopify.dev/docs/themes/liquid/reference/filters/url-filters)
+- [demo](https://turbo-theme.myshopify.com/collections/all/)
+
+`https://xxx.myshopify.com/collections/all/SCA_STOREPICKUP_PRODUCT+男性+man`
+
+- [Product Filter & Search](https://apps.shopify.com/product-filter-search)
