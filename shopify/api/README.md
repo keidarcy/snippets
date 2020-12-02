@@ -3,6 +3,7 @@
 #### nodejs with `shopify-api-node` package for `private` app with Admin Rest
 
 - create new smart collection
+- [smart collection all rules and columns](https://shopify.dev/docs/admin-api/rest/reference/products/smartcollection)
 
 ```js
 const Shopify = require('shopify-api-node');
