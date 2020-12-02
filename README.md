@@ -15,6 +15,9 @@
   - [git](./server/Git.md)
   - [nginx](./server/Nginx.md)
   - [sql](./server/SQL.md)
+- examples
+  - [pandas](./examples/python/Pandas.md)
+  - [graphql](./examples/js/graphql.js)
 - [js](./js/README.md)
   - [typescript](./js/Typescript.md)
   - [browser](./js/Browser.md)
