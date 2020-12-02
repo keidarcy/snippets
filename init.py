@@ -1,4 +1,13 @@
 import os
 
-folders = os.listdir('./')
-print(folders)
+files = os.listdir('./')
+folders = []
+for file in files:
+  if not '.' in file:
+    folders.append(file)
+
+for folder in folders:
+  readme_list = os.listdir('./' + folder) 
+  print(readme_list)
+
+# when-changed -1 . python3 init.py

@@ -30,3 +30,9 @@ ruby -run -e httpd . -p 8080
 `◯◯-content` is for blank
 `◯◯-items` is for items
 ```
+
+## Watch dog
+
+```bash
+when-changed -r -v -1 . python3 init.py
+```
