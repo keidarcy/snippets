@@ -26,6 +26,7 @@
   - [Storefront search sytax](#storefront-search-sytax)
     - [search](#search)
     - [collection filter](#collection-filter)
+    - [Show vendor list](#show-vendor-list)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -478,3 +479,16 @@ deliveryCode1618
 `https://xxx.myshopify.com/collections/all/SCA_STOREPICKUP_PRODUCT+男性+man`
 
 - [Product Filter & Search](https://apps.shopify.com/product-filter-search)
+
+### Show vendor list
+
+```liquid
+{% for product_vendor in shop.vendors limit: 6 %}
+  {%- assign brand = collections[product_vendor] -%}
+  {% if brand %}
+    <a class="py-3 mt-1 t-style-icon-size" href="{{ product_vendor | url_for_vendor }}">
+      <img class="w-full" src="{{ brand.image | img_url: 'master' }}" alt="{{ product_vendor }}"/>
+    </a>
+  {% endif %}
+{% endfor %}
+```
