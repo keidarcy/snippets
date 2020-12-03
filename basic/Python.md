@@ -83,7 +83,7 @@ def add_if_not_none(list_val):
         if(is_not_NaN(val)):
             tags.append(val)
     return tags
-get_image_path_if_not_NaN = lambda x: 'https://www.towelmuseum-shop.jp/upload/save_image/' + x if(is_not_NaN(x)) else ''
+get_image_path_if_not_NaN = lambda x: 'https://xxxx' + x if(is_not_NaN(x)) else ''
 
 def get_price_number(price):
     return price.replace('¥','').replace(',','')
@@ -96,4 +96,18 @@ def get_random_string(length):
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
 
+```
+
+### if elif else
+
+```py
+num = 7
+if num in [1,2]:
+    print(num)
+elif num in [3,4]:
+    print(num)
+elif num in [5,6,7]:
+    print(num)
+else
+    print(num)
 ```
