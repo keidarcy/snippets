@@ -9,5 +9,3 @@ for file in files:
 for folder in folders:
   readme_list = os.listdir('./' + folder) 
   print(readme_list)
-
-# when-changed -1 . python3 init.py

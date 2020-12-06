@@ -31,12 +31,18 @@ ruby -run -e httpd . -p 8080
 `◯◯-items` is for items
 ```
 
-## Watch dog
+## Python watch dog
 
-```bash
-when-changed -r -v -1 . python3 init.py
+- [when-changed](https://github.com/joh/when-changed)
+
+```
+-r recursively
+-v verbose output
+-1 don't re-run when running
+-s start immediately
+-q run quietly
 ```
 
 ```bash
-when-changed -1 . python3 init.py
+when-changed -r -v -1 . python3 init.py
 ```
