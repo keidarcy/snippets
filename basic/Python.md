@@ -111,3 +111,46 @@ elif num in [5,6,7]:
 else
     print(num)
 ```
+
+### Dictionaries
+
+```py
+student = {'name': 'John', 'age': 25, 'courses': ['Math', 'Compci']}
+print(student['courses'])
+print(student['phone'])
+print(student.get('phone', 'Not Found'))
+
+student['phone'] = 55555
+student['name'] = 'Mary'
+
+student.update({'name': 'Smith', 'age': 26})
+
+age = student.pop('age')
+
+print(student.items())
+print(student.values())
+
+for key, value in student.items():
+    print(key, value)
+    
+people = {1: {'Name': 'John', 'Age': '27', 'Sex': 'Male'},
+          2: {'Name': 'Marie', 'Age': '22', 'Sex': 'Female'}}
+
+for p_id, p_info in people.items():
+    print("\nPerson ID:", p_id)
+    
+    for key in p_info:
+        print(key + ':', p_info[key])
+
+```
+
+### list, tuple, dic, set
+
+```
+| method | initialize | how to get value | add or remove value | get value  |
+|--------|------------|------------------|---------------------|------------|
+| list   | []         | index            | OK                  | OK         |
+| tuple  | ()         | index            | NO                  | OK         |
+| dic    | {}         | key              | OK                  | OK         |
+| set    | set()      | none             | OK                  | OK(random) |
+```
