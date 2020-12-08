@@ -256,3 +256,10 @@ let cookies = document.cookie
       sidebarShow = false;
 
 ```
+
+### Share to facebook and twitter
+
+```js
+window.open("https://twitter.com/share?url=" + encodeURIComponent(document.URL))
+window.open('http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href))
+```
