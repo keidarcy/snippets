@@ -38,3 +38,23 @@ const createZip = async (code: string): Promise<void> => {
 ## Node cli clean screen
 
 - `Ctrl + L` clean screen, similar to `process.stdout.write("\u001b[2J\u001b[0;0H");`
+
+## Native node to upload to aws lambda
+
+```js
+module.exports = {
+  moduleName
+};
+```
+
+```json
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r -j xxx.zip ./dist/index.js",
+    "upload": "aws lambda update-function-code --function-name xxx --zip-file fileb://xxx.zip",
+    "build": "ncc build -o ./dist -m",
+    "deploy": "yarn build && yarn zip && yarn upload"
+  }
+}
+```
