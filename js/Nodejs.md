@@ -58,3 +58,24 @@ module.exports = {
   }
 }
 ```
+
+### Create and update json file
+
+```ts
+import fs from 'fs';
+
+const getMapping = async (id: string, myId: number) => {
+  const myPath = __dirname + '/my.json';
+  try {
+    await fs.promises.access(myPath);
+    const existedMapping = await fs.promises.readFile(myPath, 'utf-8');
+    const mappingJson = JSON.parse(existedMapping);
+    mappingJson[id] = myId;
+    await fs.promises.writeFile(myPath, JSON.stringify(mappingJson), 'utf-8');
+  } catch (error) {
+    console.log(error);
+    await fs.promises.writeFile(myPath, JSON.stringify({}), 'utf-8');
+  }
+};
+getMapping('9', 789);
+```
