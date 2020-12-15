@@ -116,7 +116,7 @@ def add_if_not_none(list_val):
         if(is_not_NaN(val)):
             tags.append(val)
     return tags
-get_image_path_if_not_NaN = lambda x: 'https://www.towelmuseum-shop.jp/upload/save_image/' + x if(is_not_NaN(x)) else ''
+get_image_path_if_not_NaN = lambda x: 'https:xx' + x if(is_not_NaN(x)) else ''
 
 def get_price_number(price):
     return price.replace('¥','').replace(',','')
@@ -306,4 +306,8 @@ for sku, row in product_data[0:25].iterrows():
 
 ```py
 new_excelify.to_csv ('xcelify_formatted.csv', index = False, header=True)
+```
+
+```py
+df.sort(['a', 'b'], ascending=[True, False])
 ```
