@@ -61,3 +61,15 @@ type PartialPerson = Partial<Person>;
 - create a fold called `@types`
 - create a file name with same with libaray name, like `aws-amplify-react.ts`
 - write `declare modul "aws-amplify-react"`
+
+## Add variable to globle object
+
+```ts
+declare global {
+  interface Window {
+    TOWEL: {
+      moneyFormatter: (price: string) => string;
+    };
+  }
+}
+```
