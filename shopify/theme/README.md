@@ -26,7 +26,8 @@
   - [Storefront search sytax](#storefront-search-sytax)
     - [search](#search)
     - [collection filter](#collection-filter)
-    - [Show vendor list](#show-vendor-list)
+  - [Show vendor list](#show-vendor-list)
+  - [Show multiple options selector in product page](#show-multiple-options-selector-in-product-page)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 
@@ -480,7 +481,7 @@ deliveryCode1618
 
 - [Product Filter & Search](https://apps.shopify.com/product-filter-search)
 
-### Show vendor list
+## Show vendor list
 
 ```liquid
 {% for product_vendor in shop.vendors limit: 6 %}
@@ -491,4 +492,64 @@ deliveryCode1618
     </a>
   {% endif %}
 {% endfor %}
+```
+
+## Show multiple options selector in product page
+
+```html
+<form action="/cart/add" method="post">
+  {% if product.variants.size > 1 %} {% if product.options[0] %} {% assign used = '' %}
+  <label for="select-one">{{ product.options[0] }}</label>
+  <select id="select-one" onchange="letsDoThis()">
+    {% for variant in product.variants %} {% unless used contains variant.option1 %}
+    <option value="{{ variant.option1 }}">{{ variant.option1 }}</option>
+    {% capture used %} {{ used }} {{ variant.option1 }} {% endcapture %} {% endunless %}
+    {% endfor %}
+  </select>
+  {% endif %} {% if product.options[1] %} {% assign used = '' %}
+  <label for="select-one">{{ product.options[1] }}</label>
+  <select id="select-two" onchange="letsDoThis()">
+    {% for variant in product.variants %} {% unless used contains variant.option2 %}
+    <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
+    {% capture used %} {{ used }} {{ variant.option2 }} {% endcapture %} {% endunless %}
+    {% endfor %}
+  </select>
+  {% endif %} {% if product.options[2] %} {% assign used = '' %}
+  <label for="select-one">{{ product.options[2] }}</label>
+  <select id="select-three" onchange="letsDoThis()">
+    {% for variant in product.variants %} {% unless used contains variant.option3 %}
+    <option value="{{ variant.option3 }}">{{ variant.option3 }}</option>
+    {% capture used %} {{ used }} {{ variant.option3 }} {% endcapture %} {% endunless %}
+    {% endfor %}
+  </select>
+  {% endif %} {% endif %}
+  <input
+    type="hidden"
+    name="id"
+    id="product-select"
+    value="{{ product.variants.first.id }}"
+  />
+</form>
+<script>
+  function letsDoThis() {
+    {% if product.options[0] %}
+      var opt1 = document.getElementById("select-one").value;{% endif %}{% if product.options[1] %}
+      var opt2 = document.getElementById("select-two").value;{% endif %}{% if product.options[2] %}
+      var opt3 = document.getElementById("select-three").value;{% endif %}var id = "";{% for v in product.variants %}
+      if (
+        opt1 == "{{ v.option1 }}"{% if product.options[1] %} && opt2 == "{{ v.option2 }}"{% endif %}{% if product.options[2] %} && opt3 == "{{ v.option3 }}"{% endif %}
+      ) {
+        var id = {{ v.id }};
+        var price = "{{ v.price | money }}";
+      }
+    {% endfor %}
+    if (id != "") {
+      document.getElementById("product-select").value = id;
+      document.getElementById("price").innerHTML = price;
+    } else {
+      document.getElementById("product-select").value = "";
+      document.getElementById("price").innerHTML = "Unavailable";
+    }
+  }
+</script>
 ```
