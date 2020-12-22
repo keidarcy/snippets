@@ -177,3 +177,36 @@ new Vue({
 - Unfulfilled
 - Partially fulfilled
 - Scheduled
+
+### Checkout
+
+- outside of shopify use storefront API to checkout
+
+```graphql
+mutation checkoutCreate($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      id
+      webUrl
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
+    }
+  }
+}
+```
+
+`webUrl` is the checkout url
+
+- shopify to checkout
+
+```html
+<form action="/cart/add" method="post">
+  <input type="text" name="id" value="{product.variants[0].id}" />
+  <input id="_key" type="text" name="properties[_key]" />
+  <input type="number" name="quantity" value="1" min="1" />
+  <button type="submit">カートにテスト追加</button>
+</form>
+```
