@@ -210,3 +210,17 @@ mutation checkoutCreate($input: CheckoutCreateInput!) {
   <button type="submit">カートにテスト追加</button>
 </form>
 ```
+
+### Collections urls
+
+[sample](https://turbo-theme.myshopify.com/)
+
+- /collections/all?sort_by=manual
+- /collections/all?sort_by=best-selling
+- /collections/all?sort_by=title-ascending
+- /collections/all?sort_by=title-descending
+- /collections/all?sort_by=price-ascending
+- /collections/all?sort_by=price-descending
+- /collections/all?sort_by=created-ascending
+- /collections/all?sort_by=created-descending
+- /collections/all/dress+purple+25-50?sort_by=
