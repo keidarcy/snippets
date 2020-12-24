@@ -91,3 +91,31 @@ Meta.defaultProps = {
   keywords: 'electorincs cheap cool'
 };
 ```
+
+## Switch case usecase in JSX
+
+```tsx
+const Notification = ({ text, status }) => {
+  const types = ['info', 'warning', 'error'];
+  return (
+    <div>
+      {types.map((type, index) => (
+        <div key={type}>
+          {(() => {
+            switch (status) {
+              case 'info':
+                return <Info text={text} />;
+              case 'warning':
+                return <Warning text={text} />;
+              case 'error':
+                return <Error text={text} />;
+              default:
+                return null;
+            }
+          })()}
+        </div>
+      ))}
+    </div>
+  );
+};
+```
