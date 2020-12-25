@@ -119,3 +119,26 @@ const Notification = ({ text, status }) => {
   );
 };
 ```
+
+## React Query
+
+```tsx
+const NewAxios = axios.create({
+  baseURL: 'host',
+  headers: { 'X-API-SECRET': 'xxx' }
+});
+
+const getPosts = async () => {
+  const params = {
+    filters: 'category[equals]creatures',
+    fields: 'id,name',
+    limit: 3
+  };
+  const { data } = await NewAxios.get<{ contents: Post[] }>('/posts', { params });
+  return data.contents;
+};
+
+export const usePostsQuery = (): QueryObserverResult<Motif[]> => {
+  return useQuery<Post[], Error>('posts', getPosts);
+};
+```
