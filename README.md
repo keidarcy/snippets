@@ -1,36 +1,50 @@
-# snippets
 
-## Markdown
+# Snippets
 
-- basic
-  - [macos]('./basic/MacOS.md')
-  - [basic]('./basic/Basic.md')
-  - [python]('./basic/Python.md')
-  - [regex]('./basic/Regex.md')
-  - [ruby]('./basic/Ruby.md')
+run this before push new commit
+
+```bash
+python3 init.py
+```
+
+---
+
 - DevOps
   - [git](./DevOps/Git.md)
-  - [aws](./DevOps/README.md)
+  - [docker](./DevOps/Docker.md)
+  - [aws](./DevOps/AWS.md)
+- js
+  - [alpinejs](./js/Alpinejs.md)
+  - [browser](./js/Browser.md)
+  - [reactivity](./js/Reactivity.md)
+  - [react](./js/React.md)
+  - [nodejs](./js/Nodejs.md)
+  - [typescript](./js/Typescript.md)
+  - [js](./js/Js.md)
+- shopify
+  - [app](./shopify/App.md)
+  - [api](./shopify/Api.md)
+  - [shopify](./shopify/Shopify.md)
+  - [theme](./shopify/Theme.md)
+  - [graphql](./shopify/Graphql.md)
+- basic
+  - [basic](./basic/Basic.md)
+  - [python](./basic/Python.md)
+  - [regex](./basic/Regex.md)
+  - [macos](./basic/MacOS.md)
+  - [pandas](./basic/Pandas.md)
+  - [interview](./basic/interview.md)
+  - [ruby](./basic/Ruby.md)
 - server
-  - [git](./server/Git.md)
   - [nginx](./server/Nginx.md)
   - [sql](./server/SQL.md)
+  - [shell](./server/Shell.md)
 - examples
-  - [pandas](./examples/python/Pandas.md)
-  - [graphql](./examples/js/graphql.js)
-- [js](./js/README.md)
-  - [typescript](./js/Typescript.md)
-  - [browser](./js/Browser.md)
-  - [nodejs](./js/Nodejs.md)
-  - [reactjs](./js/React.md)
-  - [alpinejs](./js/Alpinejs.md)
-  - [reactivity](./js/Reactivity.md)
-- [shopify](./shopify/README.md)
-  - [api](./shopify/api/README.md)
-  - [graphql](./shopify/graphql/README.md)
-  - [theme](./shopify/theme/README.md)
 
-### External Links
+---
+
+### My External Links
 
 - [Xpath](http://xpather.com/)
 - [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
+

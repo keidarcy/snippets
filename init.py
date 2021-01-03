@@ -1,22 +1,50 @@
+import glob
+import re
 import os
 
-files = os.listdir('./')
+mdDics = {}
 folders = []
-for file in files:
-  if not '.' in file:
-    folders.append(file)
+for folder in os.listdir('./'):
+    if os.path.isdir(folder) and not '.' in folder:
+        folders.append(folder)
 
-links = {}
+for filepath in glob.iglob('./' + '**/*.md', recursive=True):
+    if not 'node_modules' in filepath and not 'README' in filepath:
+        mdDics[os.path.basename(filepath).replace(
+            '.md', '').lower()] = filepath
+
+mdStr = """
+# Snippets
+
+run this before push new commit
+
+```bash
+python3 init.py
+```
+
+---
+
+"""
+
 for folder in folders:
-  file_list = os.listdir('./' + folder) 
-  links[folder] = file_list
+    mdStr += ("- {0}\n".format(folder))
+    for name, path in mdDics.items():
+        if folder in path:
+            fileStr = """  - [{0}]({1})\n""".format(name, path)
+            mdStr += (fileStr)
 
-print(links)
+mdStr += """
+---
 
-print('--------------OO-----')
+### My External Links
 
+- [Xpath](http://xpather.com/)
+- [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
 
-with open("test.txt",'w',encoding = 'utf-8') as f:
-   f.write("my first file\n")
-   f.write("This file\n\n")
-   f.write("contains three lines\n")
+"""
+with open("README.md", 'w', encoding='utf-8') as f:
+    f.write(mdStr)
+
+print(mdStr)
+
+print('-------------NEW README LINK GENERATE SUCCESSFULLY------------------')
