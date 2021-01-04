@@ -21,10 +21,20 @@ query ProductTitleAndDescription($id: ID!) {
 # Variables => $id: ID!
 ```
 
-#### node version
+#### graphql-request + graphql.macro
+
+```graphql
+query getProduct($id: ID!) {
+  product(id: $id) {
+    id
+    title
+  }
+}
+```
 
 ```js
 require('dotenv').config();
+const { loader } = require('graphql.macro');
 const { GraphQLClient, gql } = require('graphql-request');
 
 async function main() {
@@ -37,18 +47,19 @@ async function main() {
     }
   });
 
-  const query = gql`
-    query getProduct($id: ID!) {
-      product(id: $id) {
-        id
-        title
-      }
-    }
-  `;
+  // const query = gql`
+  //   query getProduct($id: ID!) {
+  //     product(id: $id) {
+  //       id
+  //       title
+  //     }
+  //   }
+  // `;
 
   const variables = {
     id: 'gid://shopify/Product/XXX'
   };
+  const query = loader('../graphqls/getOneProduct.gql');
 
   const data = await graphqlClient.request(query, variables);
   console.log(JSON.stringify(data, undefined, 2));
