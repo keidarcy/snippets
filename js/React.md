@@ -142,3 +142,84 @@ export const usePostsQuery = (): QueryObserverResult<Motif[]> => {
   return useQuery<Post[], Error>('posts', getPosts);
 };
 ```
+
+## Nextjs
+
+- Static Generation(SSG) - prerendering
+
+> fetch data at build time
+> update need rebuild
+> pages that not change often
+
+`/pages/cars/[id].tsx`
+
+```tsx
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+
+export default function Car({ car }) {
+  const router = useRouter();
+  const { id } = router.query;
+
+  return (
+    <>
+      <Head>
+        <title>{car.color}</title>
+      </Head>
+      <h1>Hello {id}</h1>
+    </>
+  );
+}
+
+export async function getStaticProps({ params }) {
+  const req = await fetch(`/api/${params.id}`);
+  const data = await req.json();
+
+  return {
+    props: { car: data }
+  };
+}
+
+export async function getStaticPaths() {
+  const req = await fetch('/apis');
+  const data = await req.json();
+
+  const paths = data.map((car) => {
+    return { params: { id: car } };
+  });
+}
+```
+
+- Server Side Rendering(SSR)
+
+> fetch data at each request time
+> pages that change often
+
+```tsx
+export async function getServerSideProps() {
+  const req = await fetch('/api');
+  const car = await req.json();
+
+  return {
+    props: { car }
+  };
+}
+
+export default function Car({ car }) {
+  return <h1>{car.maker}</h1>;
+}
+```
+
+- Incrementail static regeneration(ISR)
+
+> re-generate single pages in the background
+
+```tsx
+export async function getStaticProps() {
+  // fetch ...
+  return {
+    props: { car },
+    revalidate: 30
+  };
+}
+```
