@@ -1,5 +1,7 @@
 # Typescript basic
 
+[handbook](https://microsoft.github.io/TypeScript-New-Handbook)
+
 ## Decorator
 
 ```ts
@@ -67,9 +69,121 @@ type PartialPerson = Partial<Person>;
 ```ts
 declare global {
   interface Window {
-    TOWEL: {
+    Hello: {
       moneyFormatter: (price: string) => string;
     };
   }
+}
+```
+
+## never keyword
+
+- example
+
+```ts
+const d = function neverExcute() {
+  throw 'nothing';
+};
+
+// const d: () => never
+```
+
+- why it is useful
+
+```ts
+interface Square {
+  kind: 'square';
+}
+
+interface Rectangle {
+  kind: 'rectandle';
+}
+
+interface Circle {
+  kind: 'circle';
+}
+
+type Shape = Square | Rectangle | Circle;
+
+function something(s: Shape) {
+  if (s.kind === 'square') {
+  } else if (s.kind === 'circle') {
+  } else if (s.kind === 'rectandle') {
+  }
+  const _bugTester: never = s;
+}
+```
+
+## Confitional Type
+
+```ts
+type IsNumber<T> = T extends number ? 'number' : 'other';
+
+type WithNumber = IsNumber<number>;
+type WithOther = IsNumber<boolean[]>;
+```
+
+generic type is `number` => literal 'number' as type.
+not `number` => literal 'other' as type.
+
+```ts
+type NumberOrString<T extends number | string> = T extends number ? number : string;
+
+function createLabel<T extends number | string>(numberOrString: T): NumberOrString<T> {
+  throw 'unimplemented';
+}
+
+const createSecondLabel = <T extends number | string>(
+  numberOrString: T
+): NumberOrString<T> => {
+  throw 'unimplemented';
+};
+
+const a = createLabel('d');
+const b = createLabel(8.9);
+const c = createLabel(+Math.random().toFixed(2) * 2 > 1 ? 'STRING' : 8);
+```
+
+## `infer` operater
+
+```ts
+type IsArray<T> = T extends Array<infer O> ? O : T;
+
+type ItIsArray = IsArray<string[]>; // string
+type ItIsNotArray = IsArray<boolean>; // boolean
+```
+
+## Indexed Access Types
+
+```ts
+const MyArray = [
+  { name: 'Alice', age: 15 },
+  { name: 'Bob', age: 23 },
+  { name: 'Eve', age: 38 }
+] as const;
+
+type Ages = typeof MyArray[number]['age'];
+```
+
+`as const` makes const value readonly literal values
+
+## `--strictPropertyInitialization`
+
+```ts
+class BadGreeter {
+  name: string;
+}
+
+class GoodGreeter {
+  name: string;
+
+  constructor() {
+    this.name = 'hello';
+  }
+}
+
+class OKGreeter {
+  // Not initialized, but no error
+  name!: string;
 }
 ```
