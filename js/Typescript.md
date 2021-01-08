@@ -1,6 +1,6 @@
 # Typescript basic
 
-[handbook](https://microsoft.github.io/TypeScript-New-Handbook)
+[handbook](https://microsoft.github.io/TypeScript-New-Handbook/everything)
 
 ## Decorator
 
@@ -60,9 +60,11 @@ type PartialPerson = Partial<Person>;
 
 ## For those packages that have no type definition
 
-- create a fold called `@types`
-- create a file name with same with libaray name, like `aws-amplify-react.ts`
-- write `declare modul "aws-amplify-react"`
+- putting an empty declaration for it in a ` .d.ts` file in your project like below.
+
+```ts
+declare module 'some-untyped-module';
+```
 
 ## Add variable to globle object
 
