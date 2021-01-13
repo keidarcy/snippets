@@ -1,4 +1,3 @@
-
 # Snippets
 
 run this before push new commit
@@ -30,6 +29,7 @@ python3 init.py
 - basic
   - [basic](./basic/Basic.md)
   - [python](./basic/Python.md)
+  - [css](./basic/CSS.md)
   - [regex](./basic/Regex.md)
   - [macos](./basic/MacOS.md)
   - [pandas](./basic/Pandas.md)
@@ -47,4 +47,3 @@ python3 init.py
 
 - [Xpath](http://xpather.com/)
 - [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
-
