@@ -260,6 +260,28 @@ let cookies = document.cookie
 ### Share to facebook and twitter
 
 ```js
-window.open("https://twitter.com/share?url=" + encodeURIComponent(document.URL))
-window.open('http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href))
+window.open('https://twitter.com/share?url=' + encodeURIComponent(document.URL));
+window.open('http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href));
+```
+
+### Hiragana kanakana converter
+
+```ts
+const kanaToHira = (str: string) =>
+  Array.from(str)
+    .map((letter) =>
+      letter.replace(/[\u30a1-\u30f6]/g, (match) =>
+        String.fromCharCode(match.charCodeAt(0) - 0x60)
+      )
+    )
+    .join('');
+
+const hiraToKana = (str: string) =>
+  Array.from(str)
+    .map((letter) =>
+      letter.replace(/[\u3041-\u3096]/g, (match) =>
+        String.fromCharCode(match.charCodeAt(0) + 0x60)
+      )
+    )
+    .join('');
 ```
