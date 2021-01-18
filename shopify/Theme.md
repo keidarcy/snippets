@@ -476,6 +476,7 @@ deliveryCode1618
 - [customize-theme-filter-collections-with-product-tags](https://shopify.dev/tutorials/customize-theme-filter-collections-with-product-tags)
 - [URL filters](https://shopify.dev/docs/themes/liquid/reference/filters/url-filters)
 - [demo](https://turbo-theme.myshopify.com/collections/all/)
+- [action](https://github.com/discolabs/deploy-shopify-theme-action)
 
 `https://xxx.myshopify.com/collections/all/SCA_STOREPICKUP_PRODUCT+男性+man`
 
