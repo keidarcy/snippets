@@ -1,3 +1,4 @@
+
 # Snippets
 
 run this before push new commit
@@ -16,6 +17,7 @@ python3 init.py
   - [alpinejs](./js/Alpinejs.md)
   - [browser](./js/Browser.md)
   - [reactivity](./js/Reactivity.md)
+  - [jest](./js/Jest.md)
   - [react](./js/React.md)
   - [nodejs](./js/Nodejs.md)
   - [typescript](./js/Typescript.md)
@@ -47,3 +49,4 @@ python3 init.py
 
 - [Xpath](http://xpather.com/)
 - [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
+
