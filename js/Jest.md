@@ -10,3 +10,20 @@ describe('number test', () => {
   });
 });
 ```
+
+## test async data
+
+```js
+test('async axios json', () => {
+  expect.assertions(1);
+  return functions.fetchUser().then((data) => {
+    expect(data.name).toBe('Leanne Graham');
+  });
+});
+
+test('async axios json', async () => {
+  expect.assertions(1);
+  const data = await functions.fetchUser();
+  expect(data.name).toBe('Leanne Graham');
+});
+```
