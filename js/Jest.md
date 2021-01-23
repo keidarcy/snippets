@@ -27,3 +27,16 @@ test('async axios json', async () => {
   expect(data.name).toBe('Leanne Graham');
 });
 ```
+
+## Setup and Teardown
+
+```js
+beforeEach(() => initDatabase());
+afterEach(() => closeDatabase());
+
+beforeAll(() => initDatabase());
+afterAll(() => closeDatabase());
+
+const initDatabase = () => console.log('Database Initialized...');
+const closeDatabase = () => console.log('Database Closed...');
+```
