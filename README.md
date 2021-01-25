@@ -17,6 +17,7 @@ python3 init.py
   - [alpinejs](./js/Alpinejs.md)
   - [browser](./js/Browser.md)
   - [reactivity](./js/Reactivity.md)
+  - [tsconfig](./js/Tsconfig.md)
   - [jest](./js/Jest.md)
   - [react](./js/React.md)
   - [nodejs](./js/Nodejs.md)
