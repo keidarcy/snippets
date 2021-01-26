@@ -236,3 +236,10 @@ interface ArtistsData {
 type ArtworksResponse = ArtworksData & ErrorHandling;
 type ArtistsResponse = ArtistsData & ErrorHandling;
 ```
+
+- re export
+
+```ts
+// index.d.ts
+export { default as CSSTransition } from './CSSTransition';
+```
