@@ -31,6 +31,7 @@ python3 init.py
   - [graphql](./shopify/Graphql.md)
 - basic
   - [basic](./basic/Basic.md)
+  - [http](./basic/Http.md)
   - [vim](./basic/Vim.md)
   - [python](./basic/Python.md)
   - [css](./basic/CSS.md)
