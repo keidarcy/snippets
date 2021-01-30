@@ -14,3 +14,27 @@
   transform: translateY(0);
 }
 ```
+
+- aspect-ratio
+
+```html
+<iframe
+  src="https://www.youtube.com/embed/vQAvjof1oe4"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+<style>
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+
+  iframe {
+    width: 75%;
+    aspect-ratio: 16 / 9;
+  }
+</style>
+```
