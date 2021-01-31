@@ -38,3 +38,21 @@
   }
 </style>
 ```
+
+- outline vs border
+
+```css
+.border {
+  border: 2px solid red;
+  outline: 2px solid black;
+  border-radius: 10px;
+}
+
+.outline {
+  border: 30px solid green;
+  outline: 20px solid #fff;
+  outline-offset: -10px;
+  background: #333;
+  color: white;
+}
+```
