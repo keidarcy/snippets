@@ -7,3 +7,9 @@
 
 - `s<char><char>` - Move forward to the first occurrence of `<char><char>`
 - `S<char><char>` - Move backward to the first occurrence of `<char><char>`
+
+### [CamelCaseMotion](https://github.com/bkad/CamelCaseMotion)
+
+- `<leader>w` - Move forward to the start of the next camelCase or snake_case word segment.
+- `<leader>b` - Move back to the prior beginning of a camelCase or snake_case word segment.
+- `<leader>e` - Move forward to the next end of a camelCase or snake_case word segment.
