@@ -79,3 +79,11 @@ const getMapping = async (id: string, myId: number) => {
 };
 getMapping('9', 789);
 ```
+
+## npm peer dependency
+
+- `peerDependency` changed in `npm7`
+
+add `--legacy-peer-deps` to excute like `npm6`
+
+example `npx --legacy-peer-deps sb init`
