@@ -57,6 +57,11 @@
 }
 ```
 
+- rem vs em
+
+`rem` is based on `html` tag, without setting is 16px.
+`em` is based on parent tag size.
+
 - selector
 
 |                    |                  |                                                                                     |

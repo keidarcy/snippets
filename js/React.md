@@ -223,3 +223,123 @@ export async function getStaticProps() {
   };
 }
 ```
+
+## Compound Components
+
+### React.Children, React.cloneElement
+
+```jsx
+const Checkbox = ({ children }) => {
+  const [checkbox, setCheckbox] = useState(false);
+  const clonedChildren = React.Children.map(children, (child) => {
+    if (typeof child.type === 'string') {
+      throw new Error(
+        `<${child.type} /> DOM element is not allowed inside <Checkbox /> component.`
+      );
+    }
+    // if (typeof child.type !== Label && typeof child.type !== CheckboxInput) {
+    //   throw new Error(`<${child.type} /> is not allowed custom component.`);
+    // }
+
+    const clone = React.cloneElement(child, {
+      checkbox,
+      setCheckbox
+    });
+    return clone;
+  });
+  return clonedChildren;
+};
+const CheckboxInput = ({ checkbox, setCheckbox }) => {
+  const [_checkbox, _setCheckbox] = useState(!!checkbox);
+
+  useEffect(() => {
+    if (!setCheckbox)
+      console.warn('CheckboxInput should be called inside Checkbox for max benefit');
+  }, [setCheckbox]);
+  return (
+    <input
+      type="checkbox"
+      checked={_checkbox}
+      onChange={(e) => {
+        _setCheckbox((val) => !val);
+        if (setCheckbox) setCheckbox((val) => !val);
+      }}
+    />
+  );
+};
+const Label = ({ children, setCheckbox }) => {
+  if (!setCheckbox) {
+    throw new Error('No <Label /> without <Checkbox />');
+  }
+  return <div onClick={() => setCheckbox((val) => !val)}>{children}</div>;
+};
+
+const App = () => {
+  return (
+    <div className="App">
+      <Title />
+      <Checkbox>
+        <Label>Email</Label>
+        <CheckboxInput />
+      </Checkbox>
+      {/* <CheckboxInput /> */}
+    </div>
+  );
+};
+```
+
+### Context API
+
+```jsx
+const CheckboxInterface = createContext(null);
+
+const Checkbox = ({ children }) => {
+  const [checkbox, setCheckbox] = useState(false);
+
+  return (
+    <CheckboxInterface.Provider value={{ checkbox, setCheckbox }}>
+      {children}
+    </CheckboxInterface.Provider>
+  );
+};
+
+const CheckboxInput = () => {
+  const { checkbox, setCheckbox } = useContext(CheckboxInterface);
+  useEffect(() => {
+    if (!setCheckbox)
+      console.warn('CheckboxInput should be called inside Checkbox for max benefit');
+  }, [setCheckbox]);
+  return (
+    <input
+      type="checkbox"
+      checked={checkbox}
+      onChange={(e) => {
+        if (setCheckbox) setCheckbox((val) => !val);
+      }}
+    />
+  );
+};
+
+const Label = ({ children }) => {
+  const { setCheckbox } = useContext(CheckboxInterface);
+  if (!setCheckbox) {
+    throw new Error('No <Label /> without <Checkbox />');
+  }
+  return <div onClick={() => setCheckbox((val) => !val)}>{children}</div>;
+};
+
+const Title = () => <div>HELLO</div>;
+
+const App = () => {
+  return (
+    <div className="App">
+      <Title />
+      <Checkbox>
+        <Label>Email</Label>
+        <CheckboxInput />
+      </Checkbox>
+      {/* <CheckboxInput /> */}
+    </div>
+  );
+};
+```
