@@ -1,6 +1,8 @@
 # Javascript Basic
 
 - [javascript runtime simulation](http://latentflip.com/loupe)
+- [Concept explanation](https://www.javascripttutorial.net/)
+- [chinese resource](https://github.com/coffe1891/frontend-hard-mode-interview)
 
 ## Proxy
 
@@ -327,4 +329,252 @@ function Horse(name) {
 
 const myHorse = new Horse('yuyu');
 myHorse.voice().voice();
+```
+
+## `this`
+
+### Global context
+
+```js
+console.log(this === globalThis); // true
+```
+
+### Function context
+
+- Function invocation
+- Method invocation
+- Constructor invocation
+- Indirect invocation
+
+### Function invocation
+
+- non-strict mode
+
+```js
+function a() {
+  console.log(this === globalThis);
+}
+
+a(); // true
+```
+
+- strict mode
+
+```js
+'use strict';
+function a() {
+  console.log(this);
+}
+
+a(); // undefine
+```
+
+### Method invocation
+
+```js
+const Car = {
+  brand: 'Toyota',
+  getBrand: function () {
+    return this.brand;
+  }
+};
+
+console.log(Car.getBrand()); // Toyota
+
+const car = Car.getBrand;
+
+console.log(car()); // undefine
+```
+
+- to solve this problem, use `bind()` method of `Function.prototype`
+
+```js
+const b = Car.getBrand.bind();
+```
+
+- however it's able to bind other object to this
+
+```js
+const Car = {
+  brand: 'Toyota',
+  getBrand: function () {
+    return this.brand;
+  }
+};
+
+const Mobile = {
+  brand: 'apple'
+};
+
+console.log(Car.getBrand());
+
+const car = Car.getBrand.bind(Mobile);
+
+console.log(car());
+```
+
+### Constructor invocation
+
+```js
+function Car(brand) {
+  this.brand = brand;
+}
+
+Car.prototype.getBrand = function () {
+  return this.brand;
+};
+
+var car = new Car('Honda');
+console.log(car.getBrand());
+```
+
+```js
+var bmw = Car('BMW');
+console.log(bmw.brand);
+// => TypeError: Cannot read property 'brand' of undefined
+```
+
+```js
+function Car(brand) {
+  // if (!(this instanceof Car)) {
+  //     throw Error('Must use the new operator to call the function');
+  // }
+  if (!new.target) {
+    throw Error('Must use the new operator to call the function');
+  }
+  this.brand = brand;
+}
+```
+
+### Indirect invocation
+
+```js
+function getBrand(prefix) {
+  console.log(prefix + this.brand);
+}
+
+let honda = {
+  brand: 'Honda'
+};
+let audi = {
+  brand: 'Audi'
+};
+
+getBrand.call(honda, "It's a "); // It's a Honda
+getBrand.call(audi, "It's an "); // It's an Audi
+```
+
+```js
+getBrand.apply(honda, ["It's a "]); // "It's a Honda"
+getBrand.apply(audi, ["It's an "]); // "It's a Audi"
+```
+
+### Arrow functions
+
+```js
+let getThis = () => this;
+console.log(getThis() === window); // true
+```
+
+```js
+function Car() {
+  this.speed = 120;
+}
+
+Car.prototype.getSpeed = () => {
+  return this.speed;
+};
+
+var car = new Car();
+car.getSpeed(); // TypeError
+```
+
+## Prototype, **proto**, prototypal inheritance
+
+`.prototype` only exist on function
+
+```js
+var a = function () {};
+var b = [1, 2, 3];
+
+console.log(a.prototype); //>> function(){}
+console.log(b.prototype); //>> undefined
+```
+
+```js
+var a = function () {};
+var b = [1, 2, 3];
+
+console.log(a.__proto__ === Function.prototype); //>> true
+console.log(b.__proto__ === Array.prototype); //>> true
+console.log(a.__proto__ === a.__proto__.constructor.prototype); // true
+console.log(b.__proto__ === b.__proto__.constructor.prototype); //true
+
+console.log(a.__proto__.__proto__ === Object.prototype); //>> true
+console.log(b.__proto__.__proto__ === Object.prototype); //>> true
+
+console.log(new Object().__proto__.__proto__); //>> null
+console.log(Object.prototype.__proto__); //>> null
+```
+
+`__proto__` of a value is the prototype of constructor. //一个对象的原型就是它的构造函数的 prototype 属性的值
+
+```js
+let person = {
+  name: 'John Doe',
+  greet: function () {
+    return "Hi, I'm " + this.name;
+  }
+};
+
+console.log(person instanceof Object); // true
+console.log(person.toString()); // [object Object]
+```
+
+`person` no toString() method, so find in prototype chaine, then excute this `Object.prototype.toString()`
+
+```js
+let person = {
+  name: 'John Doe',
+  greet: function () {
+    return "Hi, I'm " + this.name;
+  }
+};
+
+let teacher = {};
+
+teacher.__proto__ = person;
+
+console.log(teacher.name);
+console.log(Object.getPrototypeOf(teacher) === person); //true
+```
+
+```js
+let person = {
+  name: 'John Doe',
+  greet: function () {
+    return "Hi, I'm " + this.name;
+  }
+};
+
+let teacher = Object.create(person);
+
+console.log(Object.getPrototypeOf(teacher) === person); //true
+```
+
+`class`
+
+```js
+class A {}
+
+A === A.prototype.constructor;
+```
+
+```js
+class A {}
+
+class B extends A {}
+
+console.log(B.__proto___ === A); // true
+B.prototype.__proto__ === A.prototype; //>> true
 ```
