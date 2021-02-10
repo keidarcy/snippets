@@ -1,4 +1,9 @@
-- Simplest implemention of redux
+## React
+
+- [build-your-own-react](https://pomb.us/build-your-own-react/)
+- [react source code](https://react.iamkasong.com/)
+
+## Simplest implemention of redux
 
 ```js
 function createStore(reducer) {
