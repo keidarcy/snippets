@@ -554,3 +554,70 @@ deliveryCode1618
   }
 </script>
 ```
+
+## Toggle variant options
+
+```js
+document.addEventListener('DOMContentLoaded', () => {
+  const stockObj = Array.from(document.querySelector('select[name="id"]').children).map(
+    (ele, index) => {
+      return {
+        name: ele.innerText.replace(/\s-.+/, ''),
+        disabled: ele.getAttribute('disabled') === 'disabled'
+      };
+    }
+  );
+
+  const toggleEnable = (ele, isEnable) => {
+    if (isEnable) {
+      ele.style.pointerEvents = '';
+      ele.style.cursor = 'pointer';
+    } else {
+      ele.style.pointerEvents = 'none';
+      ele.style.cursor = 'not-allowed';
+    }
+  };
+
+  // 0-color, 1-size
+
+  Array.from(
+    document.querySelector('ul.SingleOptionSelectorJS-0').querySelectorAll('label')
+  ).forEach((ele) => {
+    ele.addEventListener('click', function () {
+      const sizes = stockObj.filter((option) => option.name.includes(this.innerText));
+      Array.from(
+        document.querySelector('ul.SingleOptionSelectorJS-1').querySelectorAll('label')
+      ).forEach((element, index) => {
+        if (sizes[index].disabled) {
+          toggleEnable(element, false);
+        } else {
+          toggleEnable(element, true);
+        }
+      });
+    });
+  });
+
+  Array.from(
+    document.querySelector('ul.SingleOptionSelectorJS-1').querySelectorAll('label')
+  ).forEach((ele) => {
+    ele.addEventListener('click', function () {
+      const colors = stockObj.filter((option) => option.name.includes(this.innerText));
+      const sizes = stockObj.filter((option) => option.name.includes(this.innerText));
+      Array.from(
+        document.querySelector('ul.SingleOptionSelectorJS-0').querySelectorAll('label')
+      ).forEach((element, index) => {
+        if (
+          colors[index].disabled &&
+          stockObj
+            .filter((option) => option.name.includes(sizes[index].name.split('/')[0]))
+            .every((option) => option.disabled)
+        ) {
+          toggleEnable(element, false);
+        } else {
+          toggleEnable(element, true);
+        }
+      });
+    });
+  });
+});
+```
