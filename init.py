@@ -2,8 +2,8 @@ import glob
 import re
 import os
 
-mdDics = {}
-folders = []
+mdDics = {}  # all path, ex: git': './DevOps/Git.md'
+folders = []  # all folders
 for folder in os.listdir('./'):
     if os.path.isdir(folder) and not '.' in folder:
         folders.append(folder)
@@ -33,15 +33,25 @@ for folder in folders:
             fileStr = """  - [{0}]({1})\n""".format(name, path)
             mdStr += (fileStr)
 
+externalLinks = {
+    'Xpath': 'http://xpather.com/',
+    'Figma': 'https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2',
+    'Regex': 'https://regexr.com/',
+    'Colors': 'https://color.adobe.com/create/color-wheel'
+}
+
 mdStr += """
 ---
 
 ### My External Links
-
-- [Xpath](http://xpather.com/)
-- [Figma](https://www.figma.com/file/GAMKg6zWYqYId04ICOHOPq/funny?node-id=1%3A2)
-
 """
+
+# - [Xpath](http://xpather.com/)
+# - [Figma]()
+for name, url in externalLinks.items():
+    fileStr = """ - [{0}]({1})\n""".format(name, url)
+    mdStr += (fileStr)
+
 with open("README.md", 'w', encoding='utf-8') as f:
     f.write(mdStr)
 
