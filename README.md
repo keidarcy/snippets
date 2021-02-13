@@ -43,7 +43,7 @@ python3 init.py
 - server
   - [nginx](./server/Nginx.md)
   - [sql](./server/SQL.md)
-  - [shell](./server/Shell.md)
+  - [bash](./server/Bash.md)
 - examples
 
 ---
