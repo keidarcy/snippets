@@ -65,21 +65,32 @@ URL.revokeObjectURL(blob);
 
 ## Cors
 
-- [withCredentials=true] => [Access-Control-Allow-Origin] must be the address
+`example with express and react` - [repo](https://github.com/keidarcy/cors-node)
 
-- [withCredentials=true] => [Access-Control-Allow-Credentials] must be configured
+### `fetch` example
 
-- if request header is added, [Access-Control-Allow-Headers] must be allowed
+- from different origin
+  [Access-Control-Allow-Origin] must be the address
+
+- with headers
+  if request header is added, [Access-Control-Allow-Headers] must be allowed
+
+- with credentials
+  [withCredentials=true] or `fetch('https://example.com', {credentials: 'include'})`=> [Access-Control-Allow-Credentials] must be configured
+
+- simple and complex request
+  simple `fetch`, add `Access-Control-Allow-Origin`,
+  complex `fetch` like with header or `DELETE` method, config `options` first then add `Access-Control-Allow-Headers`.
 
 ### Express example
 
-say express run on http:localhost:3000, and react runs on http://localhost:3000.
+say express run on http:localhost:3001, and react runs on http://localhost:3000.
 
 1. Add header setting to allow.
 
 ```ts
 router.get('', async (req: Request, res: Response) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, access_token');
   const products = await Product.find({});
@@ -90,7 +101,7 @@ router.get('', async (req: Request, res: Response) => {
 2. Add `proxy` tp package.json of frontend project.
 
 ```
-"proxy": "http://127.0.0.1:5000",
+"proxy": "http://127.0.0.1:3000",
 ```
 
 3. Add `cors` middleware to handler.
