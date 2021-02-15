@@ -1,4 +1,25 @@
 # Browser related javascript
+- [Browser related javascript](#browser-related-javascript)
+  - [Event and CustomEvent](#event-and-customevent)
+  - [Go to top](#go-to-top)
+  - [Webpack setting for ts with dom](#webpack-setting-for-ts-with-dom)
+  - [Upload image](#upload-image)
+    - [Download file](#download-file)
+  - [Cors](#cors)
+    - [`fetch` example](#fetch-example)
+    - [Express example](#express-example)
+  - [Alphinejs fetch and render loop](#alphinejs-fetch-and-render-loop)
+  - [DOM storage](#dom-storage)
+    - [localstorage](#localstorage)
+    - [sessionstorage](#sessionstorage)
+    - [indexedDB](#indexeddb)
+    - [Cookies](#cookies)
+      - [get and set](#get-and-set)
+      - [js-cookie](#js-cookie)
+      - [get cookies object with vanilla js](#get-cookies-object-with-vanilla-js)
+    - [Click others(usually toggle overlay)](#click-othersusually-toggle-overlay)
+    - [Share to facebook and twitter](#share-to-facebook-and-twitter)
+    - [Hiragana kanakana converter](#hiragana-kanakana-converter)
 
 ## Event and CustomEvent
 

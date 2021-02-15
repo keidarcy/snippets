@@ -1,5 +1,8 @@
 ## Jupyter notebook
 
+- [Jupyter notebook](#jupyter-notebook)
+- [Pandas to fomat csv file](#pandas-to-fomat-csv-file)
+
 ```bash
 python3 -m venv csv
 ```
@@ -75,15 +78,15 @@ product_csv0 = pd.read_csv('./csvs/product_csv.csv')
 product_list = pd.DataFrame(product_list0[1:])
 product_list.index = list(product_list0.iloc[1:, 1])
 product_list.columns = list(product_list0.iloc[0, :])
-product_list = product_list.sort_values(by="小原品番", ascending=True, na_position='first')
+product_list = product_list.sort_values(by="", ascending=True, na_position='first')
 product_list = product_list.groupby(product_list.index).first()
 ```
 
 ```py
 product_csv = pd.DataFrame(product_csv0)
-product_csv.index = product_csv0.loc[:,'商品コード']
+product_csv.index = product_csv0.loc[:,'']
 product_csv.index.names = ['index']
-product_csv = product_csv.sort_values(by="小原品番", ascending=True, na_position='first')
+product_csv = product_csv.sort_values(by="", ascending=True, na_position='first')
 product_csv = product_csv.groupby(product_csv.index).first()
 
 ```
@@ -93,7 +96,7 @@ product_data = product_list.join(product_csv.add_suffix('_2'), how='outer')
 print(product_list.shape)
 print(product_csv.shape)
 
-product_data.dropna(subset=['商品ID'],inplace=True)
+product_data.dropna(subset=[''],inplace=True)
 product_data.shape
 
 ```
@@ -152,8 +155,8 @@ for sku, row in product_data[0:25].iterrows():
     index_inline = 0
 #     print(index)
     new_excelify.loc[index] = ''
-    if index == 0 or not new_excelify.loc[index - 1]['Handle'] == row['小原品番']:
-        new_excelify.loc[index]['Handle'] = row['小原品番']
+    if index == 0 or not new_excelify.loc[index - 1]['Handle'] == row['']:
+        new_excelify.loc[index]['Handle'] = row['']
         new_excelify.loc[index]['Command'] = 'UPDATE'
         new_excelify.loc[index]['Title'] = row['商品名']
         new_excelify.loc[index]['Body HTML'] = get_value_if_string(row['一覧-メインコメント_2']) + '\n' + get_value_if_string(row['キャッチコピー_2'])
@@ -187,7 +190,7 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Option3 Value'] = ''
         new_excelify.loc[index]['Variant Generate From Options'] = 'FALSE'
         new_excelify.loc[index]['Variant Position'] = '1'
-        new_excelify.loc[index]['Variant SKU'] = row['商品コード']
+        new_excelify.loc[index]['Variant SKU'] = row['']
         new_excelify.loc[index]['Variant Weight'] = ''
         new_excelify.loc[index]['Variant Weight Unit'] = ''
         new_excelify.loc[index]['Variant HS Code'] = ''
@@ -224,7 +227,7 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Metafield: custom.json [json_string]'] = json.dumps(metafiledDic)
 
     else:
-        new_excelify.loc[index]['Handle'] = row['小原品番']
+        new_excelify.loc[index]['Handle'] = row['']
         new_excelify.loc[index]['Command'] = 'UPDATE'
         new_excelify.loc[index]['Vendor'] = row['ブランド']
         new_excelify.loc[index]['Type'] = row['規格']
@@ -256,7 +259,7 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Option3 Value'] = ''
         new_excelify.loc[index]['Variant Generate From Options'] = 'FALSE'
         new_excelify.loc[index]['Variant Position'] = '1'
-        new_excelify.loc[index]['Variant SKU'] = row['商品コード']
+        new_excelify.loc[index]['Variant SKU'] = row['']
         new_excelify.loc[index]['Variant Weight'] = ''
         new_excelify.loc[index]['Variant Weight Unit'] = ''
         new_excelify.loc[index]['Variant HS Code'] = ''
@@ -277,28 +280,28 @@ for sku, row in product_data[0:25].iterrows():
     if (is_not_NaN(row['詳細-サブ拡大画像(2)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
-        new_excelify.loc[index + index_inline]['Handle'] = row['小原品番']
+        new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
         new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(2)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
     if (is_not_NaN(row['詳細-サブ拡大画像(3)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
-        new_excelify.loc[index + index_inline]['Handle'] = row['小原品番']
+        new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
         new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(3)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
     if (is_not_NaN(row['詳細-サブ拡大画像(4)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
-        new_excelify.loc[index + index_inline]['Handle'] = row['小原品番']
+        new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
         new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(4)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
     if (is_not_NaN(row['詳細-サブ拡大画像(5)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
-        new_excelify.loc[index + index_inline]['Handle'] = row['小原品番']
+        new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
         new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(5)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'

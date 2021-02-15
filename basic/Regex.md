@@ -2,6 +2,11 @@
 
 - [regexr](https://regexr.com/)
 
+- [Regex](#regex)
+  - [Basic](#basic)
+  - [Group](#group)
+  - [Examples](#examples)
+
 ### Basic
 
 - `.` => Matches any character except line breaks.

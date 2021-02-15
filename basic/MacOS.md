@@ -1,3 +1,5 @@
+- [MacOs](#macos)
+- [Hotkeys](#hotkeys)
 #### ssh in pi from mac without password
 
 ```

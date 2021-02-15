@@ -28,6 +28,7 @@
     - [collection filter](#collection-filter)
   - [Show vendor list](#show-vendor-list)
   - [Show multiple options selector in product page](#show-multiple-options-selector-in-product-page)
+  - [Toggle variant options](#toggle-variant-options)
 
 > [offical liquid code examples](https://shopify.github.io/liquid-code-examples/)
 

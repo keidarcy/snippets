@@ -1,8 +1,27 @@
-- Location Directive
+# Nginx
+
+- [nginx.org docs](https://nginx.org/en/docs/)
+- [nginx.com docs](https://docs.nginx.com/)
+
+- [Nginx](#nginx)
+  - [Location Directive](#location-directive)
+  - [Reverse Proxy](#reverse-proxy)
+  - [Load Balancer](#load-balancer)
+  - [Rewrite (redirect)](#rewrite-redirect)
+      - [`example.com` => `www.example.com`](#examplecom--wwwexamplecom)
+      - [`www.example.com/test1` => ``www.example.com/test2`](#wwwexamplecomtest1--wwwexamplecomtest2)
+      - [`http` => `https`](#http--https)
+      - [Static content](#static-content)
+  - [SSL](#ssl)
+    - [NO ssl](#no-ssl)
+    - [With SSL](#with-ssl)
+  - [Default](#default)
+
+## Location Directive
 
 > Priority high => low
 
-```
+```sh
 http {
     sever {
         location = /a {
@@ -24,9 +43,9 @@ http {
 }
 ```
 
-- Reverse Proxy
+## Reverse Proxy
 
-```
+```sh
 http {
     server {
         listen    80;
@@ -47,16 +66,16 @@ http {
 /a/** => http://192.168.0.12:80/a/**;
 /b/** => http://192.168.0.12:81/**;
 
-- Load Balancer
+## Load Balancer
 
 ```
  http {
 
-    upstream_group1 {
+    upstream ANY_STRING {
         server 192.168.0.12:80;
         server 192.168.0.12:81;
     }
-    //upstream_group1 {
+    //upstream ANY_OTHER_STRING {
     //  server 192.168.0.12:80 weight=10;
     //  server 192.168.0.12:81 weight=1;
     //}
@@ -70,13 +89,77 @@ http {
         }
 
         location /a {
-            proxy_pass http://group1/;
+            proxy_pass http://ANY_STRING/;
         }
     }
 }
 ```
 
-## No SSL
+## Rewrite (redirect)
+
+`rewrite regex replacement [flag];`
+_flag_ type _LAST_, _BREAK_, _PERMANENT_(status code 301), _REDIRECT_(status code 302)
+
+- examples
+
+#### `example.com` => `www.example.com`
+
+```
+server {
+  listen 80;
+  server_name example.com;
+
+  rewrite ^(.*)$ http://www.example.com$1 permanent;
+}
+```
+
+#### `www.example.com/test1` => ``www.example.com/test2`
+
+```
+server {
+  listen 80;
+  server_name www.example.com;
+
+  rewrite ^/test1(.*)$ http://www.example.com/test2$1 permanent;
+}
+```
+
+#### `http` => `https`
+
+```
+server {
+  listen 80;
+  server_name www.example.com;
+
+  if ($http_x_forwarded_proto != https) {
+    rewrite ^(.*)$ https://www.example.com$1 permanent;
+  }
+}
+```
+
+#### Static content
+
+```
+location ~ \.(png|jpeg|jpg|js|css|woff|ttf)$ {
+    expires 1h;
+}
+```
+
+or
+
+```
+location ~* ^/static/.+\.(png|whatever-else)$ {
+    alias /var/www/some_static;
+    expires 24h;
+}
+location / {
+    # regular rules
+}
+```
+
+## SSL
+
+### NO ssl
 
 ```
 server {
@@ -94,7 +177,8 @@ server {
 }
 ```
 
-## With SSL
+### With SSL
+
 ```
 server {
         listen 80;

@@ -3,6 +3,22 @@
 - [QueryRoot](https://shopify.dev/docs/admin-api/graphql/reference/common-objects/queryroot/index)
 - [Search Syntax](https://shopify.dev/concepts/about-apis/search-syntax)
 
+
+- [Basic](#basic)
+  - [Operation Names and Variables](#operation-names-and-variables)
+    - [graphql-request + graphql.macro](#graphql-request--graphqlmacro)
+  - [Aliases](#aliases)
+  - [Fragments](#fragments)
+  - [Pagination](#pagination)
+  - [Query argument](#query-argument)
+- [Admin API](#admin-api)
+    - [Get product list with requirement](#get-product-list-with-requirement)
+    - [Get variant with metafields](#get-variant-with-metafields)
+    - [Update product metafields](#update-product-metafields)
+- [Storefront Api](#storefront-api)
+    - [Shop information](#shop-information)
+    - [Get price with different currencies(which are setted in admin page)](#get-price-with-different-currencieswhich-are-setted-in-admin-page)
+
 ### Operation Names and Variables
 
 ```graphql

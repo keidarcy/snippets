@@ -1,3 +1,12 @@
+- [Connect google spread sheet with colab](#connect-google-spread-sheet-with-colab)
+  - [read google sheet in google colab](#read-google-sheet-in-google-colab)
+  - [save sheet from colab](#save-sheet-from-colab)
+- [Range function](#range-function)
+  - [lambda](#lambda)
+  - [Useful functions](#useful-functions)
+  - [if elif else](#if-elif-else)
+  - [Dictionaries](#dictionaries)
+  - [list, tuple, dic, set](#list-tuple-dic-set)
 ## Connect google spread sheet with colab
 
 ### read google sheet in google colab
@@ -132,13 +141,13 @@ print(student.values())
 
 for key, value in student.items():
     print(key, value)
-    
+
 people = {1: {'Name': 'John', 'Age': '27', 'Sex': 'Male'},
           2: {'Name': 'Marie', 'Age': '22', 'Sex': 'Female'}}
 
 for p_id, p_info in people.items():
     print("\nPerson ID:", p_id)
-    
+
     for key in p_info:
         print(key + ':', p_info[key])
 
@@ -148,7 +157,7 @@ for p_id, p_info in people.items():
 
 ```
 | method | initialize | how to get value | add or remove value | get value  |
-|--------|------------|------------------|---------------------|------------|
+| ------ | ---------- | ---------------- | ------------------- | ---------- |
 | list   | []         | index            | OK                  | OK         |
 | tuple  | ()         | index            | NO                  | OK         |
 | dic    | {}         | key              | OK                  | OK         |

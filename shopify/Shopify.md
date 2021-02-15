@@ -1,5 +1,24 @@
 # Useful shopify notes
 
+- [Useful shopify notes](#useful-shopify-notes)
+  - [External Links](#external-links)
+  - [Private app auth for admin api and storefront api](#private-app-auth-for-admin-api-and-storefront-api)
+  - [How theme urls map](#how-theme-urls-map)
+    - [url - template](#url---template)
+    - [hidden url](#hidden-url)
+  - [Checkout process](#checkout-process)
+  - [Multipass](#multipass)
+  - [Multiple currencies](#multiple-currencies)
+  - [Pass liquid data to Vue instance](#pass-liquid-data-to-vue-instance)
+  - [Theme editor](#theme-editor)
+  - [Cart attribute](#cart-attribute)
+  - [Additional scripts order status page](#additional-scripts-order-status-page)
+  - [Order status](#order-status)
+    - [order status](#order-status-1)
+    - [Payment status](#payment-status)
+    - [Checkout](#checkout)
+    - [Collections urls](#collections-urls)
+
 ## External Links
 
 - [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)

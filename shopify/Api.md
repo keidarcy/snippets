@@ -1,3 +1,9 @@
+- [Resources list with node](#resources-list-with-node)
+  - [nodejs with `shopify-api-node` package for `private` app with Admin Rest](#nodejs-with-shopify-api-node-package-for-private-app-with-admin-rest)
+  - [nodejs with no package for `private` app with Admin Rest](#nodejs-with-no-package-for-private-app-with-admin-rest)
+  - [broswer js for `private` app with Admin Rest](#broswer-js-for-private-app-with-admin-rest)
+  - [Curl`private` app with Stronfront Api(Graphql)](#curlprivate-app-with-stronfront-apigraphql)
+  - [Curl `prvate` app with Admin API(rest)](#curl-prvate-app-with-admin-apirest)
 ### Resources list with node
 
 #### nodejs with `shopify-api-node` package for `private` app with Admin Rest
