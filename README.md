@@ -32,10 +32,10 @@ python3 init.py
 - basic
   - [basic](./basic/Basic.md)
   - [http](./basic/Http.md)
-  - [vim](./basic/Vim.md)
   - [python](./basic/Python.md)
   - [css](./basic/CSS.md)
   - [regex](./basic/Regex.md)
+  - [editor](./basic/Editor.md)
   - [macos](./basic/MacOS.md)
   - [pandas](./basic/Pandas.md)
   - [interview](./basic/interview.md)
