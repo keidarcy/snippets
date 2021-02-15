@@ -1,3 +1,6 @@
+- [Jupyter notebook](#jupyter-notebook)
+- [Pandas to fomat csv file](#pandas-to-fomat-csv-file)
+
 ## Jupyter notebook
 
 - [Jupyter notebook](#jupyter-notebook)
@@ -41,7 +44,7 @@ df.columns = ['A', 'B']
 ```
 
 ```py
-df = pd.DataFrame(np.arange(12).reshape((4,3)),columns=['A', 'B', 'C'],index=["1行目", '2行目', '3行目', '4行目'])
+df = pd.DataFrame(np.arange(12).reshape((4,3)),columns=['A', 'B', 'C'],index=["1  ", '2  ', '3  ', '4  '])
 df['A']
 df[['A', 'B']]
 df[:2]
@@ -53,8 +56,8 @@ df.loc[:,:]
 df.loc[:,'A']
 # df = pd.DataFrame(np.arange(12).reshape((4,3)),columns=['A', 'B', 'C'],index=list(df.loc[:,'A']))
 df.loc[:, ['A', 'B']]
-df.loc['1行目', :]
-df.loc[['1行目', '2行目'], :]
+df.loc['1  ', :]
+df.loc[['1  ', '2  '], :]
 ```
 
 ```py
@@ -158,11 +161,11 @@ for sku, row in product_data[0:25].iterrows():
     if index == 0 or not new_excelify.loc[index - 1]['Handle'] == row['']:
         new_excelify.loc[index]['Handle'] = row['']
         new_excelify.loc[index]['Command'] = 'UPDATE'
-        new_excelify.loc[index]['Title'] = row['商品名']
-        new_excelify.loc[index]['Body HTML'] = get_value_if_string(row['一覧-メインコメント_2']) + '\n' + get_value_if_string(row['キャッチコピー_2'])
-        new_excelify.loc[index]['Vendor'] = row['ブランド']
-        new_excelify.loc[index]['Type'] = row['規格']
-        new_excelify.loc[index]['Tags'] = ','.join(add_if_not_none([row['カラー１'], row['カラー２'], row['キーワード検索(柄・キャラ)'], row['こだわり'], row['タオル'], row['贈るシーン別で探す'], row['贈る相手別で探す'], row['価格'], row['マスク'], row['ベビーキッズ'], row['寝具'], row['アパレル'], row['キッチン'], row['雑貨']]))
+        new_excelify.loc[index]['Title'] = row['   ']
+        new_excelify.loc[index]['Body HTML'] = get_value_if_string(row['  -       _2']) + '\n' + get_value_if_string(row['      ー_2'])
+        new_excelify.loc[index]['Vendor'] = row['    ']
+        new_excelify.loc[index]['Type'] = row['  ']
+        new_excelify.loc[index]['Tags'] = ','.join(add_if_not_none([row['  ー１'], row['  ー２'], row[' ー ー   ( ・   )'], row['    '], row['   '], row['   ー     '], row['        '], row['  '], row['   '], row['  ー   '], row['  '], row['    '], row['    '], row['  ']]))
         new_excelify.loc[index]['Tags Command'] = 'REPLACE'
         new_excelify.loc[index]['Updated At'] = ''
         new_excelify.loc[index]['Published'] = 'TRUE'
@@ -173,17 +176,17 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Row'] = ''
         new_excelify.loc[index]['Top Row'] = 'TRUE'
         new_excelify.loc[index]['Custom Collections'] = ''
-        new_excelify.loc[index]['Image Src'] = get_image_path_if_not_NaN(row['詳細-メイン拡大画像_2'])
+        new_excelify.loc[index]['Image Src'] = get_image_path_if_not_NaN(row['  -       _2'])
         new_excelify.loc[index]['Image Command'] = 'MERGE'
         new_excelify.loc[index]['Image Position'] = '1'
         new_excelify.loc[index]['Image Width'] = ''
         new_excelify.loc[index]['Image Height'] = ''
-        new_excelify.loc[index]['Image Alt Text'] = row['商品名']
+        new_excelify.loc[index]['Image Alt Text'] = row['   ']
         new_excelify.loc[index]['Variant ID'] = ''
         new_excelify.loc[index]['Variant Command'] = 'MERGE'
-        if is_not_NaN(row['カラー１']):
+        if is_not_NaN(row['  ー１']):
             new_excelify.loc[index]['Option1 Name'] = 'color'
-            new_excelify.loc[index]['Option1 Value'] = get_random_string(2) + '.' +row['カラー１']
+            new_excelify.loc[index]['Option1 Value'] = get_random_string(2) + '.' +row['  ー１']
         new_excelify.loc[index]['Option2 Name'] = ''
         new_excelify.loc[index]['Option2 Value'] = ''
         new_excelify.loc[index]['Option3 Name'] = ''
@@ -196,42 +199,42 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Variant HS Code'] = ''
         new_excelify.loc[index]['Variant Country of Origin'] = 'JP'
         new_excelify.loc[index]['Variant Compare At Price'] = ''
-        new_excelify.loc[index]['Variant Price'] = get_price_number(row['販売価格'])
+        new_excelify.loc[index]['Variant Price'] = get_price_number(row['    '])
         new_excelify.loc[index]['Variant Cost'] = ''
         new_excelify.loc[index]['Variant Requires Shipping'] = 'TRUE'
         new_excelify.loc[index]['Variant Taxable'] = 'TRUE'
         new_excelify.loc[index]['Variant Tax Code'] = ''
         new_excelify.loc[index]['Variant Barcode'] = ''
-        new_excelify.loc[index]['Variant Image'] = get_image_path_if_not_NaN(row["詳細-サブ拡大画像(1)_2"])
+        new_excelify.loc[index]['Variant Image'] = get_image_path_if_not_NaN(row["  -      (1)_2"])
         new_excelify.loc[index]['Variant Inventory Tracker'] = 'shopify'
         new_excelify.loc[index]['Variant Inventory Policy'] = 'deny'
         new_excelify.loc[index]['Variant Fulfillment Service'] = 'manual'
         new_excelify.loc[index]['Variant Inventory Adjust'] = ''
-        new_excelify.loc[index]['Variant Inventory Qty'] = row['在庫数_2']
-        new_excelify.loc[index]['Metafield: description_tag'] = row['一覧-メインコメント_2']
-        new_excelify.loc[index]['Metafield: information [string]'] = row['詳細-メインコメント_2']
-        new_excelify.loc[index]['Metafield: title_tag'] = row['商品名']
+        new_excelify.loc[index]['Variant Inventory Qty'] = row['   _2']
+        new_excelify.loc[index]['Metafield: description_tag'] = row['  -       _2']
+        new_excelify.loc[index]['Metafield: information [string]'] = row['  -       _2']
+        new_excelify.loc[index]['Metafield: title_tag'] = row['   ']
         metafiledDic = {
-            'textable': get_boolean(row['文字']),
-            'miniMark': get_boolean(row['ミニマーク']),
-            'sisyuNormal': get_boolean(row['モチーフ刺繍（一般）']),
-            'sisyuDisney': get_boolean(row['モチーフ刺繍（ディズニー）']),
-            'sisyuStarwars': get_boolean(row['モチーフ刺繍（スターウォーズ）']),
-            'giftbox': get_boolean(row['ギフトボックス可']),
-            'giftboxSet': get_boolean(row['ギフトボックスセット商品']),
-            'wrapping': get_boolean(row['ラッピング可']),
-            'giftbox': get_boolean(row['ラッピングセット商品']),
-            'yahoo': get_boolean(row['Yahoo登録商品']),
-            'color': get_boolean(row['カラーコード'])
+            'textable': get_boolean(row['  ']),
+            'miniMark': get_boolean(row['   ー ']),
+            'sisyuNormal': get_boolean(row['  ー   （  ）']),
+            'sisyuDisney': get_boolean(row['  ー   （    ー）']),
+            'sisyuStarwars': get_boolean(row['  ー   （  ー  ー ）']),
+            'giftbox': get_boolean(row['        ']),
+            'giftboxSet': get_boolean(row['            ']),
+            'wrapping': get_boolean(row['      ']),
+            'giftbox': get_boolean(row['          ']),
+            'yahoo': get_boolean(row['Yahoo    ']),
+            'color': get_boolean(row['  ー ー '])
         }
         new_excelify.loc[index]['Metafield: custom.json [json_string]'] = json.dumps(metafiledDic)
 
     else:
         new_excelify.loc[index]['Handle'] = row['']
         new_excelify.loc[index]['Command'] = 'UPDATE'
-        new_excelify.loc[index]['Vendor'] = row['ブランド']
-        new_excelify.loc[index]['Type'] = row['規格']
-        new_excelify.loc[index]['Tags'] = ','.join(add_if_not_none([row['カラー１'], row['カラー２'], row['キーワード検索(柄・キャラ)'], row['こだわり'], row['タオル'], row['贈るシーン別で探す'], row['贈る相手別で探す'], row['価格'], row['マスク'], row['ベビーキッズ'], row['寝具'], row['アパレル'], row['キッチン'], row['雑貨']]))
+        new_excelify.loc[index]['Vendor'] = row['    ']
+        new_excelify.loc[index]['Type'] = row['  ']
+        new_excelify.loc[index]['Tags'] = ','.join(add_if_not_none([row['  ー１'], row['  ー２'], row[' ー ー   ( ・   )'], row['    '], row['   '], row['   ー     '], row['        '], row['  '], row['   '], row['  ー   '], row['  '], row['    '], row['    '], row['  ']]))
         new_excelify.loc[index]['Tags Command'] = 'REPLACE'
         new_excelify.loc[index]['Updated At'] = ''
         new_excelify.loc[index]['Published'] = 'TRUE'
@@ -242,17 +245,17 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Row'] = ''
         new_excelify.loc[index]['Top Row'] = ''
         new_excelify.loc[index]['Custom Collections'] = ''
-        new_excelify.loc[index]['Image Src'] = get_image_path_if_not_NaN(row['詳細-メイン拡大画像_2'])
+        new_excelify.loc[index]['Image Src'] = get_image_path_if_not_NaN(row['  -       _2'])
         new_excelify.loc[index]['Image Command'] = 'MERGE'
         new_excelify.loc[index]['Image Position'] = '1'
         new_excelify.loc[index]['Image Width'] = ''
         new_excelify.loc[index]['Image Height'] = ''
-        new_excelify.loc[index]['Image Alt Text'] = row['商品名']
+        new_excelify.loc[index]['Image Alt Text'] = row['   ']
         new_excelify.loc[index]['Variant ID'] = ''
         new_excelify.loc[index]['Variant Command'] = 'MERGE'
-        if is_not_NaN(row['カラー１']):
+        if is_not_NaN(row['  ー１']):
             new_excelify.loc[index]['Option1 Name'] = 'color'
-            new_excelify.loc[index]['Option1 Value'] = get_random_string(2) + '.' +row['カラー１']
+            new_excelify.loc[index]['Option1 Value'] = get_random_string(2) + '.' +row['  ー１']
         new_excelify.loc[index]['Option2 Name'] = ''
         new_excelify.loc[index]['Option2 Value'] = ''
         new_excelify.loc[index]['Option3 Name'] = ''
@@ -265,45 +268,45 @@ for sku, row in product_data[0:25].iterrows():
         new_excelify.loc[index]['Variant HS Code'] = ''
         new_excelify.loc[index]['Variant Country of Origin'] = 'JP'
         new_excelify.loc[index]['Variant Compare At Price'] = ''
-        new_excelify.loc[index]['Variant Price'] = get_price_number(row['販売価格'])
+        new_excelify.loc[index]['Variant Price'] = get_price_number(row['    '])
         new_excelify.loc[index]['Variant Cost'] = ''
         new_excelify.loc[index]['Variant Requires Shipping'] = 'TRUE'
         new_excelify.loc[index]['Variant Taxable'] = 'TRUE'
         new_excelify.loc[index]['Variant Tax Code'] = ''
         new_excelify.loc[index]['Variant Barcode'] = ''
-        new_excelify.loc[index]['Variant Image'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(1)_2'])
+        new_excelify.loc[index]['Variant Image'] = get_image_path_if_not_NaN(row['  -      (1)_2'])
         new_excelify.loc[index]['Variant Inventory Tracker'] = 'shopify'
         new_excelify.loc[index]['Variant Inventory Policy'] = 'deny'
         new_excelify.loc[index]['Variant Fulfillment Service'] = 'manual'
         new_excelify.loc[index]['Variant Inventory Adjust'] = ''
-        new_excelify.loc[index]['Variant Inventory Qty'] = row['在庫数_2']
-    if (is_not_NaN(row['詳細-サブ拡大画像(2)_2'])):
+        new_excelify.loc[index]['Variant Inventory Qty'] = row['   _2']
+    if (is_not_NaN(row['  -      (2)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
         new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
-        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(2)_2'])
+        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['  -      (2)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
-    if (is_not_NaN(row['詳細-サブ拡大画像(3)_2'])):
+    if (is_not_NaN(row['  -      (3)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
         new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
-        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(3)_2'])
+        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['  -      (3)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
-    if (is_not_NaN(row['詳細-サブ拡大画像(4)_2'])):
+    if (is_not_NaN(row['  -      (4)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
         new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
-        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(4)_2'])
+        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['  -      (4)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
-    if (is_not_NaN(row['詳細-サブ拡大画像(5)_2'])):
+    if (is_not_NaN(row['  -      (5)_2'])):
         index_inline += 1
         new_excelify.loc[index + index_inline] = ''
         new_excelify.loc[index + index_inline]['Handle'] = row['']
         new_excelify.loc[index + index_inline]['Command'] = 'UPDATE'
-        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['詳細-サブ拡大画像(5)_2'])
+        new_excelify.loc[index + index_inline]['Image Src'] = get_image_path_if_not_NaN(row['  -      (5)_2'])
         new_excelify.loc[index + index_inline]['Image Command'] = 'MERGE'
 ```
 

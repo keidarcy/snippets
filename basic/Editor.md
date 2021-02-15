@@ -1,3 +1,21 @@
+- [VSCODE](#vscode)
+    - [regex replace in file](#regex-replace-in-file)
+- [VIM](#vim)
+  - [vim-surround](#vim-surround)
+  - [vim-sneak](#vim-sneak)
+  - [vim-easymotion](#vim-easymotion)
+  - [CamelCaseMotion](#camelcasemotion)
+
+## VSCODE
+
+#### regex replace in file
+
+- `command + option + f`
+- example 1 - add "" to every lines >> `.+` => `"$0"`
+- stripe "" from every lines >> `"(.+)"` => `$1`
+- swap order of words >> `(\w+) (\w+)` => `$2 $1`
+
+
 ## VIM
 
 - `<C-o>` - go to last edited place backward
