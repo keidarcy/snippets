@@ -20,6 +20,11 @@
     - [Click others(usually toggle overlay)](#click-othersusually-toggle-overlay)
     - [Share to facebook and twitter](#share-to-facebook-and-twitter)
     - [Hiragana kanakana converter](#hiragana-kanakana-converter)
+  - [axios](#axios)
+    - [Create global axios instance](#create-global-axios-instance)
+    - [Difference of `config` between get and post method](#difference-of-config-between-get-and-post-method)
+  - [Get file name without extension](#get-file-name-without-extension)
+  - [Date](#date)
 
 ## Event and CustomEvent
 
@@ -317,3 +322,82 @@ const hiraToKana = (str: string) =>
     )
     .join('');
 ```
+
+## axios
+
+### Create global axios instance
+
+```js
+Axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    // get: {
+    //   'Content-Type': 'application/json',
+    //   'access-token': TOKEN
+    // }
+    'Content-Type': 'application/json',
+    'access-token': TOKEN
+  }
+});
+```
+
+### Difference of `config` between get and post method
+
+```js
+const data = {
+  sort: 'desc',
+  count: 12
+};
+
+axios.post(URL, data);
+axios.get(URL, { data });
+```
+
+## Get file name without extension
+
+```js
+arr.split('.').slice(0, -1).join('.');
+```
+
+## Date
+
+```js
+Date.now();
+//1605615577351
+new Date()(
+  //Tue Nov 17 2020 21:19:42 GMT+0900 (Japan Standard Time)
+  new Date()
+).toString();
+//"Tue Nov 17 2020 21:20:30 GMT+0900 (Japan Standard Time)"
+Date.parse('Tue Nov 17 2020 21:20:30 GMT+0900 (Japan Standard Time)');
+//1605615630000
+new Date().getFullYear();
+//2020
+// GMT is an abbreviation for Greenwich Mean Time
+```
+- [Browser related javascript](#browser-related-javascript)
+  - [Event and CustomEvent](#event-and-customevent)
+  - [Go to top](#go-to-top)
+  - [Webpack setting for ts with dom](#webpack-setting-for-ts-with-dom)
+  - [Upload image](#upload-image)
+    - [Download file](#download-file)
+  - [Cors](#cors)
+    - [`fetch` example](#fetch-example)
+    - [Express example](#express-example)
+  - [Alphinejs fetch and render loop](#alphinejs-fetch-and-render-loop)
+  - [DOM storage](#dom-storage)
+    - [localstorage](#localstorage)
+    - [sessionstorage](#sessionstorage)
+    - [indexedDB](#indexeddb)
+    - [Cookies](#cookies)
+      - [get and set](#get-and-set)
+      - [js-cookie](#js-cookie)
+      - [get cookies object with vanilla js](#get-cookies-object-with-vanilla-js)
+    - [Click others(usually toggle overlay)](#click-othersusually-toggle-overlay)
+    - [Share to facebook and twitter](#share-to-facebook-and-twitter)
+    - [Hiragana kanakana converter](#hiragana-kanakana-converter)
+  - [axios](#axios)
+    - [Create global axios instance](#create-global-axios-instance)
+    - [Difference of `config` between get and post method](#difference-of-config-between-get-and-post-method)
+  - [Get file name without extension](#get-file-name-without-extension)
+  - [Date](#date)

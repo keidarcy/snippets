@@ -16,6 +16,7 @@ python3 init.py
 - js
   - [alpinejs](./js/Alpinejs.md)
   - [browser](./js/Browser.md)
+  - [fundamental](./js/Fundamental.md)
   - [reactivity](./js/Reactivity.md)
   - [tsconfig](./js/Tsconfig.md)
   - [jest](./js/Jest.md)
@@ -30,10 +31,10 @@ python3 init.py
   - [theme](./shopify/Theme.md)
   - [graphql](./shopify/Graphql.md)
 - basic
-  - [basic](./basic/Basic.md)
   - [http](./basic/Http.md)
   - [python](./basic/Python.md)
   - [css](./basic/CSS.md)
+  - [basic](./basic/Basic.md)
   - [regex](./basic/Regex.md)
   - [editor](./basic/Editor.md)
   - [macos](./basic/MacOS.md)
