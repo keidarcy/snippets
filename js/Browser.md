@@ -1,4 +1,5 @@
 # Browser related javascript
+
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
   - [Go to top](#go-to-top)
@@ -25,6 +26,8 @@
     - [Difference of `config` between get and post method](#difference-of-config-between-get-and-post-method)
   - [Get file name without extension](#get-file-name-without-extension)
   - [Date](#date)
+  - [WebRTC](#webrtc)
+  - [WebSocket & WebTransport](#websocket--webtransport)
 
 ## Event and CustomEvent
 
@@ -375,29 +378,92 @@ new Date().getFullYear();
 //2020
 // GMT is an abbreviation for Greenwich Mean Time
 ```
-- [Browser related javascript](#browser-related-javascript)
-  - [Event and CustomEvent](#event-and-customevent)
-  - [Go to top](#go-to-top)
-  - [Webpack setting for ts with dom](#webpack-setting-for-ts-with-dom)
-  - [Upload image](#upload-image)
-    - [Download file](#download-file)
-  - [Cors](#cors)
-    - [`fetch` example](#fetch-example)
-    - [Express example](#express-example)
-  - [Alphinejs fetch and render loop](#alphinejs-fetch-and-render-loop)
-  - [DOM storage](#dom-storage)
-    - [localstorage](#localstorage)
-    - [sessionstorage](#sessionstorage)
-    - [indexedDB](#indexeddb)
-    - [Cookies](#cookies)
-      - [get and set](#get-and-set)
-      - [js-cookie](#js-cookie)
-      - [get cookies object with vanilla js](#get-cookies-object-with-vanilla-js)
-    - [Click others(usually toggle overlay)](#click-othersusually-toggle-overlay)
-    - [Share to facebook and twitter](#share-to-facebook-and-twitter)
-    - [Hiragana kanakana converter](#hiragana-kanakana-converter)
-  - [axios](#axios)
-    - [Create global axios instance](#create-global-axios-instance)
-    - [Difference of `config` between get and post method](#difference-of-config-between-get-and-post-method)
-  - [Get file name without extension](#get-file-name-without-extension)
-  - [Date](#date)
+
+## WebRTC
+
+1. connect two browsers(A & B)
+2. A will create an offer(sdp) and set it as local description
+3. B will get the offer and set it as remote description
+4. B creates an answer sets it as its local description and signal the answer(sdp) to A
+5. A sets the answer as its remote description
+6. Connection established, exchange data channel
+
+- A
+
+```js
+const lc = new RTCPeerConnection(); //locationconnection
+const dc = lc.createDataChannel('channel');
+dc.onmessage = (e) => console.log('Got a message' + e.data);
+dc.onopen = (e) => console.log('connection opened!');
+lc.onicecandidate = (e) =>
+  console.log('new ice candidate! reprinting SDP' + JSON.stringify(lc.localDescription));
+lc.createOffer()
+  .then((o) => lc.setLocalDescription(o))
+  .then((a) => console.log('set successfully'));
+// new ice candidate! reprinting SDP{"type":"offer","sdp":......
+// copy JSON object as offer to B
+```
+
+- B
+
+```js
+let dc;
+const offer = ''; //{"type":"offer","sdp":......}"
+const rc = new RTCPeerConnection();
+rc.onicecandidate = (e) =>
+  console.log('new ice candidate! reprinting SDP' + JSON.stringify(rc.localDescription));
+rc.ondatachannel = (e) => {
+  dc = e.channel;
+  dc.onmessage = (e) => console.log('New message from A' + e.data);
+  dc.onopen = (e) => console.log('connection opened!!');
+};
+rc.setRemoteDescription(offer).then((a) => console.log('offset set'));
+rc.createAnswer()
+  .then((a) => rc.setLocalDescription(a))
+  .then((a) => console.log('answer created'));
+```
+
+- A
+
+```js
+const answer = ''; //
+lc.setRemoteDescription(answer);
+dc.send('yoyo from A');
+// Got a messageyoyo from B
+```
+
+- B
+
+```js
+// New message from Ayoyo A
+dc.send('yoyo from B');
+```
+
+- `media`, `carmera` will use `lc.addTract`
+
+## WebSocket & WebTransport
+
+- server node
+
+```js
+const WebSocket = require('ws');
+const server = new WebSocket.Server({ port: '8000' });
+
+server.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    socket.send(message);
+  });
+});
+```
+
+- client browser
+
+```js
+const socket = new WebSocket('ws://localhost:8000');
+socket.onmesssage = ({ data }) => {
+  console.log('Message from server', data);
+};
+document.querySelector('button').onclick = () => {
+  socket.send('hello');
+};
+```
