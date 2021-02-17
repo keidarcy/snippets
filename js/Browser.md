@@ -1,5 +1,7 @@
 # Browser related javascript
 
+- [chrome devtools](https://developers.google.com/web/tools/chrome-devtools/console/utilities)
+
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
   - [Go to top](#go-to-top)
