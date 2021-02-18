@@ -33,6 +33,7 @@
   - [Linked List](#linked-list)
   - [React useState](#react-usestate)
   - [`slice` `splice` `splite`](#slice-splice-splite)
+  - [Generator and Iterator](#generator-and-iterator)
 
 ## Proxy
 
@@ -846,3 +847,72 @@ window.app = schedule;
   - Takes 2 parameters, both are optional: string.split(separator, limit)
   - Doesn’t change the original string
   - Can only be used for strings
+
+## Generator and Iterator
+
+- loop though array object
+
+```js
+const person = {name: 'eriii', phone: '123-2312'}
+for(const [key, value] of Object.entries(person)){
+  console.log(`key: ${key}is ${value}`)
+}
+// > "key: nameis eriii"
+// > "key: phoneis 123-2312"
+
+```
+
+```js
+const names = ['john', 'joe', 'mm']
+
+for(const name in names){
+    console.log(name)
+}
+// 1 2 3
+
+for(const name of names){
+    console.log(name)
+}
+// john joe mm
+
+const iterator = names[Symbol.iterator]()
+iterator.next() // {value: "john", done: false}
+iterator.next() // {value: "joe", done: false}
+iterator.next() // {value: "mm", done: false}
+iterator.next() // {value: undefined, done: true}
+```
+
+
+```js
+const person = {name: 'eriii', phone: '123-2312'}
+// person[Sy]
+
+person[Symbol.iterator] = function* (){
+  yield Object.keys(this)
+}
+
+[...person] // [['name', 'phone']]
+
+for(const b of person){
+  b // [name, phone]
+}
+
+person[Symbol.iterator] = function* (){
+  yield* Object.keys(this)
+}
+
+
+[...person] // ['name', 'phone']
+
+for(const b of person){
+  b // name, phone
+}
+
+
+
+
+
+```
+
+
+```
