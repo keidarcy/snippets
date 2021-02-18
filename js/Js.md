@@ -4,7 +4,6 @@
 - [Concept explanation](https://www.javascripttutorial.net/)
 - [chinese resource](https://github.com/coffe1891/frontend-hard-mode-interview)
 
-
 - [Javascript Basic](#javascript-basic)
   - [Proxy](#proxy)
   - [With](#with)
@@ -34,6 +33,10 @@
   - [React useState](#react-usestate)
   - [`slice` `splice` `splite`](#slice-splice-splite)
   - [Generator and Iterator](#generator-and-iterator)
+      - [loop though array object](#loop-though-array-object)
+      - [iterator](#iterator-1)
+      - [generator](#generator-1)
+      - [use generator to create own Object.entries function](#use-generator-to-create-own-objectentries-function)
 
 ## Proxy
 
@@ -850,38 +853,40 @@ window.app = schedule;
 
 ## Generator and Iterator
 
-- loop though array object
+#### loop though array object
 
 ```js
-const person = {name: 'eriii', phone: '123-2312'}
-for(const [key, value] of Object.entries(person)){
-  console.log(`key: ${key}is ${value}`)
+const person = { name: 'eriii', phone: '123-2312' };
+for (const [key, value] of Object.entries(person)) {
+  console.log(`key: ${key}is ${value}`);
 }
 // > "key: nameis eriii"
 // > "key: phoneis 123-2312"
-
 ```
 
-```js
-const names = ['john', 'joe', 'mm']
+#### iterator
 
-for(const name in names){
-    console.log(name)
+```js
+const names = ['john', 'joe', 'mm'];
+
+for (const name in names) {
+  console.log(name);
 }
 // 1 2 3
 
-for(const name of names){
-    console.log(name)
+for (const name of names) {
+  console.log(name);
 }
 // john joe mm
 
-const iterator = names[Symbol.iterator]()
-iterator.next() // {value: "john", done: false}
-iterator.next() // {value: "joe", done: false}
-iterator.next() // {value: "mm", done: false}
-iterator.next() // {value: undefined, done: true}
+const iterator = names[Symbol.iterator]();
+iterator.next(); // {value: "john", done: false}
+iterator.next(); // {value: "joe", done: false}
+iterator.next(); // {value: "mm", done: false}
+iterator.next(); // {value: undefined, done: true}
 ```
 
+#### generator
 
 ```js
 const person = {name: 'eriii', phone: '123-2312'}
@@ -907,12 +912,41 @@ person[Symbol.iterator] = function* (){
 for(const b of person){
   b // name, phone
 }
-
-
-
-
-
 ```
 
+```js
+function* generatorThings() {
+  yield 'hello';
+  const yo = yield 'hey';
+  console.log(yo); //> yoyo
+  yield 'hi';
+  return 'return';
+}
 
+const g = generatorThings();
+
+g.next(); // > {value: "hello", done: false}
+g.next('yo'); // > {value: "hey", done: false}
+g.next('yoyo'); // > {value: "hi", done: false}
+const m = g.next(); // > {value: undefined, done: true}
+m.done;
+```
+#### use generator to create own Object.entries function
+
+```js
+
+const person = { name: 'eriii', phone: '123-2312' };
+
+function* oentries(obj) {
+  const keys = Object.keys(obj)
+  for (const key of keys){
+    yield [key, obj[key]]
+  }
+}
+
+for(const [key, value] of oentries(person)){
+  console.log(`key: ${key}is ${value}`);
+}
+// key: nameis eriii
+// key: phoneis 123-2312
 ```
