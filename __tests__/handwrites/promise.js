@@ -131,9 +131,9 @@
 // }
 
 const states = {
-  PENDING: 'PENDING',
-  FULFILLED: 'FULFILLED',
-  REJECTED: 'REJECTED'
+  PENDING: 'pending',
+  FULFILLED: 'fulfilled',
+  REJECTED: 'rejected'
 };
 
 const isThenable = (maybePromise) =>
@@ -180,13 +180,70 @@ class Promise {
   finally(sideEffectFn) {
     if (this._state !== states.PENDING) {
       sideEffectFn();
+
       return this._state === states.FULFILLED
         ? Promise.resolve(this._value)
         : Promise.reject(this._reason);
     }
+
     const controlledPromise = new Promise();
     this._finallyQueue.push([controlledPromise, sideEffectFn]);
+
     return controlledPromise;
+  }
+
+  _propagateFulfilled() {
+    this._thenQueue.forEach(([controlledPromise, fulfilledFn]) => {
+      if (typeof fulfilledFn === 'function') {
+        const valueOrPromise = fulfilledFn(this._value);
+
+        if (isThenable(valueOrPromise)) {
+          valueOrPromise.then(
+            (value) => controlledPromise._onFulfilled(value),
+            (reason) => controlledPromise._onRejected(reason)
+          );
+        } else {
+          controlledPromise._onFulfilled(valueOrPromise);
+        }
+      } else {
+        return controlledPromise._onFulfilled(this._value);
+      }
+    });
+
+    this._finallyQueue.forEach(([controlledPromise, sideEffectFn]) => {
+      sideEffectFn();
+      controlledPromise._onFulfilled(this._value);
+    });
+
+    this._thenQueue = [];
+    this._finallyQueue = [];
+  }
+
+  _propagateRejected() {
+    this._thenQueue.forEach(([controlledPromise, _, catchFn]) => {
+      if (typeof catchFn === 'function') {
+        const valueOrPromise = catchFn(this._reason);
+
+        if (isThenable(valueOrPromise)) {
+          valueOrPromise.then(
+            (value) => controlledPromise._onFulfilled(value),
+            (reason) => controlledPromise._onRejected(reason)
+          );
+        } else {
+          controlledPromise._onFulfilled(valueOrPromise);
+        }
+      } else {
+        return controlledPromise._onRejected(this._reason);
+      }
+    });
+
+    this._finallyQueue.forEach(([controlledPromise, sideEffectFn]) => {
+      sideEffectFn();
+      controlledPromise._onRejected(this._value);
+    });
+
+    this._thenQueue = [];
+    this._finallyQueue = [];
   }
 
   _onFulfilled(value) {
@@ -204,78 +261,22 @@ class Promise {
       this._propagateRejected();
     }
   }
-  _propagateFulfilled() {
-    this._thenQueue.forEach(([controlledPromise, fulfilledFn]) => {
-      if (typeof fulfilledFn === 'function') {
-        const valueOrPromise = fulfilledFn(this._value);
-        if (isThenable(valueOrPromise)) {
-          valueOrPromise.then(
-            (value) => controlledPromise._onFulfilled(value),
-            (reason) => controlledPromise._onRejected(reason)
-          );
-        } else {
-          controlledPromise._onFulfilled(valueOrPromise);
-        }
-      } else {
-        return controlledPromise._onFulfilled(this._value);
-      }
-    });
-    this._finallyQueue.forEach(([controlledPromise, sideEffectFn]) => {
-      sideEffectFn();
-      controlledPromise._onFulfilled(this._value);
-    });
-    this._finallyQueue = [];
-    this._thenQueue = [];
-  }
-
-  _propagateRejected() {
-    this._thenQueue.forEach(([controlledPromise, _, catchedFn]) => {
-      if (typeof catchedFn === 'function') {
-        const valueOrPromise = catchedFn(this._reason);
-        if (isThenable(valueOrPromise)) {
-          valueOrPromise.then(
-            (value) => controlledPromise._onFulfilled(value),
-            (reason) => controlledPromise._onRejected(reason)
-          );
-        } else {
-          controlledPromise._onRejected(valueOrPromise);
-        }
-      } else {
-        return controlledPromise._onRejected(this._reason);
-      }
-      this._finallyQueue.forEach(([controlledPromise, sideEffectFn]) => {
-        sideEffectFn();
-        controlledPromise._onRejected(this._reason);
-      });
-      this._finallyQueue = [];
-      this._thenQueue = [];
-    });
-  }
-
-  resolve(value) {
-    return new Promise((resolve) => resolve(value));
-  }
-
-  reject(reason) {
-    return new Promise((_, reject) => reject(reason));
-  }
 }
+
+Promise.resolve = (value) => new Promise((resolve) => resolve(value));
+Promise.reject = (value) => new Promise((_, reject) => reject(value));
 
 const fs = require('fs');
 const path = require('path');
 
 const readFile = (filename, encoding) =>
-  new Promise((resolve, rejecet) => {
-    fs.readFile(
-      (filename,
-      encoding,
-      (err, value) => {
-        if (err) {
-          return rejecet(err);
-        }
-        resolve(value);
-      })
-    );
+  new Promise((resolve, reject) => {
+    fs.readFile(filename, encoding, (err, value) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(value);
+    });
   });
 
 const delay = (timeInMs, value) =>
@@ -285,34 +286,48 @@ const delay = (timeInMs, value) =>
     }, timeInMs);
   });
 
-readFile(path.join(__dirname, 'index.js', 'utf8'))
-  .then((text) => {
-    console.log({ text });
-    return delay(2000, text.replace(/abcde/g, ''));
-  })
-  .then((newText) => {
-    console.log({ newText });
-  })
-  .catch((err) => {
-    console.log({ err });
-  })
-  .finally(() => {
-    console.log('--------DONE--------');
-  });
-
-// Promise.deferred = function () {
-//   let deferred = {};
-//   deferred.promise = new Promise((resolve, reject) => {
-//     deferred.resolve = resolve;
-//     deferred.reject = reject;
+// readFile(path.join(__dirname, 'index.js'), 'utf8')
+//   .then((text) => {
+//     console.log({ text });
+//   })
+//   .then((newText) => {
+//     console.log({ newText });
+//   })
+//   .catch((err) => {
+//     console.log({ err });
+//   })
+//   .finally(() => {
+//     console.log('--------DONE--------');
 //   });
-//   return deferred;
-// };
 
-// var promisesAplusTests = require('promises-aplus-tests');
+const doAsyncStuff = async () => {
+  try {
+    const text = await readFile(path.join(__dirname, 'indexxxx.js'), 'utf8');
+    console.log({ text });
 
-// promisesAplusTests(Promise, function (err) {
-//   console.log('errorororooror', err);
-// });
+    const newText = await delay(2000, text.replace(/abcde/g, ''));
+    console.log({ newText });
+  } catch (error) {
+    console.log({ error });
+  }
+  console.log('------DONE-------');
+};
+
+doAsyncStuff();
+
+Promise.deferred = function () {
+  let deferred = {};
+  deferred.promise = new Promise((resolve, reject) => {
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+  });
+  return deferred;
+};
+
+var promisesAplusTests = require('promises-aplus-tests');
+
+promisesAplusTests(Promise, function (err) {
+  console.log('errorororooror', err);
+});
 
 module.exports = Promise;
