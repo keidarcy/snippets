@@ -30,6 +30,7 @@
   - [Date](#date)
   - [WebRTC](#webrtc)
   - [WebSocket & WebTransport](#websocket--webtransport)
+    - [XMLHttpRequest](#xmlhttprequest)
 
 ## Event and CustomEvent
 
@@ -468,4 +469,52 @@ socket.onmesssage = ({ data }) => {
 document.querySelector('button').onclick = () => {
   socket.send('hello');
 };
+```
+
+### XMLHttpRequest
+
+```js
+const getBtn = document.getElementById('get-btn');
+const postBtn = document.getElementById('post-btn');
+
+const sendHttpRequest = (method, url, data)=>{
+  const promise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+
+    xhr.responseType = 'json'
+    if (data){
+      xhr.setRequestHeader('Content-Type', 'application.json')
+    }
+    xhr.onload = () => {
+      if(xhr.status > 400){
+        reject('nonnon')
+      }
+      const data = xhr.response;
+      resolve(data)
+    }
+    xhr.onerror = () => {
+      reject('wrong')
+    }
+    xhr.send(JSON.stringify(data));
+  })
+  return promise;
+}
+
+getData = async () => {
+  const data = await sendHttpRequest('GET', 'https://reqres.in/api/users')
+  console.log({data})
+}
+
+postData = async () => {
+  try{
+  const data = await sendHttpRequest('POST', 'https://reqres.in/ap/users', {email: 'test@test.com', password: 'testtest'})
+  console.log({data})
+  }catch(ex){
+    console.error(ex)
+  }
+}
+
+getBtn.addEventListener('click', getData)
+postBtn.addEventListener('click', postData)
 ```
