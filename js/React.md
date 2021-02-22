@@ -351,4 +351,4 @@ const App = () => {
 
 ## React17 lifecycle
 
-![lifecycle](react-lifecycle.png)
+![lifecycle](reactlifecycle.png)
