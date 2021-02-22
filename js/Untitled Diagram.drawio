@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-02-22T02:00:35.137Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36" etag="8hpje9HhvYzZJqA4SgWT" version="14.4.2" type="github">
+<mxfile host="app.diagrams.net" modified="2021-02-22T02:09:15.625Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36" etag="R7mtAxC75jKNfwiMyXPa" version="14.4.2" type="github">
   <diagram id="og85YZZiC0CWe7mM9z_K" name="Page-1">
     <mxGraphModel dx="3796" dy="1162" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -82,13 +82,13 @@
         <mxCell id="t9xVzTfUzft2zpDUL9A9-55" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Mount&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="165" y="740" width="155" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="t9xVzTfUzft2zpDUL9A9-56" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Mount&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="t9xVzTfUzft2zpDUL9A9-56" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentWill&lt;br&gt;Unmount&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="572.5" y="740" width="155" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="t9xVzTfUzft2zpDUL9A9-57" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Mount&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="t9xVzTfUzft2zpDUL9A9-57" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Catch&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="770" y="740" width="155" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="cCIKSAW-SaP8fwa9gpXD-1" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Mount&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="cCIKSAW-SaP8fwa9gpXD-1" value="&lt;span style=&quot;font-size: 17px&quot;&gt;componentDid&lt;br&gt;Update&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="362.5" y="740" width="155" height="60" as="geometry" />
         </mxCell>
       </root>
