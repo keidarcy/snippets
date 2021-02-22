@@ -2,6 +2,7 @@
 - [Development enviroment bar](#development-enviroment-bar)
 - [Flexbox](#flexbox)
 - [Python watch dog](#python-watch-dog)
+- [TCP/IP](#tcpip)
 ## Quick server
 
 ```
@@ -50,3 +51,6 @@ ruby -run -e httpd . -p 8080
 ```bash
 when-changed -r -v -1 . python3 init.py
 ```
+## TCP/IP
+
+![handshake](tcp-ip-handshake.png)
