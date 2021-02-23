@@ -101,7 +101,7 @@ const runPromises = async () => {
 
 runPromises()
 	.then(res => console.log(res))
-	.catch(err => console.log(err))o
+	.catch(err => console.log(err))
 ```
 
 - A: `[['First', 'Second'], ['Fourth']]`
