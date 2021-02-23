@@ -31,6 +31,7 @@
   - [WebRTC](#webrtc)
   - [WebSocket & WebTransport](#websocket--webtransport)
     - [XMLHttpRequest](#xmlhttprequest)
+    - [Beacon API](#beacon-api)
 
 ## Event and CustomEvent
 
@@ -517,4 +518,31 @@ postData = async () => {
 
 getBtn.addEventListener('click', getData)
 postBtn.addEventListener('click', postData)
+```
+
+### Beacon API
+
+- what it is
+
+Beacon requests use the HTTP POST method and requests typically do not require a response, just return boolean value.
+
+- why use it and difference between XMLHttpRequest
+
+Ajax request using the XMLHTTPREQUEST object or even the fetch api can do way much more than the beacon request. But the ajax and fetch requests are waiting for result from the server which make them unresponsive in events such as window unload or page unload or even animations..
+
+The beacon api only does a POST request and it immediately returns true if the request get piped for execution and false when it didnt. Plus it doesn’t wait for result from the server which makes it great for logging during animations or during page unload..  you send the request and you don’t wait for result.
+
+- basic usage
+
+```js
+navigator.sendBeacon(`URL?timestay=${time}`)
+```
+
+- example
+
+```js
+document.addEventListener('unload', () => {
+  navigator.sendBeacon(`URL?timestay=${time}`)
+})
+
 ```
