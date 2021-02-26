@@ -30,8 +30,9 @@
   - [Date](#date)
   - [WebRTC](#webrtc)
   - [WebSocket & WebTransport](#websocket--webtransport)
-    - [XMLHttpRequest](#xmlhttprequest)
-    - [Beacon API](#beacon-api)
+  - [XMLHttpRequest](#xmlhttprequest)
+  - [Beacon API](#beacon-api)
+  - [JSONP](#jsonp)
 
 ## Event and CustomEvent
 
@@ -472,7 +473,7 @@ document.querySelector('button').onclick = () => {
 };
 ```
 
-### XMLHttpRequest
+## XMLHttpRequest
 
 ```js
 const getBtn = document.getElementById('get-btn');
@@ -520,7 +521,7 @@ getBtn.addEventListener('click', getData)
 postBtn.addEventListener('click', postData)
 ```
 
-### Beacon API
+## Beacon API
 
 - what it is
 
@@ -545,4 +546,18 @@ document.addEventListener('unload', () => {
   navigator.sendBeacon(`URL?timestay=${time}`)
 })
 
+```
+
+## JSONP
+
+```html
+<script>
+  const cb = (res) => {
+    console.log({res})
+  }
+</script>
+<script src="https://jsonplaceholder.typicode.com/todos?jsoncallback=cb"></script>
+<script>
+  console.log({cb})
+</script>
 ```

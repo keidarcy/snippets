@@ -34,6 +34,7 @@ python3 init.py
   - [http](./basic/Http.md)
   - [python](./basic/Python.md)
   - [css](./basic/CSS.md)
+  - [tips](./basic/Tips.md)
   - [basic](./basic/Basic.md)
   - [regex](./basic/Regex.md)
   - [editor](./basic/Editor.md)
@@ -45,7 +46,7 @@ python3 init.py
   - [nginx](./server/Nginx.md)
   - [sql](./server/SQL.md)
   - [bash](./server/Bash.md)
-- examples
+- __tests__
 
 ---
 
