@@ -1,6 +1,7 @@
 # Browser related javascript
 
 - [chrome devtools](https://developers.google.com/web/tools/chrome-devtools/console/utilities)
+- [web.dev](https://web.dev/)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
