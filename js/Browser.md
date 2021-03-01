@@ -1,7 +1,7 @@
 # Browser related javascript
 
 - [chrome devtools](https://developers.google.com/web/tools/chrome-devtools/console/utilities)
-- [web.dev](https://web.dev/)
+- [web.dev](https://web.devG/)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
@@ -34,6 +34,7 @@
   - [XMLHttpRequest](#xmlhttprequest)
   - [Beacon API](#beacon-api)
   - [JSONP](#jsonp)
+  - [Leave alert](#leave-alert)
 
 ## Event and CustomEvent
 
@@ -480,46 +481,49 @@ document.querySelector('button').onclick = () => {
 const getBtn = document.getElementById('get-btn');
 const postBtn = document.getElementById('post-btn');
 
-const sendHttpRequest = (method, url, data)=>{
+const sendHttpRequest = (method, url, data) => {
   const promise = new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
 
-    xhr.responseType = 'json'
-    if (data){
-      xhr.setRequestHeader('Content-Type', 'application.json')
+    xhr.responseType = 'json';
+    if (data) {
+      xhr.setRequestHeader('Content-Type', 'application.json');
     }
     xhr.onload = () => {
-      if(xhr.status > 400){
-        reject('nonnon')
+      if (xhr.status > 400) {
+        reject('nonnon');
       }
       const data = xhr.response;
-      resolve(data)
-    }
+      resolve(data);
+    };
     xhr.onerror = () => {
-      reject('wrong')
-    }
+      reject('wrong');
+    };
     xhr.send(JSON.stringify(data));
-  })
+  });
   return promise;
-}
+};
 
 getData = async () => {
-  const data = await sendHttpRequest('GET', 'https://reqres.in/api/users')
-  console.log({data})
-}
+  const data = await sendHttpRequest('GET', 'https://reqres.in/api/users');
+  console.log({ data });
+};
 
 postData = async () => {
-  try{
-  const data = await sendHttpRequest('POST', 'https://reqres.in/ap/users', {email: 'test@test.com', password: 'testtest'})
-  console.log({data})
-  }catch(ex){
-    console.error(ex)
+  try {
+    const data = await sendHttpRequest('POST', 'https://reqres.in/ap/users', {
+      email: 'test@test.com',
+      password: 'testtest'
+    });
+    console.log({ data });
+  } catch (ex) {
+    console.error(ex);
   }
-}
+};
 
-getBtn.addEventListener('click', getData)
-postBtn.addEventListener('click', postData)
+getBtn.addEventListener('click', getData);
+postBtn.addEventListener('click', postData);
 ```
 
 ## Beacon API
@@ -532,21 +536,20 @@ Beacon requests use the HTTP POST method and requests typically do not require a
 
 Ajax request using the XMLHTTPREQUEST object or even the fetch api can do way much more than the beacon request. But the ajax and fetch requests are waiting for result from the server which make them unresponsive in events such as window unload or page unload or even animations..
 
-The beacon api only does a POST request and it immediately returns true if the request get piped for execution and false when it didnt. Plus it doesn’t wait for result from the server which makes it great for logging during animations or during page unload..  you send the request and you don’t wait for result.
+The beacon api only does a POST request and it immediately returns true if the request get piped for execution and false when it didnt. Plus it doesn’t wait for result from the server which makes it great for logging during animations or during page unload.. you send the request and you don’t wait for result.
 
 - basic usage
 
 ```js
-navigator.sendBeacon(`URL?timestay=${time}`)
+navigator.sendBeacon(`URL?timestay=${time}`);
 ```
 
 - example
 
 ```js
 document.addEventListener('unload', () => {
-  navigator.sendBeacon(`URL?timestay=${time}`)
-})
-
+  navigator.sendBeacon(`URL?timestay=${time}`);
+});
 ```
 
 ## JSONP
@@ -554,11 +557,40 @@ document.addEventListener('unload', () => {
 ```html
 <script>
   const cb = (res) => {
-    console.log({res})
-  }
+    console.log({ res });
+  };
 </script>
 <script src="https://jsonplaceholder.typicode.com/todos?jsoncallback=cb"></script>
 <script>
-  console.log({cb})
+  console.log({ cb });
 </script>
+```
+
+## Leave alert
+
+- example with http request
+
+```js
+const pendingOps = new Set();
+
+function addToPendingWork(promise) {
+  pendingOps.add(promise);
+  spinner.hidden = false;
+
+  const cleanup = () => {
+    pendingOps.delete(promise);
+    spinner.hidden = pendingOps.size === 0;
+  };
+
+  promise.then(cleanup).catch(cleanup);
+}
+```
+
+- example with beacon api
+
+```js
+const data = JSON.stringify({ action: 'close', when: +new Data() });
+window.addEventListener('beforeunload', (ev) => {
+  navigator.sendBeacon('/analytics', data);
+});
 ```
