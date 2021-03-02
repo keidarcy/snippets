@@ -35,6 +35,7 @@
   - [Beacon API](#beacon-api)
   - [JSONP](#jsonp)
   - [Leave alert](#leave-alert)
+  - [Composition start|end|update event](#composition-startendupdate-event)
 
 ## Event and CustomEvent
 
@@ -592,5 +593,26 @@ function addToPendingWork(promise) {
 const data = JSON.stringify({ action: 'close', when: +new Data() });
 window.addEventListener('beforeunload', (ev) => {
   navigator.sendBeacon('/analytics', data);
+});
+```
+
+## Composition start|end|update event
+
+- [mdn](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionstart_event)
+
+```js
+const inputElement = document.querySelector('input[type="text"]');
+
+inputElement.addEventListener('compositionstart', (event) => {
+  console.log(`generated characters were: ${event.data}`);
+});
+
+
+inputElement.addEventListener('compositionend', (event) => {
+  console.log(`generated characters were: ${event.data}`);
+});
+
+inputElement.addEventListener('compositionupdate', (event) => {
+  console.log(`generated characters were: ${event.data}`);
 });
 ```
