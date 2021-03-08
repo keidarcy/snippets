@@ -2,6 +2,7 @@
 
 - [chrome devtools](https://developers.google.com/web/tools/chrome-devtools/console/utilities)
 - [web.dev](https://web.devG/)
+- [how chrome work](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
@@ -569,12 +570,23 @@ document.addEventListener('unload', () => {
 
 ## Leave alert
 
+- basic implementation
+
+```js
+window.addEventListener('beforeunload', ev => {
+  if (pendingOps.size) {
+    ev.retrunValue = 'strill waiting';
+  }
+})
+```
+
 - example with http request
 
 ```js
 const pendingOps = new Set();
 
 function addToPendingWork(promise) {
+  const promise = fetch('/new-content');
   pendingOps.add(promise);
   spinner.hidden = false;
 
@@ -585,6 +597,12 @@ function addToPendingWork(promise) {
 
   promise.then(cleanup).catch(cleanup);
 }
+
+window.addEventListener('beforeunload', ev => {
+  if (pendingOps.size) {
+    ev.retrunValue = 'strill waiting';
+  }
+})
 ```
 
 - example with beacon api
