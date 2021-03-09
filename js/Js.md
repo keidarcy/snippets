@@ -329,6 +329,8 @@ console.log(name); // JOE
 
 ## this
 
+- [this](https://web.dev/javascript-this/)
+
 - `this` === current execution context
 
 ```js

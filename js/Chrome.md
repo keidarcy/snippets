@@ -37,6 +37,7 @@
   - [JSONP](#jsonp)
   - [Leave alert](#leave-alert)
   - [Composition start|end|update event](#composition-startendupdate-event)
+  - [script tag scope](#script-tag-scope)
 
 ## Event and CustomEvent
 
@@ -633,4 +634,22 @@ inputElement.addEventListener('compositionend', (event) => {
 inputElement.addEventListener('compositionupdate', (event) => {
   console.log(`generated characters were: ${event.data}`);
 });
+```
+## script tag scope
+
+```html
+<script>
+  var one = true;
+  const two = true;
+</script>
+<script type="module">
+  var three = true
+  const four = true
+</script>
+<script type="module">
+  console.log(self.one)
+  console.log(two)
+  // console.log(three)
+  // console.log(four)
+</script>
 ```
