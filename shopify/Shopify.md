@@ -21,6 +21,7 @@
 
 ## External Links
 
+- [live chat](https://help.shopify.com/en/questions#/contact)
 - [Liquid Objects](https://shopify.dev/docs/themes/liquid/reference/objects)
 - [schema types](https://shopify.dev/docs/themes/settings)
 - [slatest](https://github.com/entozoon/slatest)(hot reload with compiler version themekit)

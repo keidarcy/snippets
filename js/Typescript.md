@@ -243,3 +243,16 @@ type ArtistsResponse = ArtistsData & ErrorHandling;
 // index.d.ts
 export { default as CSSTransition } from './CSSTransition';
 ```
+
+## nodemon for ts
+
+- nodemon.json
+- execute with only `nodemon`
+
+```json
+{
+  "watch": ["server"],
+  "ext": "ts",
+  "exec": "ts-node index.ts"
+}
+```
