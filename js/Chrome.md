@@ -3,6 +3,8 @@
 - [chrome devtools](https://developers.google.com/web/tools/chrome-devtools/console/utilities)
 - [web.dev](https://web.devG/)
 - [how chrome work](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
+- [webpage tester](https://www.webpagetest.org/)
+- [crux](https://web.dev/chrome-ux-report-data-studio-dashboard/)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
@@ -38,6 +40,16 @@
   - [Leave alert](#leave-alert)
   - [Composition start|end|update event](#composition-startendupdate-event)
   - [script tag scope](#script-tag-scope)
+  - [Web Vitals](#web-vitals)
+    - [CLS](#cls)
+      - [What causes](#what-causes)
+      - [Layout shift score](#layout-shift-score)
+      - [solutions](#solutions)
+    - [LCP](#lcp)
+      - [critical css](#critical-css)
+      - [Server push(http2)](#server-pushhttp2)
+    - [FID](#fid)
+      - [what causes](#what-causes-1)
 
 ## Event and CustomEvent
 
@@ -653,3 +665,90 @@ inputElement.addEventListener('compositionupdate', (event) => {
   // console.log(four)
 </script>
 ```
+
+## Web Vitals
+
+- LCP(Largest Content Paint) - Loading
+- FID(First Input Delay) - Interactivity
+- CLS(Cumulative Layout Shift) - Visual Stability
+- FCP(First Contentful Paint)
+- TTFB(Time to First Byte)
+
+![LCP](https://webdev.imgix.net/vitals/lcp_ux.svg)
+![FID](https://webdev.imgix.net/vitals/fid_ux.svg)
+![CLS](https://webdev.imgix.net/vitals/cls_ux.svg)
+
+
+### CLS
+
+#### What causes
+
+1. image without dimensions
+2. ads, embeds, iframess without dimensions
+3. dynamically injected content
+4. web fonts causing FOIT/FOUT
+
+#### Layout shift score
+
+```
+layout shift score = impact fraction * distance fraction
+```
+
+#### solutions
+
+1. Always include width and height size attributes on images and videos.
+
+```html
+<!-- default css setting -->
+<style>
+img {
+  aspect-ratio: attr(width) / attr(height)
+}
+</style>
+<img src="src" width="640" height="360" alt="alt" />
+```
+
+2. Reserve enough space for dynamic content, like ads or promos. Avoid inserting new content above existing content, unless in response to a user interaction.
+
+```html
+<style>
+.container {
+  display: block;
+  width: 720px;
+  height: 90px;
+  background: #ccc;
+  overflow: hidden;
+}
+</style>
+
+<div class="container">
+  <iframe scr="...">
+</div>
+```
+
+### LCP
+
+#### critical css
+
+```js
+for (let i = 0; i < CssFiles.media.length; i++) {
+  const link = document.createElement('link');
+  link.href = CssFiles.media[i];
+  link.type = 'text/css';
+  link.ref = 'stylesheet';
+  link.media = 'print';
+  link.onload = link.media = 'all';
+  document.getElementsByTagName('head')[0].appendChild(link);
+}
+```
+
+#### Server push(http2)
+
+### FID
+
+#### what causes
+
+1. Long taks
+2. Long javascript execution time
+3. Large javascript bundles
+4. render-blocking javascript
