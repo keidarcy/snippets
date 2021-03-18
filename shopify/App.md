@@ -1,7 +1,6 @@
 - [Store Pickup by Secomapp](#store-pickup-by-secomapp)
 - [Bespoke_Shipping](#bespoke_shipping)
 	- [instruction](#instruction)
-- [test script](#test-script)
 -
 ## Store Pickup by Secomapp
 
@@ -125,62 +124,4 @@ function calculateshipping($DATA) {
 	/* do not edit below this line */
 
 }
-```
-
-## test script
-
-original price * 100 = *yen\* price
-
-```php
-$DATA = ['items' => [['quantity' => 12,'grams' => 1300,'price' => 600000]]];
-
-$totalPrice = 0;
-$numberPerBox = 12;
-$boxPrice = 1000 + 800;
-$pricePerTime = 800;
-$pricePerWeight = 910;
-$boxWeight = 3.5;
-$isDDP = true;
-$rateDDP = 1.25;
-$priceDDP = 4000;
-$priceFrance = 5000;
-
-
-$totalWeight = 0;
-$boxNumber = 0;
-$productPrice = 0;
-foreach ($DATA['items'] as $index => $item) {
-    $totalWeight += $item['quantity'] * ($item['grams'] / 1000);
-    $boxNumber += ceil($item['quantity'] / $numberPerBox);
-    $productPrice += $item['quantity'] * ($item['price'] / 100);
-}
-$totalWeight += $boxNumber * $boxWeight;
-$boxPrice = ($boxNumber * $boxPrice) + $pricePerTime;
-$shippingPrice = $totalWeight * $pricePerWeight;
-
-
-if ($isDDP) {
-    $totalPrice = floor((($shippingPrice + $boxPrice + $productPrice) * $rateDDP) + $priceDDP);
-} else {
-    $totalPrice = floor(($shippingPrice + $boxPrice + $productPrice));
-}
-
-if ($DATA['destination']['country'] == 'FR') {
-    $totalShippingPrice += $priceFrance;
-}
-
-$totalShippingPrice = ($totalPrice - $productPrice) * 100;
-
-$_RATES[] = array(
-	"service_name" => "Standard Shipping", //this is what the customer will see
-	"service_code" => "STANDARD_SHIPPING", //can be anything you like
-	"total_price" => $totalShippingPrice, //in cents
-	"currency" => "JPY",
-);
-
-var_dump($productPrice);
-var_dump($shippingPrice);
-var_dump($boxPrice);
-var_dump($totalPrice);
-var_dump($totalShippingPrice);
 ```
