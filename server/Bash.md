@@ -41,3 +41,5 @@ ifconfig | grep 'inet 192'| awk '{ print $2}'
 
 - update omz `upgrade_oh_my_zsh`
 - delete all caches `rm ~/.zcompdump*`
+
+## jq
