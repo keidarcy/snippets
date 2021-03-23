@@ -4,6 +4,9 @@
 - [nginx.com docs](https://docs.nginx.com/)
 
 - [Nginx](#nginx)
+  - [basic](#basic)
+  - [Layer 7 proxy](#layer-7-proxy)
+  - [Layer 4 proxy](#layer-4-proxy)
   - [Location Directive](#location-directive)
   - [Reverse Proxy](#reverse-proxy)
   - [Load Balancer](#load-balancer)
@@ -16,6 +19,102 @@
     - [NO ssl](#no-ssl)
     - [With SSL](#with-ssl)
   - [Default](#default)
+
+## basic
+
+```
+http {
+    server {
+        listen 8080;
+        root /etc/nginx/html;
+
+        location /images {
+            root /etc/nginx/;
+        }
+
+        location ~ .png$ {
+            return 403;
+        }
+    }
+
+    server {
+        listen 8888;
+
+        location / {
+            proxy_pass http://localhost:8080/;
+        }
+    }
+}
+
+events {}
+
+```
+
+## Layer 7 proxy
+
+```
+http {
+    upstream allbackend {
+        # ip_hash;
+        server docker.for.mac.localhost:2222;
+        server docker.for.mac.localhost:3333;
+        server docker.for.mac.localhost:4444;
+        server docker.for.mac.localhost:5555;
+    }
+    upstream app1backend {
+        server docker.for.mac.localhost:2222;
+        server docker.for.mac.localhost:3333;
+
+    }
+
+    upstream app2backend {
+        server docker.for.mac.localhost:4444;
+        server docker.for.mac.localhost:5555;
+    }
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://allbackend/;
+        }
+
+        location /app1 {
+            proxy_pass http://app1backend/;
+        }
+        location /app2 {
+            proxy_pass http://app2backend/;
+        }
+
+        location /admin {
+            return 403;
+        }
+    }
+}
+
+events { }
+```
+
+## Layer 4 proxy
+
+```
+stream {
+    upstream allbackend {
+        server docker.for.mac.localhost:2222;
+        server docker.for.mac.localhost:3333;
+        server docker.for.mac.localhost:4444;
+        server docker.for.mac.localhost:5555;
+    }
+
+    server {
+        listen 80;
+        proxy_pass allbackend;
+    }
+}
+
+events { }
+```
+
+`docker run --rm -v `pwd`/nginx.conf:/etc/nginx/nginx.conf -v `pwd`/ssl:/etc/nginx/ssl -p 9999:443 --name hello_nginx -d nginx:alpine`
 
 ## Location Directive
 
