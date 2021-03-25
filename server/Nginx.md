@@ -7,6 +7,7 @@
   - [basic](#basic)
   - [Layer 7 proxy](#layer-7-proxy)
   - [Layer 4 proxy](#layer-4-proxy)
+  - [Basic Auth](#basic-auth)
   - [Location Directive](#location-directive)
   - [Reverse Proxy](#reverse-proxy)
   - [Load Balancer](#load-balancer)
@@ -115,6 +116,13 @@ events { }
 ```
 
 `docker run --rm -v `pwd`/nginx.conf:/etc/nginx/nginx.conf -v `pwd`/ssl:/etc/nginx/ssl -p 9999:443 --name hello_nginx -d nginx:alpine`
+
+## Basic Auth
+
+```
+auth_basic           “Administrator’s Area”;
+auth_basic_user_file /etc/apache2/.htpasswd;
+```
 
 ## Location Directive
 
