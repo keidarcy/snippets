@@ -31,7 +31,6 @@ python3 init.py
   - [theme](./shopify/Theme.md)
   - [graphql](./shopify/Graphql.md)
 - basic
-  - [http](./basic/Http.md)
   - [python](./basic/Python.md)
   - [css](./basic/CSS.md)
   - [tips](./basic/Tips.md)
@@ -39,7 +38,6 @@ python3 init.py
   - [regex](./basic/Regex.md)
   - [editor](./basic/Editor.md)
   - [macos](./basic/MacOS.md)
-  - [pandas](./basic/Pandas.md)
   - [interview](./basic/interview.md)
   - [ruby](./basic/Ruby.md)
 - server

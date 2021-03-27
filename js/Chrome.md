@@ -5,6 +5,7 @@
 - [how chrome work](https://developers.google.com/web/updates/2018/09/inside-browser-part1)
 - [webpage tester](https://www.webpagetest.org/)
 - [crux](https://web.dev/chrome-ux-report-data-studio-dashboard/)
+- [url viewer](https://view.hugo-decoded.be/)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
