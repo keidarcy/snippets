@@ -119,9 +119,29 @@ events { }
 
 ## Basic Auth
 
+- Installing HTTPD Tools
+
 ```
-auth_basic           “Administrator’s Area”;
-auth_basic_user_file /etc/apache2/.htpasswd;
+sudo yum install -y httpd-tools
+```
+
+- Setting Up HTTP Basic Authentication Credentials
+
+```
+sudo htpasswd -c /etc/nginx/.htpasswd(pw file path) nginx(username)
+```
+
+- Updating the Nginx Configuration
+
+```
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  _;
+    root         /usr/share/nginx/html;
+
+    auth_basic "Private Property";
+    auth_basic_user_file /etc/nginx/.htpasswd;
 ```
 
 ## Location Directive
