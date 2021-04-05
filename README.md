@@ -15,6 +15,7 @@ python3 init.py
   - [aws](./DevOps/AWS.md)
 - js
   - [alpinejs](./js/Alpinejs.md)
+  - [appscript](./js/AppScript.md)
   - [fundamental](./js/Fundamental.md)
   - [reactivity](./js/Reactivity.md)
   - [chrome](./js/Chrome.md)
