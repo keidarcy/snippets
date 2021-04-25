@@ -1,8 +1,10 @@
 # Javascript Basic
 
 - [javascript runtime simulation](http://latentflip.com/loupe)
+ - [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+ - [What the heck is the event loop anyway? | Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [Concept explanation](https://www.javascripttutorial.net/)
-- [chinese resource](https://github.com/coffe1891/frontend-hard-mode-interview)
+- [js hard mode](https://github.com/coffe1891/frontend-hard-mode-interview)
 
 - [Javascript Basic](#javascript-basic)
   - [Proxy](#proxy)
