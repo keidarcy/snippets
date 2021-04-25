@@ -37,15 +37,6 @@
       - [iterator](#iterator-1)
       - [generator](#generator-1)
       - [use generator to create own Object.entries function](#use-generator-to-create-own-objectentries-function)
-  - [Data structure](#data-structure)
-    - [Array](#array)
-    - [Set](#set-1)
-      - [Array vs Set](#array-vs-set)
-    - [Object](#object)
-    - [Map](#map-1)
-      - [Object vs Map](#object-vs-map)
-      - [WeakSet & WeakMap](#weakset--weakmap)
-    - [Linked List](#linked-list-1)
 
 ## Proxy
 
@@ -123,7 +114,8 @@ console.log(iterator.next());
 ## Map
 
 - Map
-  > The Map object holds key-value pairs and **remembers** the original insertion order of the keys. Any value (both **objects** and primitive values) may be used as either a key or a value.
+
+The Map object holds key-value pairs and **remembers** the original insertion order of the keys. Any value (both **objects** and primitive values) may be used as either a key or a value.
 
 ```js
 const a = {};
@@ -148,17 +140,40 @@ console.log(map);
 
 > [info](https://javascript.info/weakmap-weakset)
 
-> The first difference from Map is that WeakMap keys must be **objects**, not primitive values
+1. The first difference from Map is that WeakMap keys must be **objects**, not primitive values
+2. if we use an object as the key in it, and there are no other references to that object – it will be removed from memory (and from the map) automatically
+3. WeakMap does not support iteration and methods keys(), values(), entries(), so there’s no way to get all keys or values from it.
 
-> Key won't be garbage-collected
+```js
+let weakMap = new WeakMap();
+
+let obj = {};
+
+weakMap.set(obj, "ok"); // works fine (object key)
+
+// can't use a string as the key
+weakMap.set("test", "Whoops"); // Error, because "test" is not an object
+```
+
+
+```js
+let john = { name: "John" };
+
+let weakMap = new WeakMap();
+weakMap.set(john, "...");
+
+john = null; // overwrite the reference
+
+// john is removed from memory!
+```
 
 ## Set
 
 - Set
 
-> The Set object lets you store **unique** values of any type, whether primitive values or object references.
+1. The Set object lets you store **unique** values of any type, whether primitive values or object references.
 
-> Set objects are collections of values. You can iterate through the elements of a set in **insertion order**. A value in the Set may **only occur once**; it is unique in the Set's collection.
+2. Set objects are collections of values. You can iterate through the elements of a set in **insertion order**. A value in the Set may **only occur once**; it is unique in the Set's collection.
 
 ```js
 const set = new Set([1, 2, 4]);
@@ -172,11 +187,17 @@ console.log(set);
 
 ```js
 const arr = [1, 2, 2, 3];
-const newArr = [...new Set[arr]()]; //[1,2,3]
+const newArr = [...new Set(arr)]; //[1,2,3]
 const newArr = [Array.from(new Set[arr]())]; //[1,2,3]
 ```
 
 - WeakSet
+
+> [info](https://javascript.info/weakmap-weakset)
+
+1. It is analogous to `Set`, but we may only add objects to `WeakSet` (not primitives).
+2. An object exists in the set while it is reachable from somewhere else.
+3. Like `Set`, it supports `add`, `has` and `delete`, but not `size`, `keys()` and no iterations.
 
 ```js
 const ws = new WeakSet([{ a: 1 }, { b: 2 }]);
@@ -961,147 +982,3 @@ for(const [key, value] of oentries(person)){
 // key: nameis eriii
 // key: phoneis 123-2312
 ```
-
-## Data structure
-
-### Array
-1. Insertion order is kept
-2. Element access via index
-3. Iterable == use for-of loop
-4. Size(length) adjusts dynamically
-5. Duplicate values are *allowed*
-6. Deletion and finding elements can require *extra work*
-
-```js
-const alphs = ['a', 'b', 'c'];
-console.log(alphs[1]);
-console.log(alphs.length);
-
-for (const el of alphs) {
-  console.log(el);
-}
-
-alphs.push('d');
-console.log(alphs.length);
-
-const cIndex = alphs.findIndex((al) => al === 'c');
-alphs.splice(2, 1);
-console.log(alphs);
-```
-
-### Set
-
-1. Insertion order is _not_ stored/memorized
-2. Element access and extraction via method
-3. Iterable == use for-of loop
-4. Size(length) adjusts dynamically
-5. Duplicate values are *not* allowed == unique values only
-6. Deletion and finding elements is trivial and fast
-
-```js
-const ids = new Set();
-ids.add('a');
-ids.add('b');
-ids.add('a');
-
-for (const al of ids) {
-  console.log(al);
-}
-
-console.log(ids.has('a'));
-ids.delete('a');
-```
-
-#### Array vs Set
-
-- array
-  - Can always use array
-  - Must-use if order matters, duplicated are wanted
-- set
-  - Only usable if order does not matter and you only need unique values
-  - Can simplify data access(finding, deletion) compared to arrays
-
-### Object
-
-1. Unordered key-value pairs of data
-2. Element access via key (property name)
-3. Not iterable (only with for-in)
-4. Keys are unique, value are not
-5. Keys have to be strings, numbers or symbols
-6. Can store data & *functionality* (methods)
-
-```js
-const person = { firstName: 'a', age: 21 };
-person.firstName = 'b';
-delete person.age;
-console.log(person);
-```
-
-### Map
-1. Ordered key-value pairs of data
-2. Element access via key
-3. Iterable == use for-of loop
-4. Keys are unique, values are not
-5. Keys can be anything(including refrence values like arrays)
-6. Pure data storage optimized for data access
-
-```js
-const regex = 'a.*c';
-const states = parse(regex);
-const exampleStr = 'acsssssc';
-const result = test(states, exampleStr);
-console.log({ result });
-
-const resultData = new Map();
-resultData.set('average', 1.1);
-resultData.set('lastResult', null);
-
-const person = { name: 'a' };
-resultData.set(person, 10);
-
-for (const val of resultData) {
-  console.log(val);
-}
-// [ 'average', 1.1 ]
-// [ 'lastResult', null ]
-// [ { name: 'a' }, 10 ]
-resultData.get(person);
-resultData.delete(person);
-resultData.get(person);
-
-```
-
-
-#### Object vs Map
-
-- objects
-  - Very versatile construct and data storage in js
-  - Must-use if you want to add extra functionality
-
-- maps
-  - Focused on data storage and access
-  - Can simplify and imporove data access compared to objects
-
-#### WeakSet & WeakMap
-
-- Variations of Set and Map
-- Values and keys are only *weakly referenced*
-- Garbage collection can delete values and keys if not used anywhere else in the app
-
-### Linked List
-
-- history
-
-Historically, then main reason was *mermory management*: don't have to specify (occupy) the size in advance.
-
-- why use
-
-useful if you do a lot of *insertions at the beginning of lists* - faster then array at this
-
-|                       | Linked List                        | Arrays |
-| --------------------- | ---------------------------------- | ------ |
-| Element Access        | O(n)                               | O(1)   |
-| Insertion at End      | with tail:O(1), without tail: O(n) | O(1)   |
-| Insetion at beginning | O(1)                               | O(n)   |
-| Insertion in Middle   | Search time + O(1)                 | O(n)   |
-| Search elements       | O(n)                               | O(n)   |
