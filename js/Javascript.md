@@ -1,12 +1,17 @@
 # Javascript Basic
 
-- [javascript runtime simulation](http://latentflip.com/loupe)
- - [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
- - [What the heck is the event loop anyway? | Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
-- [Concept explanation](https://www.javascripttutorial.net/)
-- [js hard mode](https://github.com/coffe1891/frontend-hard-mode-interview)
+#### js links
 
+- [What the heck is the event loop anyway? | Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+  - [javascript runtime simulation](http://latentflip.com/loupe)
+- [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+- [Concept explanation](https://www.javascripttutorial.net/)
+- [frontend hard mode](https://github.com/coffe1891/frontend-hard-mode-interview)
+
+#### js notes
 - [Javascript Basic](#javascript-basic)
+      - [js links](#js-links)
+      - [js notes](#js-notes)
   - [Proxy](#proxy)
   - [With](#with)
   - [Generator and Iterator](#generator-and-iterator)

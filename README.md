@@ -19,12 +19,11 @@ python3 init.py
   - [fundamental](./js/Fundamental.md)
   - [reactivity](./js/Reactivity.md)
   - [chrome](./js/Chrome.md)
-  - [tsconfig](./js/Tsconfig.md)
+  - [javascript](./js/Javascript.md)
   - [jest](./js/Jest.md)
   - [react](./js/React.md)
   - [nodejs](./js/Nodejs.md)
   - [typescript](./js/Typescript.md)
-  - [js](./js/Js.md)
 - shopify
   - [app](./shopify/App.md)
   - [api](./shopify/Api.md)
