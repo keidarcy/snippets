@@ -1,21 +1,74 @@
-- Pure CSS slidedown / slideup animation using transform translateY
+## selector
+
+|                    |                  |                                                                                     |
+| :----------------: | :--------------: | :---------------------------------------------------------------------------------: |
+|   element.class    |     p.intro      |                     Selects all <p> elements with class="intro"                     |
+|  element,element   |      div, p      |                   Selects all <div> elements and all <p> elements                   |
+|  element element   |      div p       |                   Selects all <p> elements inside <div> elements                    |
+|  element>element   |     div > p      |            Selects all <p> elements where the parent is a <div> element             |
+|  element+element   |     div + p      |   Selects the first <p> element that are placed immediately after <div> elements    |
+| element1~element2  |      p ~ ul      |            Selects every <ul> element that are preceded by a <p> element            |
+|    [attribute]     |     [target]     |                    Selects all elements with a target attribute                     |
+| [attribute=value]  | [target=_blank]  |                     Selects all elements with target="\_blank"                      |
+| [attribute~=value] | [title~=flower]  |      Selects all elements with a title attribute containing the word "flower"       |
+| [attribute=value]  |    [lang =en]    |         Selects all elements with a lang attribute value starting with "en"         |
+| [attribute^=value] | a[href^="https"] |      Selects every <a> element whose href attribute value begins with "https"       |
+| [attribute$=value] | a[href$=".pdf"]  |        Selects every <a> element whose href attribute value ends with ".pdf"        |
+| [attribute*=value] | a[href*="darcy"] | Selects every <a> element whose href attribute value contains the substring "darcy" |
+
+
+## properties
+
+### box-sizing
 
 ```css
-.slide-up,
-.slide-down {
-  overflow: hidden;
-}
-.slide-up > div,
-.slide-down > div {
-  transform: translateY(-100%);
-  transition: 0.4s ease-in-out;
-}
-.slide-down > div {
-  transform: translateY(0);
-}
+box-sizing: content-box;
+box-sizing: border-box;
 ```
 
-- aspect-ratio
+- `content-box`: the `height` and `width` css box model "content" size
+- `border-box`: the `height` and `width` css box model "content + padding + border" size
+
+### flexbox
+
+- flex item
+  - `flex-direction`
+  - `justify-content`
+  - `align-items`
+  - `align-content`
+  - `flex-wrap`
+- flex children
+  - flex
+    - `flex: initial`: `flex: 0 1 auto`: flex-grow: 0; flex-shrink: 1; flex-basis: auto;
+    - `flex: 1`: `flex:1 1 auto`
+  - `flex-grow`
+  - `flex-shrink`
+  - `flex-basis`
+
+### grid
+
+- grid item
+  - `grid-template-columns`: `: repeat(1, minmax(0, 1fr))`
+  - `grid-template-rows`
+  - `gap`
+  - `column-gap`
+  - `row-gap`
+  - `grid-template-area`
+
+### box alignment
+  - `justify-content`
+  - `justify-items`
+  - `justify-self`
+  - `align-content`
+  - `align-items`
+  - `align-self`
+  - `place-content`
+  - `place-items`
+  - `place-self`
+
+
+
+### aspect-ratio
 
 ```html
 <iframe
@@ -39,7 +92,15 @@
 </style>
 ```
 
-- outline vs border
+## others
+
+### unit: rem vs em
+
+`rem` is based on `html` tag, without setting is 16px.
+`em` is based on parent tag size.
+
+
+### outline vs border
 
 ```css
 .border {
@@ -57,25 +118,19 @@
 }
 ```
 
-- rem vs em
+### Pure CSS slidedown / slideup animation using transform translateY
 
-`rem` is based on `html` tag, without setting is 16px.
-`em` is based on parent tag size.
-
-- selector
-
-|                    |                  |                                                                                     |
-| :----------------: | :--------------: | :---------------------------------------------------------------------------------: |
-|   element.class    |     p.intro      |                     Selects all <p> elements with class="intro"                     |
-|  element,element   |      div, p      |                   Selects all <div> elements and all <p> elements                   |
-|  element element   |      div p       |                   Selects all <p> elements inside <div> elements                    |
-|  element>element   |     div > p      |            Selects all <p> elements where the parent is a <div> element             |
-|  element+element   |     div + p      |   Selects the first <p> element that are placed immediately after <div> elements    |
-| element1~element2  |      p ~ ul      |            Selects every <ul> element that are preceded by a <p> element            |
-|    [attribute]     |     [target]     |                    Selects all elements with a target attribute                     |
-| [attribute=value]  | [target=_blank]  |                     Selects all elements with target="\_blank"                      |
-| [attribute~=value] | [title~=flower]  |      Selects all elements with a title attribute containing the word "flower"       |
-| [attribute=value]  |    [lang =en]    |         Selects all elements with a lang attribute value starting with "en"         |
-| [attribute^=value] | a[href^="https"] |      Selects every <a> element whose href attribute value begins with "https"       |
-| [attribute$=value] | a[href$=".pdf"]  |        Selects every <a> element whose href attribute value ends with ".pdf"        |
-| [attribute*=value] | a[href*="darcy"] | Selects every <a> element whose href attribute value contains the substring "darcy" |
+```css
+.slide-up,
+.slide-down {
+  overflow: hidden;
+}
+.slide-up > div,
+.slide-down > div {
+  transform: translateY(-100%);
+  transition: 0.4s ease-in-out;
+}
+.slide-down > div {
+  transform: translateY(0);
+}
+```
