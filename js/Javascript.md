@@ -17,13 +17,13 @@
   - [core](#core)
     - [`this`](#this)
       - [Global context](#global-context)
-      - [Function context](#function-context)
-        - [Function invocation](#function-invocation)
-        - [Method invocation](#method-invocation)
+    - [Function context](#function-context)
+      - [Function invocation](#function-invocation)
+      - [Method invocation](#method-invocation)
         - [Constructor invocation](#constructor-invocation)
-        - [Indirect invocation](#indirect-invocation)
-        - [Arrow functions](#arrow-functions)
-    - [Prototype, **proto**, prototypal inheritance](#prototype-proto-prototypal-inheritance)
+      - [Indirect invocation](#indirect-invocation)
+      - [Arrow functions](#arrow-functions)
+    - [**Prototype**, **__proto__**, prototype inheritance](#prototype-proto-prototype-inheritance)
     - [Generator and Iterator](#generator-and-iterator)
       - [loop though array object](#loop-though-array-object)
       - [iterator](#iterator)
@@ -76,14 +76,14 @@ const user = {
 console.log(this === globalThis); // true
 ```
 
-#### Function context
+### Function context
 
 - Function invocation
 - Method invocation
 - Constructor invocation
 - Indirect invocation
 
-##### Function invocation
+#### Function invocation
 
 - non-strict mode
 
@@ -106,7 +106,7 @@ function a() {
 a(); // undefine
 ```
 
-##### Method invocation
+#### Method invocation
 
 ```js
 const Car = {
@@ -183,7 +183,7 @@ function Car(brand) {
 }
 ```
 
-##### Indirect invocation
+#### Indirect invocation
 
 ```js
 function getBrand(prefix) {
@@ -206,7 +206,7 @@ getBrand.apply(honda, ["It's a "]); // "It's a Honda"
 getBrand.apply(audi, ["It's an "]); // "It's a Audi"
 ```
 
-##### Arrow functions
+#### Arrow functions
 
 ```js
 let getThis = () => this;
@@ -226,7 +226,7 @@ var car = new Car();
 car.getSpeed(); // TypeError
 ```
 
-### Prototype, **proto**, prototypal inheritance
+### **Prototype**, **__proto__**, prototype inheritance
 
 `.prototype` only exist on function
 
@@ -254,7 +254,7 @@ console.log(new Object().__proto__.__proto__); //>> null
 console.log(Object.prototype.__proto__); //>> null
 ```
 
-`__proto__` of a value is the prototype of constructor. //一个对象的原型就是它的构造函数的 prototype 属性的值
+`__proto__` of a value is the prototype of constructor. //>> 一个对象的原型就是它的构造函数的 prototype 属性的值
 
 ```js
 let person = {
