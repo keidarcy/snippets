@@ -1,14 +1,6 @@
 
 # Snippets
 
-run this before push new commit
-
-```bash
-python3 init.py
-```
-
----
-
 - DevOps
   - [git](./DevOps/Git.md)
   - [docker](./DevOps/Docker.md)

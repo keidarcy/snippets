@@ -16,14 +16,6 @@ for filepath in glob.iglob('./' + '**/*.md', recursive=True):
 mdStr = """
 # Snippets
 
-run this before push new commit
-
-```bash
-python3 init.py
-```
-
----
-
 """
 
 for folder in folders:
