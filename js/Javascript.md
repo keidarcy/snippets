@@ -1,7 +1,7 @@
 # Javascript Basic
 
 - videos
-  - [What the heck is the event loop anyway? | Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+  - [What the heck is the event loop anyway](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
     - [javascript runtime simulation](http://latentflip.com/loupe)
   - [Jake Archibald: In The Loop](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - sites
