@@ -1,5 +1,5 @@
  - [Play with docker](https://labs.play-with-docker.com/)
- 
+
 
 ## Basic concept
 
@@ -9,56 +9,56 @@
  ```
  docker pull nginx
  ```
- 
+
   - remove image
  ```
- docker rmi {{image name}}
+ docker rmi {/{image name}/}
  ```
- 
+
  - run
  ```
  docker run -d -p 8000:80 nginx
  docker run -d -p 8000:80 --name mynginx -v `pwd`:/usr/share/nginx/html nginx:1.13
  ```
- 
+
   - remove container
  ```
- docker rm -f {{container name}}
+ docker rm -f {/{container name}/}
  ```
 
  - commit
  ```
- docker commit {{running container name}} {{new image name}}
+ docker commit {/{running container name}/} {/{new image name}/}
  ```
- 
+
  - save
  ```
- docker save {{image name}} > {{tar file name}}
+ docker save {/{image name}/} > {/{tar file name}/}
  ```
- 
+
  - load
  ```
- docker load < {{tar file name}}
+ docker load < {/{tar file name}/}
  ```
- 
+
  ## Docker network
- 
+
  ```
  docker run -dit --link mynginx:mynginx alpine
  ```
- 
+
  > mynginx becomes domain
-  
+
  ```
  cat /etc/hosts
- 
+
  #172.17.0.2      mynginx 9b003a399629
  #172.17.0.3      fa05ac17834a
 
  ```
 
  - Simple docker-compose
- 
+
 ```yml
 version: "3"
 services:
@@ -123,7 +123,7 @@ HEALTHCHECK
 SHELL
 USER
 ```
- 
+
 ## Reset All the Local Resources
 
 ```

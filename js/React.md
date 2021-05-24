@@ -268,7 +268,7 @@ const CheckboxInput = ({ checkbox, setCheckbox }) => {
       onChange={(e) => {
         _setCheckbox((val) => !val);
         if (setCheckbox) setCheckbox((val) => !val);
-      }}
+      }/}
     />
   );
 };
@@ -302,7 +302,7 @@ const Checkbox = ({ children }) => {
   const [checkbox, setCheckbox] = useState(false);
 
   return (
-    <CheckboxInterface.Provider value={{ checkbox, setCheckbox }}>
+    <CheckboxInterface.Provider value={/{ checkbox, setCheckbox }/}>
       {children}
     </CheckboxInterface.Provider>
   );
@@ -320,7 +320,7 @@ const CheckboxInput = () => {
       checked={checkbox}
       onChange={(e) => {
         if (setCheckbox) setCheckbox((val) => !val);
-      }}
+      }/}
     />
   );
 };

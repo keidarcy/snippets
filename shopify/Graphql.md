@@ -239,7 +239,7 @@ query taggedProducts {
 
 ```graphql
 {
-  products(first: 30, query: "", after: "{{ the cursor you want to use }}") {
+  products(first: 30, query: "", after: "{/{ the cursor you want to use }/}") {
     pageInfo {
       hasNextPage
       hasPreviousPage

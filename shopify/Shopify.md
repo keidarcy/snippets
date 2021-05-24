@@ -60,7 +60,7 @@ curl --request POST \
 ### url - template
 
 ```
-{{ request.page_type }} == {{ template }} which will be 404 | blog | cart ...
+{/{ request.page_type }/} == {/{ template }/} which will be 404 | blog | cart ...
  - /thisisntarealurl → 404.liquid
  - /blogs/{blog-name}/{article-id-handle} → article.liquid
  - /blogs/{blog-name} → blog.liquid
@@ -115,7 +115,7 @@ https://STORE.myshopify.com/NUMBER/orders/token
 ## Pass liquid data to Vue instance
 
 ```
-<script id="data" type="application/json">{{ product | json }}</script>
+<script id="data" type="application/json">{/{ product | json }/}</script>
 ```
 
 ```
@@ -139,8 +139,8 @@ new Vue({
 ```html
 <p class="cart-attribute__field">
   <label for="name">name</label>
-  <input id="name" type="text" name="attributes[name]" value="{{ cart.attributes["name"]
-  }}">
+  <input id="name" type="text" name="attributes[name]" value="{/{ cart.attributes["name"]
+  }/}">
 </p>
 ```
 

@@ -39,8 +39,8 @@
 ## New theme helper
 
 ```html
-{{ 'main.min.css' | asset_url | stylesheet_tag }} {{ 'main.min.js' | asset_url |
-script_tag }}
+{/{ 'main.min.css' | asset_url | stylesheet_tag }/} {/{ 'main.min.js' | asset_url |
+script_tag }/}
 <script>
   // TODO: remove this helper
   {% assign current_handle = '' %}
@@ -70,9 +70,9 @@ script_tag }}
     {% when 'product' %}
       {% assign current_url = product.url %}
   {% endcase %}
-    console.log('template: {{ template }}, theme.name: {{ theme.name }}');
-    console.log('current_handle: {{ current_handle }}');
-    console.log('current_url: {{ current_url }}');
+    console.log('template: {/{ template }/}, theme.name: {/{ theme.name }/}');
+    console.log('current_handle: {/{ current_handle }/}');
+    console.log('current_url: {/{ current_url }/}');
 </script>
 ```
 
@@ -80,7 +80,7 @@ script_tag }}
 
 ```
 {% for category in linklists.category.links %}
-  {{ category.title }}
+  {/{ category.title }/}
 {% endfor %}
 ```
 
@@ -100,8 +100,8 @@ script_tag }}
 ```html
 <p class="cart-attribute__field">
   <label for="your-name">Your name</label>
-  <input id="your-name" type="text" name="attributes[Your name]" value="{{
-  cart.attributes["Your name"] }}">
+  <input id="your-name" type="text" name="attributes[Your name]" value="{/{
+  cart.attributes["Your name"] }/}">
 </p>
 ```
 
@@ -126,11 +126,11 @@ script_tag }}
   <select name="id">
     {% for variant in product.variants %}
     {% if variant.available %}
-    <option value="{{ variant.id }}">
-      {{ variant.title }}
+    <option value="{/{ variant.id }/}">
+      {/{ variant.title }/}
     </option>
     {% else %}
-    <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+    <option disabled="disabled">{/{ variant.title }/} - {/{ 'products.product.sold_out' | t }/}</option>
     {% endif %}
     {% endfor %}
   </select>
@@ -144,35 +144,35 @@ script_tag }}
 
 ```liquid
  {% for product in collections['ADIDAS'].products limit: 6 %}
-		<a href="{{ product.url }}">
-			<img src="{{ product.featured_image | img_url }}" alt="" srcset="">
-			<h1>{{ product.title }}</h1>
+		<a href="{/{ product.url }/}">
+			<img src="{/{ product.featured_image | img_url }/}" alt="" srcset="">
+			<h1>{/{ product.title }/}</h1>
 		</a>
 		<div>
-				<a href="{{ product.url }}">
-						<img src="{{ product.featured_image | img_url :'x600'}}" alt="" srcset="">
+				<a href="{/{ product.url }/}">
+						<img src="{/{ product.featured_image | img_url :'x600'}/}" alt="" srcset="">
 				</a>
 		</div>
 		<div>
-			<h1>{{ product.title }}</h1>
+			<h1>{/{ product.title }/}</h1>
 			<div class="plan">
-					<h3 id="_product_price_{{ product.id }}">{{ product.price | money }}</h3>
+					<h3 id="_product_price_{/{ product.id }/}">{/{ product.price | money }/}</h3>
 			</div>
-			{{ product.description }}
+			{/{ product.description }/}
 
 			{% form 'product', product, data-productid: product.id %}
 			<div class="selector-wrapper js product-form__item" style="display: {% if product.has_only_default_variant %} none;{% endif %}">
 					<p>Variants</p>
 					<label {% if option.name == 'default' %}class="label--hidden"
-							{% endif %}for="SingleOptionSelector-{{ forloop.index0 }}">
-							{{ option.name }}
+							{% endif %}for="SingleOptionSelector-{/{ forloop.index0 }/}">
+							{/{ option.name }/}
 					</label>
-					<select name="id" data-productid="{{ product.id }}" id="ProductSelect-{{ product.id }}">
+					<select name="id" data-productid="{/{ product.id }/}" id="ProductSelect-{/{ product.id }/}">
 							{% for variant in product.variants %}
-							<option price="{{ variant.price | money }}" value="{{ variant.id }}"
+							<option price="{/{ variant.price | money }/}" value="{/{ variant.id }/}"
 									{%- if variant == current_variant %} selected="selected" {%- endif -%}>
-									{{ variant.title }} {%- if variant.available == false %} -
-									{{ 'products.product.sold_out' | t }}{% endif %}
+									{/{ variant.title }/} {%- if variant.available == false %} -
+									{/{ 'products.product.sold_out' | t }/}{% endif %}
 							</option>
 							{% endfor %}
 					</select>
@@ -182,7 +182,7 @@ script_tag }}
 			<div class="product-form__controls-group">
 					<div class="product-form__item">
 							<div>Quantity</div>
-							<input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1"
+							<input type="number" id="Quantity-{/{ section.id }/}" name="quantity" value="1" min="1"
 									pattern="[0-9]*" class="product-form__input product-form__input--quantity"
 									data-quantity-input>
 					</div>
@@ -191,20 +191,20 @@ script_tag }}
 			<button class="btn product-form__cart-submit btn--secondary-accent" type="submit" name="add"
 					{% if product.available %}{% else %}disabled{% endif %}>
 					{% unless product.available %}
-					{{ 'products.product.sold_out' | t }}
+					{/{ 'products.product.sold_out' | t }/}
 					{% else %}
-					{{ 'products.product.add_to_cart' | t }}
+					{/{ 'products.product.add_to_cart' | t }/}
 					{% endunless %}
 			</button>
-			{{ form | payment_button }}
+			{/{ form | payment_button }/}
 			{% endform %}
 	</div>
 	<script>
-		if(document.querySelector('#ProductSelect-{{ product.id }}')){
-			const select_{{ product.id }} = document.querySelector('#ProductSelect-{{ product.id }}');
-			select_{{ product.id }}.addEventListener('change', () => {
-					const price = select_{{ product.id }}.selectedOptions[0].getAttribute('price')
-					document.querySelector('#_product_price_{{ product.id }}').innerHTML = price;
+		if(document.querySelector('#ProductSelect-{/{ product.id }/}')){
+			const select_{/{ product.id }/} = document.querySelector('#ProductSelect-{/{ product.id }/}');
+			select_{/{ product.id }/}.addEventListener('change', () => {
+					const price = select_{/{ product.id }/}.selectedOptions[0].getAttribute('price')
+					document.querySelector('#_product_price_{/{ product.id }/}').innerHTML = price;
 			});
 		}
 	</script>
@@ -217,7 +217,7 @@ script_tag }}
 
 ```liquid
   {% form 'currency' %}
-    {{ form | currency_selector }}
+    {/{ form | currency_selector }/}
   {% endform %}
 ```
 
@@ -226,9 +226,9 @@ script_tag }}
   <select name="currency">
     {% for currency in shop.enabled_currencies %}
 {% if currency == cart.currency %}
-  <option selected="true" value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+  <option selected="true" value="{/{ currency.iso_code }/}">{/{currency.iso_code}/} {/{currency.symbol}/}</option>
   {% else %}
-  <option value="{{ currency.iso_code }}">{{currency.iso_code}} {{currency.symbol}}</option>
+  <option value="{/{ currency.iso_code }/}">{/{currency.iso_code}/} {/{currency.symbol}/}</option>
 {% endif %}
     {% endfor %}
   </select>
@@ -304,9 +304,9 @@ CONTENT
 </ul>
 <script>
   const URL =
-    '{{ routes.product_recommendations_url }}' +
+    '{/{ routes.product_recommendations_url }/}' +
     '.json?product_id=' +
-    '{{ product.id }}' +
+    '{/{ product.id }/}' +
     '&limit=4';
   function recommendData() {
     return {
@@ -325,14 +325,14 @@ CONTENT
 
 ## Use money formatter with multiple currenies
 
-- `{{ "{{ this " }}}}` => `{{ this }}` in liquid.
+- `{/{ "{/{ this " }/}}/}` => `{/{ this }/}` in liquid.
 
 ```html
 <script>
   var theme = {
-  	moneyFormat: {{ shop.money_format | json }}
+  	moneyFormat: {/{ shop.money_format | json }/}
   }
-  theme.moneyFormat.replace(/{{ "{{[a-zA-Z0-9_]*" }}}}/, p.price)
+  theme.moneyFormat.replace(/{/{ "{/{[a-zA-Z0-9_]*" }/}}/}/, p.price)
 </script>
 ```
 
@@ -353,14 +353,14 @@ CONTENT
 <p class="cart-attribute__field">
   <label for="your-name">memo1</label>
   <textarea id="your-name" name="attributes[memo1]">
-{{ cart.attributes["memo1"] }}</textarea
+{/{ cart.attributes["memo1"] }/}</textarea
   >
 </p>
 
 <p class="cart-attribute__field">
   <label for="your-name">memo2</label>
   <textarea id="your-name" name="attributes[memo2]">
-{{ cart.attributes["memo2"] }}</textarea
+{/{ cart.attributes["memo2"] }/}</textarea
   >
 </p>
 ```
@@ -371,9 +371,9 @@ CONTENT
 {% if order.attributes %}
 <ul>
   {% for attribute in order.attributes %}
-  <li><strong>{{ attribute | first }}</strong>: {{ attribute | last }}</li>
+  <li><strong>{/{ attribute | first }/}</strong>: {/{ attribute | last }/}</li>
   <script>
-    console.log('{{ attribute }}');
+    console.log('{/{ attribute }/}');
   </script>
   {% endfor %}
 </ul>
@@ -429,8 +429,8 @@ deliveryCode1618
 {% endfor %}
 {% assign myproducts = prodlist | remove_last: ';' | split: ';' %}
 {% for handle in myproducts %}
-  {{ handle }}
-  {{ all_products[ handle ].title }}
+  {/{ handle }/}
+  {/{ all_products[ handle ].title }/}
 {% endfor%}
 
 ```
@@ -441,7 +441,7 @@ deliveryCode1618
 {% for outerItem in outerItems %}
     {% assign outer_forloop = forloop %}
     {% for item in items%}
-        <div>{{ outer_forloop.counter }}.&nbsp;{{ item }}</div>
+        <div>{/{ outer_forloop.counter }/}.&nbsp;{/{ item }/}</div>
     {% endfor %}
 {% endfor %}
 ```
@@ -453,9 +453,9 @@ deliveryCode1618
 {% for article in blogs["handle"].articles %}
   {% if article.tags contains 'tag name' and count < 9 %}
   {% assign count = count | plus: 1 %}
-  <li><a href="{{ article.url }}"><div class="photo"><img src="{{ article | img_url: 'master' }}" alt="{{ article.title }}"></div><div class="txtInner">
-    <p class="ttl">{{ article.title }}</p>
-    <p>{{ article.metafields.global.products }}</p>
+  <li><a href="{/{ article.url }/}"><div class="photo"><img src="{/{ article | img_url: 'master' }/}" alt="{/{ article.title }/}"></div><div class="txtInner">
+    <p class="ttl">{/{ article.title }/}</p>
+    <p>{/{ article.metafields.global.products }/}</p>
     <p class="link"><span>detail</span></p>
   </div></a></li>
   {% endif %}
@@ -489,8 +489,8 @@ deliveryCode1618
 {% for product_vendor in shop.vendors limit: 6 %}
   {%- assign brand = collections[product_vendor] -%}
   {% if brand %}
-    <a class="py-3 mt-1 t-style-icon-size" href="{{ product_vendor | url_for_vendor }}">
-      <img class="w-full" src="{{ brand.image | img_url: 'master' }}" alt="{{ product_vendor }}"/>
+    <a class="py-3 mt-1 t-style-icon-size" href="{/{ product_vendor | url_for_vendor }/}">
+      <img class="w-full" src="{/{ brand.image | img_url: 'master' }/}" alt="{/{ product_vendor }/}"/>
     </a>
   {% endif %}
 {% endfor %}
@@ -501,27 +501,27 @@ deliveryCode1618
 ```html
 <form action="/cart/add" method="post">
   {% if product.variants.size > 1 %} {% if product.options[0] %} {% assign used = '' %}
-  <label for="select-one">{{ product.options[0] }}</label>
+  <label for="select-one">{/{ product.options[0] }/}</label>
   <select id="select-one" onchange="letsDoThis()">
     {% for variant in product.variants %} {% unless used contains variant.option1 %}
-    <option value="{{ variant.option1 }}">{{ variant.option1 }}</option>
-    {% capture used %} {{ used }} {{ variant.option1 }} {% endcapture %} {% endunless %}
+    <option value="{/{ variant.option1 }/}">{/{ variant.option1 }/}</option>
+    {% capture used %} {/{ used }/} {/{ variant.option1 }/} {% endcapture %} {% endunless %}
     {% endfor %}
   </select>
   {% endif %} {% if product.options[1] %} {% assign used = '' %}
-  <label for="select-one">{{ product.options[1] }}</label>
+  <label for="select-one">{/{ product.options[1] }/}</label>
   <select id="select-two" onchange="letsDoThis()">
     {% for variant in product.variants %} {% unless used contains variant.option2 %}
-    <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
-    {% capture used %} {{ used }} {{ variant.option2 }} {% endcapture %} {% endunless %}
+    <option value="{/{ variant.option2 }/}">{/{ variant.option2 }/}</option>
+    {% capture used %} {/{ used }/} {/{ variant.option2 }/} {% endcapture %} {% endunless %}
     {% endfor %}
   </select>
   {% endif %} {% if product.options[2] %} {% assign used = '' %}
-  <label for="select-one">{{ product.options[2] }}</label>
+  <label for="select-one">{/{ product.options[2] }/}</label>
   <select id="select-three" onchange="letsDoThis()">
     {% for variant in product.variants %} {% unless used contains variant.option3 %}
-    <option value="{{ variant.option3 }}">{{ variant.option3 }}</option>
-    {% capture used %} {{ used }} {{ variant.option3 }} {% endcapture %} {% endunless %}
+    <option value="{/{ variant.option3 }/}">{/{ variant.option3 }/}</option>
+    {% capture used %} {/{ used }/} {/{ variant.option3 }/} {% endcapture %} {% endunless %}
     {% endfor %}
   </select>
   {% endif %} {% endif %}
@@ -529,7 +529,7 @@ deliveryCode1618
     type="hidden"
     name="id"
     id="product-select"
-    value="{{ product.variants.first.id }}"
+    value="{/{ product.variants.first.id }/}"
   />
 </form>
 <script>
@@ -539,10 +539,10 @@ deliveryCode1618
       var opt2 = document.getElementById("select-two").value;{% endif %}{% if product.options[2] %}
       var opt3 = document.getElementById("select-three").value;{% endif %}var id = "";{% for v in product.variants %}
       if (
-        opt1 == "{{ v.option1 }}"{% if product.options[1] %} && opt2 == "{{ v.option2 }}"{% endif %}{% if product.options[2] %} && opt3 == "{{ v.option3 }}"{% endif %}
+        opt1 == "{/{ v.option1 }/}"{% if product.options[1] %} && opt2 == "{/{ v.option2 }/}"{% endif %}{% if product.options[2] %} && opt3 == "{/{ v.option3 }/}"{% endif %}
       ) {
-        var id = {{ v.id }};
-        var price = "{{ v.price | money }}";
+        var id = {/{ v.id }/};
+        var price = "{/{ v.price | money }/}";
       }
     {% endfor %}
     if (id != "") {
