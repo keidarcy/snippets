@@ -165,9 +165,9 @@ new Vue({
 - [customize-order-status](https://help.shopify.com/en/manual/orders/status-tracking/customize-order-status)
 
 ```
-{% if first_time_accessed %}
+{/% if first_time_accessed %/}
   // Conversion scripts you want to run only once
-{% endif %}
+{/% endif %/}
 ```
 
 ## Order status

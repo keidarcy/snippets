@@ -10,7 +10,7 @@
   - [Product form](#product-form)
     - [Minimal product form](#minimal-product-form)
     - [Show full featured collection of products](#show-full-featured-collection-of-products)
-  - [Show theme information in console with theme.liquid](#show-theme-information-in-console-with-themeliquid)
+  - [Show theme information in console with theme.html](#show-theme-information-in-console-with-themehtml)
   - [Multiple currency selector](#multiple-currency-selector)
   - [Member only page](#member-only-page)
   - [Member only and special tagged customer only](#member-only-and-special-tagged-customer-only)
@@ -43,33 +43,33 @@
 script_tag }/}
 <script>
   // TODO: remove this helper
-  {% assign current_handle = '' %}
-  {% case template %}
-    {% when 'page' %}
-      {% assign current_handle = page.handle %}
-    {% when 'blog' %}
-      {% assign current_handle = blog.handle %}
-    {% when 'article' %}
-      {% assign current_handle = blog.handle %}
-    {% when 'collection' %}
-      {% assign current_handle = collection.handle %}
-    {% when 'product' %}
-      {% assign current_handle = product.handle %}
-  {% endcase %}
-  {% assign current_url = '' %}
+  {/% assign current_handle = '' %/}
+  {/% case template %/}
+    {/% when 'page' %/}
+      {/% assign current_handle = page.handle %/}
+    {/% when 'blog' %/}
+      {/% assign current_handle = blog.handle %/}
+    {/% when 'article' %/}
+      {/% assign current_handle = blog.handle %/}
+    {/% when 'collection' %/}
+      {/% assign current_handle = collection.handle %/}
+    {/% when 'product' %/}
+      {/% assign current_handle = product.handle %/}
+  {/% endcase %/}
+  {/% assign current_url = '' %/}
 
-  {% case template %}
-    {% when 'page' %}
-      {% assign current_url = page.url %}
-    {% when 'blog' %}
-      {% assign current_url = blog.url %}
-    {% when 'article' %}
-      {% assign current_url = blog.url %}
-    {% when 'collection' %}
-      {% assign current_url = collection.url %}
-    {% when 'product' %}
-      {% assign current_url = product.url %}
-  {% endcase %}
+  {/% case template %/}
+    {/% when 'page' %/}
+      {/% assign current_url = page.url %/}
+    {/% when 'blog' %/}
+      {/% assign current_url = blog.url %/}
+    {/% when 'article' %/}
+      {/% assign current_url = blog.url %/}
+    {/% when 'collection' %/}
+      {/% assign current_url = collection.url %/}
+    {/% when 'product' %/}
+      {/% assign current_url = product.url %/}
+  {/% endcase %/}
     console.log('template: {/{ template }/}, theme.name: {/{ theme.name }/}');
     console.log('current_handle: {/{ current_handle }/}');
     console.log('current_url: {/{ current_url }/}');
@@ -79,9 +79,9 @@ script_tag }/}
 ## Add link loop
 
 ```
-{% for category in linklists.category.links %}
+{/% for category in linklists.category.links %/}
   {/{ category.title }/}
-{% endfor %}
+{/% endfor %/}
 ```
 
 ## Add custom fileds
@@ -121,18 +121,18 @@ script_tag }/}
 
 ### Minimal product form
 
-```liquid
+```html
 <form action="/cart/add" method="post">
   <select name="id">
-    {% for variant in product.variants %}
-    {% if variant.available %}
+    {/% for variant in product.variants %/}
+    {/% if variant.available %/}
     <option value="{/{ variant.id }/}">
       {/{ variant.title }/}
     </option>
-    {% else %}
+    {/% else %/}
     <option disabled="disabled">{/{ variant.title }/} - {/{ 'products.product.sold_out' | t }/}</option>
-    {% endif %}
-    {% endfor %}
+    {/% endif %/}
+    {/% endfor %/}
   </select>
   <input type="number" name="quantity" value="1" min="1" class="QuantityInput">
   <button type="submit">カートにテスト追加</button>
@@ -142,8 +142,8 @@ script_tag }/}
 
 ### Show full featured collection of products
 
-```liquid
- {% for product in collections['ADIDAS'].products limit: 6 %}
+```html
+ {/% for product in collections['ADIDAS'].products limit: 6 %/}
 		<a href="{/{ product.url }/}">
 			<img src="{/{ product.featured_image | img_url }/}" alt="" srcset="">
 			<h1>{/{ product.title }/}</h1>
@@ -160,21 +160,21 @@ script_tag }/}
 			</div>
 			{/{ product.description }/}
 
-			{% form 'product', product, data-productid: product.id %}
-			<div class="selector-wrapper js product-form__item" style="display: {% if product.has_only_default_variant %} none;{% endif %}">
+			{/% form 'product', product, data-productid: product.id %/}
+			<div class="selector-wrapper js product-form__item" style="display: {/% if product.has_only_default_variant %/} none;{/% endif %/}">
 					<p>Variants</p>
-					<label {% if option.name == 'default' %}class="label--hidden"
-							{% endif %}for="SingleOptionSelector-{/{ forloop.index0 }/}">
+					<label {/% if option.name == 'default' %/}class="label--hidden"
+							{/% endif %/}for="SingleOptionSelector-{/{ forloop.index0 }/}">
 							{/{ option.name }/}
 					</label>
 					<select name="id" data-productid="{/{ product.id }/}" id="ProductSelect-{/{ product.id }/}">
-							{% for variant in product.variants %}
+							{/% for variant in product.variants %/}
 							<option price="{/{ variant.price | money }/}" value="{/{ variant.id }/}"
-									{%- if variant == current_variant %} selected="selected" {%- endif -%}>
-									{/{ variant.title }/} {%- if variant.available == false %} -
-									{/{ 'products.product.sold_out' | t }/}{% endif %}
+									{/%- if variant == current_variant %/} selected="selected" {/%- endif -%/}>
+									{/{ variant.title }/} {/%- if variant.available == false %/} -
+									{/{ 'products.product.sold_out' | t }/}{/% endif %/}
 							</option>
-							{% endfor %}
+							{/% endfor %/}
 					</select>
 			</div>
 
@@ -189,15 +189,15 @@ script_tag }/}
 			</div>
 
 			<button class="btn product-form__cart-submit btn--secondary-accent" type="submit" name="add"
-					{% if product.available %}{% else %}disabled{% endif %}>
-					{% unless product.available %}
+					{/% if product.available %/}{/% else %/}disabled{/% endif %/}>
+					{/% unless product.available %/}
 					{/{ 'products.product.sold_out' | t }/}
-					{% else %}
+					{/% else %/}
 					{/{ 'products.product.add_to_cart' | t }/}
-					{% endunless %}
+					{/% endunless %/}
 			</button>
 			{/{ form | payment_button }/}
-			{% endform %}
+			{/% endform %/}
 	</div>
 	<script>
 		if(document.querySelector('#ProductSelect-{/{ product.id }/}')){
@@ -208,31 +208,31 @@ script_tag }/}
 			});
 		}
 	</script>
-{% endfor %}
+{/% endfor %/}
 ```
 
-## Show theme information in console with theme.liquid
+## Show theme information in console with theme.html
 
 ## Multiple currency selector
 
-```liquid
-  {% form 'currency' %}
+```html
+  {/% form 'currency' %/}
     {/{ form | currency_selector }/}
-  {% endform %}
+  {/% endform %/}
 ```
 
-```liquid
-{% form 'currency' %}
+```html
+{/% form 'currency' %/}
   <select name="currency">
-    {% for currency in shop.enabled_currencies %}
-{% if currency == cart.currency %}
+    {/% for currency in shop.enabled_currencies %/}
+{/% if currency == cart.currency %/}
   <option selected="true" value="{/{ currency.iso_code }/}">{/{currency.iso_code}/} {/{currency.symbol}/}</option>
-  {% else %}
+  {/% else %/}
   <option value="{/{ currency.iso_code }/}">{/{currency.iso_code}/} {/{currency.symbol}/}</option>
-{% endif %}
-    {% endfor %}
+{/% endif %/}
+    {/% endfor %/}
   </select>
-{% endform %}
+{/% endform %/}
 ```
 
 ```js
@@ -243,43 +243,43 @@ $('.shopify-currency-form select').on('change', function () {
 
 ## Member only page
 
-```liquid
-{% unless customer %}
-    {% if template contains 'customers' %}
-        {% assign send_to_login = false %}
-    {% else %}
-        {% assign send_to_login = true %}
-    {% endif %}
-{% endunless %}
+```html
+{/% unless customer %/}
+    {/% if template contains 'customers' %/}
+        {/% assign send_to_login = false %/}
+    {/% else %/}
+        {/% assign send_to_login = true %/}
+    {/% endif %/}
+{/% endunless %/}
 
-{% if send_to_login %}
+{/% if send_to_login %/}
 <meta content="0; url=/account/login?checkout_url=/" http-equiv="refresh" />
-{% else %}
+{/% else %/}
 CONTENT
-{% endif %}
+{/% endif %/}
 ```
 
 ## Member only and special tagged customer only
 
-```liquid
-{% if customer %}
-  {% for tag in customer.tags %}
-    {% unless tag contains 'multipass'  %}
+```html
+{/% if customer %/}
+  {/% for tag in customer.tags %/}
+    {/% unless tag contains 'multipass'  %/}
       <script type="text/javascript">
         location.href = "/";
       </script>
-    {% endunless %}
-  {% endfor %}
-  {% if customer.tags.size == 0 %}
+    {/% endunless %/}
+  {/% endfor %/}
+  {/% if customer.tags.size == 0 %/}
 	  <script type="text/javascript">
         location.href = "/";
       </script>
-  {% endif %}
-{% else %}
+  {/% endif %/}
+{/% else %/}
   <script type="text/javascript">
     location.href = "/";
   </script>
-{% endif %}
+{/% endif %/}
 
 
 ```
@@ -297,7 +297,7 @@ CONTENT
         <p class="ttl" x-text="recommend.title"></p>
         <p class="price" x-text="recommend.price"></p>
         <p class="tag" x-text="recommend.vendor"></p>
-        {% render 'sake-stars' %}
+        {/% render 'sake-stars' %/}
       </a>
     </li>
   </template>
@@ -325,7 +325,7 @@ CONTENT
 
 ## Use money formatter with multiple currenies
 
-- `{/{ "{/{ this " }/}}/}` => `{/{ this }/}` in liquid.
+- `{/{ "{/{ this " }/}}/}` => `{/{ this }/}` in html.
 
 ```html
 <script>
@@ -368,16 +368,16 @@ CONTENT
 ### Render added cart attribute
 
 ```html
-{% if order.attributes %}
+{/% if order.attributes %/}
 <ul>
-  {% for attribute in order.attributes %}
+  {/% for attribute in order.attributes %/}
   <li><strong>{/{ attribute | first }/}</strong>: {/{ attribute | last }/}</li>
   <script>
     console.log('{/{ attribute }/}');
   </script>
-  {% endfor %}
+  {/% endfor %/}
 </ul>
-{% endif %}
+{/% endif %/}
 ```
 
 ```
@@ -422,44 +422,44 @@ deliveryCode1618
 
 ## Create product handles array and render product list
 
-```liquid
-{% assign prodlist = '' %}
-{% for item in items limit: limit %}
-    {% prodlist = prodlist | append: item.handle | append: ';' %}
-{% endfor %}
-{% assign myproducts = prodlist | remove_last: ';' | split: ';' %}
-{% for handle in myproducts %}
+```html
+{/% assign prodlist = '' %/}
+{/% for item in items limit: limit %/}
+    {/% prodlist = prodlist | append: item.handle | append: ';' %/}
+{/% endfor %/}
+{/% assign myproducts = prodlist | remove_last: ';' | split: ';' %/}
+{/% for handle in myproducts %/}
   {/{ handle }/}
   {/{ all_products[ handle ].title }/}
-{% endfor%}
+{/% endfor%/}
 
 ```
 
 ## Nested for loop get index
 
-```liquid
-{% for outerItem in outerItems %}
-    {% assign outer_forloop = forloop %}
-    {% for item in items%}
+```html
+{/% for outerItem in outerItems %/}
+    {/% assign outer_forloop = forloop %/}
+    {/% for item in items%/}
         <div>{/{ outer_forloop.counter }/}.&nbsp;{/{ item }/}</div>
-    {% endfor %}
-{% endfor %}
+    {/% endfor %/}
+{/% endfor %/}
 ```
 
 ## Show tagged articles with limited number
 
-```liquid
-{% assign count = 1 %}
-{% for article in blogs["handle"].articles %}
-  {% if article.tags contains 'tag name' and count < 9 %}
-  {% assign count = count | plus: 1 %}
+```html
+{/% assign count = 1 %/}
+{/% for article in blogs["handle"].articles %/}
+  {/% if article.tags contains 'tag name' and count < 9 %/}
+  {/% assign count = count | plus: 1 %/}
   <li><a href="{/{ article.url }/}"><div class="photo"><img src="{/{ article | img_url: 'master' }/}" alt="{/{ article.title }/}"></div><div class="txtInner">
     <p class="ttl">{/{ article.title }/}</p>
     <p>{/{ article.metafields.global.products }/}</p>
     <p class="link"><span>detail</span></p>
   </div></a></li>
-  {% endif %}
-{% endfor %}
+  {/% endif %/}
+{/% endfor %/}
 ```
 
 ## Storefront search sytax
@@ -475,7 +475,7 @@ deliveryCode1618
 ### collection filter
 
 - [customize-theme-filter-collections-with-product-tags](https://shopify.dev/tutorials/customize-theme-filter-collections-with-product-tags)
-- [URL filters](https://shopify.dev/docs/themes/liquid/reference/filters/url-filters)
+- [URL filters](https://shopify.dev/docs/themes/html/reference/filters/url-filters)
 - [demo](https://turbo-theme.myshopify.com/collections/all/)
 - [action](https://github.com/discolabs/deploy-shopify-theme-action)
 
@@ -485,46 +485,46 @@ deliveryCode1618
 
 ## Show vendor list
 
-```liquid
-{% for product_vendor in shop.vendors limit: 6 %}
-  {%- assign brand = collections[product_vendor] -%}
-  {% if brand %}
+```html
+{/% for product_vendor in shop.vendors limit: 6 %/}
+  {/%- assign brand = collections[product_vendor] -%/}
+  {/% if brand %/}
     <a class="py-3 mt-1 t-style-icon-size" href="{/{ product_vendor | url_for_vendor }/}">
       <img class="w-full" src="{/{ brand.image | img_url: 'master' }/}" alt="{/{ product_vendor }/}"/>
     </a>
-  {% endif %}
-{% endfor %}
+  {/% endif %/}
+{/% endfor %/}
 ```
 
 ## Show multiple options selector in product page
 
 ```html
 <form action="/cart/add" method="post">
-  {% if product.variants.size > 1 %} {% if product.options[0] %} {% assign used = '' %}
+  {/% if product.variants.size > 1 %/} {/% if product.options[0] %/} {/% assign used = '' %/}
   <label for="select-one">{/{ product.options[0] }/}</label>
   <select id="select-one" onchange="letsDoThis()">
-    {% for variant in product.variants %} {% unless used contains variant.option1 %}
+    {/% for variant in product.variants %/} {/% unless used contains variant.option1 %/}
     <option value="{/{ variant.option1 }/}">{/{ variant.option1 }/}</option>
-    {% capture used %} {/{ used }/} {/{ variant.option1 }/} {% endcapture %} {% endunless %}
-    {% endfor %}
+    {/% capture used %/} {/{ used }/} {/{ variant.option1 }/} {/% endcapture %/} {/% endunless %/}
+    {/% endfor %/}
   </select>
-  {% endif %} {% if product.options[1] %} {% assign used = '' %}
+  {/% endif %/} {/% if product.options[1] %/} {/% assign used = '' %/}
   <label for="select-one">{/{ product.options[1] }/}</label>
   <select id="select-two" onchange="letsDoThis()">
-    {% for variant in product.variants %} {% unless used contains variant.option2 %}
+    {/% for variant in product.variants %/} {/% unless used contains variant.option2 %/}
     <option value="{/{ variant.option2 }/}">{/{ variant.option2 }/}</option>
-    {% capture used %} {/{ used }/} {/{ variant.option2 }/} {% endcapture %} {% endunless %}
-    {% endfor %}
+    {/% capture used %/} {/{ used }/} {/{ variant.option2 }/} {/% endcapture %/} {/% endunless %/}
+    {/% endfor %/}
   </select>
-  {% endif %} {% if product.options[2] %} {% assign used = '' %}
+  {/% endif %/} {/% if product.options[2] %/} {/% assign used = '' %/}
   <label for="select-one">{/{ product.options[2] }/}</label>
   <select id="select-three" onchange="letsDoThis()">
-    {% for variant in product.variants %} {% unless used contains variant.option3 %}
+    {/% for variant in product.variants %/} {/% unless used contains variant.option3 %/}
     <option value="{/{ variant.option3 }/}">{/{ variant.option3 }/}</option>
-    {% capture used %} {/{ used }/} {/{ variant.option3 }/} {% endcapture %} {% endunless %}
-    {% endfor %}
+    {/% capture used %/} {/{ used }/} {/{ variant.option3 }/} {/% endcapture %/} {/% endunless %/}
+    {/% endfor %/}
   </select>
-  {% endif %} {% endif %}
+  {/% endif %/} {/% endif %/}
   <input
     type="hidden"
     name="id"
@@ -534,17 +534,17 @@ deliveryCode1618
 </form>
 <script>
   function letsDoThis() {
-    {% if product.options[0] %}
-      var opt1 = document.getElementById("select-one").value;{% endif %}{% if product.options[1] %}
-      var opt2 = document.getElementById("select-two").value;{% endif %}{% if product.options[2] %}
-      var opt3 = document.getElementById("select-three").value;{% endif %}var id = "";{% for v in product.variants %}
+    {/% if product.options[0] %/}
+      var opt1 = document.getElementById("select-one").value;{/% endif %/}{/% if product.options[1] %/}
+      var opt2 = document.getElementById("select-two").value;{/% endif %/}{/% if product.options[2] %/}
+      var opt3 = document.getElementById("select-three").value;{/% endif %/}var id = "";{/% for v in product.variants %/}
       if (
-        opt1 == "{/{ v.option1 }/}"{% if product.options[1] %} && opt2 == "{/{ v.option2 }/}"{% endif %}{% if product.options[2] %} && opt3 == "{/{ v.option3 }/}"{% endif %}
+        opt1 == "{/{ v.option1 }/}"{/% if product.options[1] %/} && opt2 == "{/{ v.option2 }/}"{/% endif %/}{/% if product.options[2] %/} && opt3 == "{/{ v.option3 }/}"{/% endif %/}
       ) {
         var id = {/{ v.id }/};
         var price = "{/{ v.price | money }/}";
       }
-    {% endfor %}
+    {/% endfor %/}
     if (id != "") {
       document.getElementById("product-select").value = id;
       document.getElementById("price").innerHTML = price;
