@@ -3,6 +3,7 @@
 - [handbook](https://microsoft.github.io/TypeScript-New-Handbook/everything)
 - [playground](https://www.typescriptlang.org/play)
 - [type challenges](https://github.com/type-challenges/type-challenges)
+- [ts blogs](https://devblogs.microsoft.com/typescript/)
 
 ----
 - [Typescript basic](#typescript-basic)
