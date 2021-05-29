@@ -7,6 +7,21 @@
 
 ----
 - [Typescript basic](#typescript-basic)
+  - [BFE.dev ts puzzles](#bfedev-ts-puzzles)
+      - [1. implement Partial<T>](#1-implement-partialt)
+      - [2. implement Required<T>](#2-implement-requiredt)
+      - [3. implement Readonly<T>](#3-implement-readonlyt)
+      - [4. implement Record<K, V>](#4-implement-recordk-v)
+      - [5. implement Pick<T, K>](#5-implement-pickt-k)
+      - [6. implement Omit<T, K>](#6-implement-omitt-k)
+      - [7. implement Exclude<T, E>](#7-implement-excludet-e)
+      - [8. implement Extract<T, U>](#8-implement-extractt-u)
+      - [9. implement NonNullable<T>](#9-implement-nonnullablet)
+      - [10. implement Parameters<T>](#10-implement-parameterst)
+      - [11. implement ConstructorParameters<T>](#11-implement-constructorparameterst)
+      - [12. implement ReturnType<T>](#12-implement-returntypet)
+      - [13. implement InstanceType<T>](#13-implement-instancetypet)
+      - [14. implement ThisParameterType<T>](#14-implement-thisparametertypet)
   - [Types](#types)
     - [keywords](#keywords)
       - [keyof](#keyof)
@@ -30,6 +45,108 @@
 
 ----
 
+## BFE.dev ts puzzles
+
+#### 1. implement Partial<T>
+
+```ts
+type MyPartial<T> = {
+  [K in keyof T]?: T[K]
+}
+```
+
+#### 2. implement Required<T>
+
+```ts
+type MyRequired<T> = {
+  [K in keyof T]-?: T[K]
+}
+```
+
+#### 3. implement Readonly<T>
+
+```ts
+type MyRequired<T> = {
+  readonly [K in keyof T]: T[K]
+}
+```
+
+#### 4. implement Record<K, V>
+
+```ts
+type MyRecord<K extends keyof any, V> = {
+  [P in K]: V
+}
+
+```
+
+#### 5. implement Pick<T, K>
+
+```ts
+type MyPick<T, K extends keyof T> = {
+  [P in K]: T[P]
+}
+
+```
+
+#### 6. implement Omit<T, K>
+
+```ts
+type MyExclude<T, U> = T extends U ? never : T;
+type MyOmit<T, K extends keyof T> = {
+  [P in MyExclude<keyof T, K>]: P extends K ?  never :T[P]
+}
+
+```
+
+#### 7. implement Exclude<T, E>
+
+```ts
+type MyExclude<T, E> = T extends E ? never : T;
+```
+
+#### 8. implement Extract<T, U>
+
+```ts
+type MyExtract<T, U> = T extends U ? T : never;
+```
+
+#### 9. implement NonNullable<T>
+
+```ts
+type MyNonNullable<T> = T extends null | undefined ? never : T;
+```
+
+#### 10. implement Parameters<T>
+
+```ts
+type MyParameters<Fn extends Function> = Fn extends (...args: infer U) => any ? U : never;
+type MyParameters<T extends (...args: any[]) => any> = T extends (...args: infer P) => any ? P : never;
+```
+
+#### 11. implement ConstructorParameters<T>
+
+```ts
+type MyConstructorParameters<T extends new (...args: any) => any> =  T extends new (...args: infer P) => any ? P : never;
+```
+
+#### 12. implement ReturnType<T>
+
+```ts
+type MyReturnType<T extends Function> = T extends (...args: any) => infer R ? R : never;
+```
+
+#### 13. implement InstanceType<T>
+
+```ts
+type MyInstanceType<T extends new (...args: any) => any> = T extends new (...args: any) => infer R ? R : never;
+```
+
+#### 14. implement ThisParameterType<T>
+
+```ts
+type MyThisParameterType<T> = T extends (this: infer R, ...args: any) => any ? R : unknown;
+```
 
 ## Types
 
