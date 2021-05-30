@@ -22,6 +22,13 @@
       - [12. implement ReturnType<T>](#12-implement-returntypet)
       - [13. implement InstanceType<T>](#13-implement-instancetypet)
       - [14. implement ThisParameterType<T>](#14-implement-thisparametertypet)
+      - [15. implement OmitThisParameter<T>](#15-implement-omitthisparametert)
+      - [16. implement FirstChar<T>](#16-implement-firstchart)
+      - [17. implement LastChar<T>](#17-implement-lastchart)
+      - [18. implement TupleToUnion<T>](#18-implement-tupletouniont)
+      - [19. implement FirstItem<T>](#19-implement-firstitemt)
+      - [20: implement IsNever<T>](#20-implement-isnevert)
+      - [21. implement LastItem<T>](#21-implement-lastitemt)
   - [Types](#types)
     - [keywords](#keywords)
       - [keyof](#keyof)
@@ -147,6 +154,49 @@ type MyInstanceType<T extends new (...args: any) => any> = T extends new (...arg
 ```ts
 type MyThisParameterType<T> = T extends (this: infer R, ...args: any) => any ? R : unknown;
 ```
+#### 15. implement OmitThisParameter<T>
+
+```ts
+type MyOmitThisParameter<T> = T extends (this: any, ...args: infer U) => infer R ? (...args: U) => R : never;
+```
+
+#### 16. implement FirstChar<T>
+```ts
+type FirstChar<T extends string> =  T extends `${infer T}${any}` ? T : never;
+```
+
+#### 17. implement LastChar<T>
+
+```ts
+type LastChar<T extends string> =
+  T extends `${infer F}${infer R}` ?
+   R extends '' ? F : LastChar<R> : never;
+
+```
+
+#### 18. implement TupleToUnion<T>
+
+```ts
+type TupleToUnion<T extends any[]> = T[number]
+```
+
+#### 19. implement FirstItem<T>
+
+```ts
+type FirstItem<T extends any[]> = T[0] extends undefined ? never : T[0];
+```
+
+#### 20: implement IsNever<T>
+
+```ts
+type IsNever<T> = [T] extends [never] ? true: false;
+```
+
+#### 21. implement LastItem<T>
+```ts
+type LastItem<T extends any[]> = T extends [...a: any, b: infer L] ? L : never;
+```
+
 
 ## Types
 
