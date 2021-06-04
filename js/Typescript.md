@@ -29,6 +29,12 @@
       - [19. implement FirstItem<T>](#19-implement-firstitemt)
       - [20: implement IsNever<T>](#20-implement-isnevert)
       - [21. implement LastItem<T>](#21-implement-lastitemt)
+      - [22. implement StringToTuple<T>](#22-implement-stringtotuplet)
+      - [23. implement LengthOfTuple<T>](#23-implement-lengthoftuplet)
+      - [24. implement LengthOfString<T>](#24-implement-lengthofstringt)
+      - [25. implement UnwrapPromise<T>](#25-implement-unwrappromiset)
+      - [26. implement ReverseTuple<T>](#26-implement-reversetuplet)
+      - [27. implement Flat<T>](#27-implement-flatt)
   - [Types](#types)
     - [keywords](#keywords)
       - [keyof](#keyof)
@@ -193,8 +199,62 @@ type IsNever<T> = [T] extends [never] ? true: false;
 ```
 
 #### 21. implement LastItem<T>
+- solution one
+
 ```ts
 type LastItem<T extends any[]> = T extends [...a: any, b: infer L] ? L : never;
+```
+
+- solution two
+
+```ts
+type LastItem<T extends any[]> = T extends [infer F, ...infer L] ? L extends [] ? F :  LastItem<L> : never;
+```
+
+#### 22. implement StringToTuple<T>
+
+```ts
+type StringToTuple<T extends string> =  T extends `${infer F}${infer L}` ? [F, ...StringToTuple<L>] : [];
+```
+
+#### 23. implement LengthOfTuple<T>
+
+```ts
+type LengthOfTuple<T extends any[]> = T["length"]
+
+```
+
+#### 24. implement LengthOfString<T>
+
+```ts
+type StringToTuple<T extends string> = T extends `${infer P}${infer U}` ? [P, ...StringToTuple<U>] : [];
+
+type LengthOfString<T extends string> = StringToTuple<T>['length'];
+```
+
+
+#### 25. implement UnwrapPromise<T>
+
+```ts
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : Error;
+```
+
+#### 26. implement ReverseTuple<T>
+
+```ts
+type ReverseTuple<T extends any[]> = T extends [...infer F, infer L] ? [L, ...ReverseTuple<F>] : [];
+```
+
+
+#### 27. implement Flat<T>
+
+```ts
+type Flat<T extends any[]> =
+  T extends [infer P, ...infer U] ?
+    P extends any[] ?
+    [...Flat<P>, ...Flat<U>] :
+  [P, ...Flat<U>] : [];
+
 ```
 
 
