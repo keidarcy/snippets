@@ -35,6 +35,9 @@
       - [25. implement UnwrapPromise<T>](#25-implement-unwrappromiset)
       - [26. implement ReverseTuple<T>](#26-implement-reversetuplet)
       - [27. implement Flat<T>](#27-implement-flatt)
+      - [29. implement Shift<T>](#29-implement-shiftt)
+      - [31. implement Push<T, I>](#31-implement-pusht-i)
+      - [33. implement TupleToString<T>](#33-implement-tupletostringt)
   - [Types](#types)
     - [keywords](#keywords)
       - [keyof](#keyof)
@@ -255,6 +258,29 @@ type Flat<T extends any[]> =
     [...Flat<P>, ...Flat<U>] :
   [P, ...Flat<U>] : [];
 
+```
+
+#### 29. implement Shift<T>
+
+```ts
+type Shift<T extends any[]> = T extends [infer T, ...infer U] ? U : [];
+```
+
+#### 31. implement Push<T, I>
+
+```ts
+type Push<T extends any[], I> = [...T, I];
+```
+
+#### 33. implement TupleToString<T>
+
+```ts
+type TupleToString<T extends string[]> =
+  T extends [infer P, ...infer U] ?
+    U extends string[] ?
+    `${P & string}${TupleToString<U>}`:
+    P:
+  '';
 ```
 
 
