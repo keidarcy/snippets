@@ -38,6 +38,7 @@
       - [29. implement Shift<T>](#29-implement-shiftt)
       - [31. implement Push<T, I>](#31-implement-pusht-i)
       - [33. implement TupleToString<T>](#33-implement-tupletostringt)
+      - [42. implement Equal<A, B>](#42-implement-equala-b)
   - [Types](#types)
     - [keywords](#keywords)
       - [keyof](#keyof)
@@ -281,6 +282,18 @@ type TupleToString<T extends string[]> =
     `${P & string}${TupleToString<U>}`:
     P:
   '';
+```
+
+#### 42. implement Equal<A, B>
+
+```ts
+
+type Equal<A, B> =
+                (<T>() => T extends A ? 1: 0) extends
+                (<T>() => T extends B ? 1 : 0)
+                ? true
+                : false;
+
 ```
 
 
