@@ -2,6 +2,8 @@
 
 - [build-your-own-react](https://pomb.us/build-your-own-react/)
 - [react source code](https://react.iamkasong.com/)
+- [React Fiber Deep Dive with Dan Abramov](https://www.youtube.com/watch?v=aS41Y_eyNrU)
+- [React Source Code](https://www.youtube.com/playlist?list=PLvx8w9g4qv_p-OS-XdbB3Ux_6DMXhAJC3)
 
 ## Simplest implemention of redux
 
