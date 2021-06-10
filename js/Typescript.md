@@ -4,6 +4,7 @@
 - [playground](https://www.typescriptlang.org/play)
 - [type challenges](https://github.com/type-challenges/type-challenges)
 - [ts blogs](https://devblogs.microsoft.com/typescript/)
+- [Microsoft office tutorial](https://docs.microsoft.com/en-us/learn/paths/build-javascript-applications-typescript/)
 
 ----
 - [Typescript basic](#typescript-basic)
