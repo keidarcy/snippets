@@ -1,4 +1,57 @@
-### Some useages
+
+## Version Control System
+
+- [Version Control System](#version-control-system)
+	- [concepts](#concepts)
+	- [settings](#settings)
+		- [basic settings](#basic-settings)
+		- [help messages](#help-messages)
+		- [Push commit to different remote branch](#push-commit-to-different-remote-branch)
+		- [Dry run push](#dry-run-push)
+		- [Delete branch](#delete-branch)
+		- [Update forked repository to original repository latest](#update-forked-repository-to-original-repository-latest)
+		- [Clean current branch](#clean-current-branch)
+
+
+### concepts
+
+- why vcs
+  - track history
+  - work together
+- types
+  - centralized (subversion, team foundation server )
+  - distributed (git, mercurial)
+- why git
+  - free
+  - open source
+  - super fast
+  - scalable
+  - cheap branching and merging
+
+### settings
+
+- levers
+  - system
+  - global
+  - local
+#### basic settings
+
+```bash
+git config --global user.name "xyh"
+git config --global user.email ""
+git config --global core.editor ""
+git config --global -e # open global settings
+git config --global core.autocrlf "" # windows - true, mac - input
+```
+
+#### help messages
+
+```bash
+git config --help # details
+git config -h # brief
+```
+
+
 #### Push commit to different remote branch
 
 ```bash
