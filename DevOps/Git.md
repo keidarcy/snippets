@@ -2,15 +2,16 @@
 ## Version Control System
 
 - [Version Control System](#version-control-system)
-	- [concepts](#concepts)
-	- [settings](#settings)
-		- [basic settings](#basic-settings)
-		- [help messages](#help-messages)
-		- [Push commit to different remote branch](#push-commit-to-different-remote-branch)
-		- [Dry run push](#dry-run-push)
-		- [Delete branch](#delete-branch)
-		- [Update forked repository to original repository latest](#update-forked-repository-to-original-repository-latest)
-		- [Clean current branch](#clean-current-branch)
+  - [concepts](#concepts)
+  - [settings](#settings)
+      - [basic settings](#basic-settings)
+      - [help messages](#help-messages)
+  - [creating snapshots](#creating-snapshots)
+    - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
+    - [Dry run push](#dry-run-push)
+    - [Delete branch](#delete-branch)
+    - [Update forked repository to original repository latest](#update-forked-repository-to-original-repository-latest)
+    - [Clean current branch](#clean-current-branch)
 
 
 ### concepts
@@ -34,7 +35,7 @@
   - system
   - global
   - local
-#### basic settings
+##### basic settings
 
 ```bash
 git config --global user.name "xyh"
@@ -44,11 +45,25 @@ git config --global -e # open global settings
 git config --global core.autocrlf "" # windows - true, mac - input
 ```
 
-#### help messages
+##### help messages
 
 ```bash
 git config --help # details
 git config -h # brief
+```
+
+### creating snapshots
+
+- staging area(last snapshot version)
+
+once first commit be created staging area exists.
+
+```bash
+git add file1 # add file1 to staging area
+```
+
+```bash
+git commit -m 'first commit' # every commit git store fill content not diff
 ```
 
 
