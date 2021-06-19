@@ -6,6 +6,9 @@
   - [status](#status)
   - [diff, difftool](#diff-difftool)
   - [show, ls-tree, restore, clean](#show-ls-tree-restore-clean)
+- [Browsing history](#browsing-history)
+  - [`--state`, `--patch`](#--state---patch)
+  - [filter commits](#filter-commits)
     - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
     - [Dry run push](#dry-run-push)
     - [Delete branch](#delete-branch)
@@ -118,6 +121,30 @@ git restore --staged file2.js
 ```bash
 git clean -fd
 ```
+
+## Browsing history
+
+### `--state`, `--patch`
+
+```bash
+git log --oneline --stat # the diff line numbers
+git log --oneline --patch # the diff detail
+```
+
+### filter commits
+
+```bash
+git log --oneline -3 # last 3 commits
+git log --oneline --author="XING YAHAO"
+git log --oneline --after="2020-08-17"
+git log --oneline --after="yesterday"
+git log --oneline --after="one week ago"
+git log --oneline --grep="commit   lomessage term"
+git log --oneline -S "git" # search all commit include the search contents and show commit
+git log --oneline -S "git" --patch # show the diff it self
+git log --oneline fb0d...dad47 # show between 2 commits
+```
+
 
 
 
