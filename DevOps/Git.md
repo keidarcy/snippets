@@ -361,20 +361,58 @@ git branch --unmerged # will show
 git branch -D fix/photo_upload # force delete only
 ```
 ### rebasing
-```bash
 
+- no merge conflict
+
+```bash
+git switch -C 'feature/shopping-cart'
+git commit
+git switch master
+git commit
+git switch feature/shopping-cart
+git rebase master
+git switch master
+git merge --ff feature/shopping-cart
 ```
+
+- merge conflict
+
+```bash
+git rebase master
+# Auto-merging toc.txt
+# CONFLICT (content): Merge conflict in toc.txt
+# error: could not apply 97e93a6... Update toc.txt 1
+# Resolve all conflicts manually, mark them as resolved with
+# "git add/rm <conflicted_files>", then run "git rebase --continue".
+# You can instead skip this commit: run "git rebase --skip".
+# To abort and get back to the state before "git rebase", run "git rebase --abort".
+# Could not apply 97e93a6... Update toc.txt 1
+git mergetool
+git rebase --continue
+git rebase --skip
+git rebase --abor
+```
+
 ### cherry picking
 ```bash
-
+git cherry-pick a1f63e6
+# Auto-merging toc.txt
+# CONFLICT (content): Merge conflict in toc.txt
+# error: could not apply a1f63e6... Update toc.txt 1
+# hint: after resolving the conflicts, mark the corrected paths
+# hint: with 'git add <paths>' or 'git rm <paths>'
+# hint: and commit the result with 'git commit'
+git add .
+git commit
 ```
 ### picking a file from another branch
 ```bash
-
+git switch -C feature/send-mail
+git add .
+git commit
+git switch master
+git restore --source=feature/send-mail -- mail.txt
 ```
-
-
-
 
 
 
