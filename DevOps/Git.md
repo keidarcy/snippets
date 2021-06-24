@@ -19,6 +19,23 @@
   - [restoring a deleting file](#restoring-a-deleting-file)
   - [finding the author of line using blame](#finding-the-author-of-line-using-blame)
   - [tagging](#tagging)
+- [Branching](#branching)
+  - [working with branches](#working-with-branches)
+  - [comparing branches](#comparing-branches)
+  - [stashing](#stashing)
+  - [merging](#merging)
+    - [fast-forward merges(if branches have not diverged)](#fast-forward-mergesif-branches-have-not-diverged)
+    - [three-way merges(if branches have diverged)](#three-way-mergesif-branches-have-diverged)
+  - [viewing merged and unmerged branches](#viewing-merged-and-unmerged-branches)
+  - [merge conflicts](#merge-conflicts)
+  - [aborting a merge](#aborting-a-merge)
+  - [undoing a faulty merge](#undoing-a-faulty-merge)
+    - [`reset`](#reset)
+    - [`revert`](#revert)
+  - [squash merging](#squash-merging)
+  - [rebasing](#rebasing)
+  - [cherry picking](#cherry-picking)
+  - [picking a file from another branch](#picking-a-file-from-another-branch)
     - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
     - [Dry run push](#dry-run-push)
     - [Delete branch](#delete-branch)
@@ -238,7 +255,123 @@ git tag -a v1.1 -m "My version 1.1"  // annotate tag
 git tag -n # show tag message
 ```
 
+## Branching
 
+### working with branches
+
+```bash
+git switch bugfix
+git switch -C bugfix/login-form # switch and create new branch
+git branch -m bugfix bugfix/signup-form # rename {oldname} {newname}
+git branch -d fix/signup-form
+```
+### comparing branches
+
+```bash
+git log master..fix/signup-form
+git log master..fix/signup-form --patch
+git diff master..fix/signup-form
+git diff --name-only fix/signup-form
+git diff --name-status fix/signup-form
+```
+### stashing
+
+```bash
+git stash push -m "New stash one"
+git stash push -am "New stash one" # new file stash
+git stash list
+git stash show stash@{1}
+git stash show 1
+git stash apply 0
+git stash drop 0
+git stash clear
+```
+### merging
+
+#### fast-forward merges(if branches have not diverged)
+
+```bash
+git merge -ff bugfix/login-form
+```
+
+#### three-way merges(if branches have diverged)
+
+```bash
+git merge -no-ff bugfix/password-form
+git config --global merge.ff false
+git config --global pull.ff only
+[merge]
+    ff = false
+[pull]
+    ff = only
+```
+### viewing merged and unmerged branches
+
+```bash
+git branch --merged
+git branch -d bugfix/signup-form
+git branch --no-merged
+```
+
+### merge conflicts
+
+graphical merge tools
+1. p4merge
+2. kdiff
+
+### aborting a merge
+
+```bash
+git merge --abort
+```
+
+### undoing a faulty merge
+
+#### `reset`
+
+```bash
+git reset --hard HEAD~1 # move git pointer to one commit before, apply snapshot to staged area and working directory
+git reset --mixed HEAD~1 # default,move git pointer to one commit before, apply snapshot to staged area and working directory
+git reset HEAD~1
+git reset --soft HEAD~1 # default, move git pointer to one commit before
+
+git reset --hard 882b232 # move pointer to any commit even not show in log history
+```
+
+#### `revert`
+
+```bash
+git revert -m 1 HEAD
+```
+
+### squash merging
+
+```bash
+git merge --squash fix/photo_upload # ff changes to staged area
+# Updating f10f470..0d9b74a
+# Fast-forward
+# Squash commit -- not updating HEAD
+# LICENSE   | 1 +
+# README.md | 1 +
+git commit -m "fixed: in photo upload"
+
+# this branch won't show in
+git branch --merge # squash merged branch won't show
+git branch --unmerged # will show
+git branch -D fix/photo_upload # force delete only
+```
+### rebasing
+```bash
+
+```
+### cherry picking
+```bash
+
+```
+### picking a file from another branch
+```bash
+
+```
 
 
 
