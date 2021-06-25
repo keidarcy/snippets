@@ -319,6 +319,12 @@ graphical merge tools
 1. p4merge
 2. kdiff
 
+```bash
+git config --global merge.tool p4merge
+git config --global mergetool.p4merge.path "/Applications/p4merge.app/Contents/MacOS/p4merge"
+git config --global mergetool.keepBackup false
+```
+
 ### aborting a merge
 
 ```bash
