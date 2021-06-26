@@ -36,6 +36,15 @@
   - [rebasing](#rebasing)
   - [cherry picking](#cherry-picking)
   - [picking a file from another branch](#picking-a-file-from-another-branch)
+- [Collaborating](#collaborating)
+  - [remote tacking branch](#remote-tacking-branch)
+  - [fetching](#fetching)
+  - [pulling(fetch + merge)](#pullingfetch--merge)
+  - [pushing](#pushing)
+  - [sharing tags](#sharing-tags)
+  - [sharing branches](#sharing-branches)
+  - [collaboration workflow](#collaboration-workflow)
+  - [keeping a forked repository up to date](#keeping-a-forked-repository-up-to-date)
     - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
     - [Dry run push](#dry-run-push)
     - [Delete branch](#delete-branch)
@@ -420,6 +429,74 @@ git switch master
 git restore --source=feature/send-mail -- mail.txt
 ```
 
+## Collaborating
+
+### remote tacking branch
+
+```bash
+git remote
+git remote -v
+```
+### fetching
+
+```bash
+git fetch origin # download all commit
+git branch -vv
+git merge origin/master
+```
+
+### pulling(fetch + merge)
+
+```bash
+git pull # if branch diverse three way merge
+git pull --rebase # avoid three way merge --rebase
+```
+
+### pushing
+
+```bash
+git push origin master # default will be git push
+```
+
+### sharing tags
+
+```bash
+git tag v1.0
+git push origin v1.0
+git push origin --delete v1.0
+git tag -d v1.0
+```
+
+### sharing branches
+
+```bash
+git branch -vv
+git branch -r
+git push -d origin feature/password
+git branch -r
+```
+
+### collaboration workflow
+
+```bash
+git switch -C feature/change-password origin/feature/change-password
+git remote prune origin
+```
+
+### keeping a forked repository up to date
+
+```bash
+git remote
+git remote -v
+git remote add upstream {BASE_URL}
+git remote
+git remote -v
+# git remote rename upstream base
+# git remote rm base
+git fetch upstream
+git switch master
+git merge base/master
+```
 
 
 
