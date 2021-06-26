@@ -45,6 +45,18 @@
   - [sharing branches](#sharing-branches)
   - [collaboration workflow](#collaboration-workflow)
   - [keeping a forked repository up to date](#keeping-a-forked-repository-up-to-date)
+- [rewriting history](#rewriting-history)
+  - [undoing commits](#undoing-commits)
+  - [reverting commits](#reverting-commits)
+  - [recovering lost commits](#recovering-lost-commits)
+  - [amending the last commits](#amending-the-last-commits)
+  - [amending an earlier commit](#amending-an-earlier-commit)
+  - [dropping commits](#dropping-commits)
+  - [rewording commit messages](#rewording-commit-messages)
+  - [reordering commits](#reordering-commits)
+  - [squashing commits](#squashing-commits)
+  - [splitting a commit](#splitting-a-commit)
+  - [course wrap up](#course-wrap-up)
     - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
     - [Dry run push](#dry-run-push)
     - [Delete branch](#delete-branch)
@@ -155,7 +167,7 @@ git restore --staged file2.js
 ```
 
 ```bash
-git clean -fd
+git clean -fd # remove un-tracking files in working directory
 ```
 
 ## Browsing history
@@ -497,6 +509,85 @@ git fetch upstream
 git switch master
 git merge base/master
 ```
+
+## rewriting history
+
+### undoing commits
+
+```bash
+git reset --hard HEAD~1
+git diff --cached
+```
+
+### reverting commits
+
+```bash
+git revert HEAD~2
+git revert HEAD~3..HEAD # revert (3, 0] commit
+```
+
+### recovering lost commits
+
+```bash
+git revert HEAD
+git revert HEAD~3..HEAD
+git reset --hard HEAD~3
+git revert --no-commit HEAD~3.. # same with HEAD~3..HEAD
+git revert --continue
+
+git reflog
+git reset --hard HEAD@{1}
+```
+
+### amending the last commits
+
+```bash
+git add .
+git commit --amend
+```
+
+### amending an earlier commit
+
+```bash
+
+```
+
+### dropping commits
+
+```bash
+
+```
+
+### rewording commit messages
+
+```bash
+
+```
+
+### reordering commits
+
+```bash
+
+```
+
+### squashing commits
+
+```bash
+
+```
+
+### splitting a commit
+
+```bash
+
+```
+
+### course wrap up
+
+```bash
+
+```
+
 
 
 
