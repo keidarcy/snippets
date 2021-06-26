@@ -56,12 +56,10 @@
   - [reordering commits](#reordering-commits)
   - [squashing commits](#squashing-commits)
   - [splitting a commit](#splitting-a-commit)
-  - [course wrap up](#course-wrap-up)
-    - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
-    - [Dry run push](#dry-run-push)
-    - [Delete branch](#delete-branch)
+- [extra tips](#extra-tips)
+  - [Push commit to different remote branch](#push-commit-to-different-remote-branch)
+  - [Dry run push](#dry-run-push)
     - [Update forked repository to original repository latest](#update-forked-repository-to-original-repository-latest)
-    - [Clean current branch](#clean-current-branch)
 
 
 ## Basic
@@ -549,71 +547,72 @@ git commit --amend
 ### amending an earlier commit
 
 ```bash
-
+git rebase --abort
+git rebase -i {HASH}
+# do your change
+git rebase --continue
 ```
 
 ### dropping commits
 
 ```bash
-
+git rebase -i 6cbd931~ # ^ means parent
+# drop commit
 ```
 
 ### rewording commit messages
 
 ```bash
-
+git rebase -i f283d7524^
+# reword
 ```
 
 ### reordering commits
 
 ```bash
-
+git rebase -i f283d7524^
+# move commit order
 ```
 
 ### squashing commits
 
 ```bash
+git rebase -i f283d7524
+# squash
+git reflog
+git reset --hard HEAD@{9}
 
+git rebase -i f283d7524
+# fixup
 ```
 
 ### splitting a commit
 
 ```bash
+git rebase -i f283d7524
+# edit
 
+git reset --mixed HEAD^ # HEAD^ == HEAD~1
+# to change and commit it
+# to change and commit it
+git rebase --continue
 ```
 
-### course wrap up
-
-```bash
-
-```
+## extra tips
 
 
-
-
-
-#### Push commit to different remote branch
+### Push commit to different remote branch
 
 ```bash
 git push origin local-name:remote-name
 ```
 
-#### Dry run push
+### Dry run push
 
 ```sh
 git push -nu origin xxx
 # -n --dry-run
 # -u --set-upstream
-```
-
-#### Delete branch
-
-```bash
-# delete branch locally
-git branch -d localBranchName
-
-# delete branch remotely
-git push origin --delete remoteBranchName
 ```
 
 #### Update forked repository to original repository latest
@@ -626,10 +625,4 @@ git fetch upstream
 git rebase upstream/master
 
 git push origin master --force
-```
-
-#### Clean current branch
-
-```bash
-alias nah='git reset --hard;git clean -df;'
 ```
