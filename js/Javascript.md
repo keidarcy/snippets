@@ -24,6 +24,16 @@
       - [Indirect invocation](#indirect-invocation)
       - [Arrow functions](#arrow-functions)
     - [**Prototype**, **__proto__**, prototype inheritance](#prototype-proto-prototype-inheritance)
+    - [Symbol](#symbol)
+      - [`Symbol.iterator`](#symboliterator)
+      - [`Symbol.asyncIterator`](#symbolasynciterator)
+      - [`Symbol.hasInstance`](#symbolhasinstance)
+      - [`Symbol.isConcatSpreadable`](#symbolisconcatspreadable)
+      - [`Symbol.match replace split...`](#symbolmatch-replace-split)
+      - [`Symbol.species`](#symbolspecies)
+      - [`Symbol.toPrimitive`](#symboltoprimitive)
+      - [`Symbol.toStringTag`](#symboltostringtag)
+      - [`Symbol.unscopables`](#symbolunscopables)
     - [Generator and Iterator](#generator-and-iterator)
       - [loop though array object](#loop-though-array-object)
       - [iterator](#iterator)
@@ -315,6 +325,208 @@ class B extends A {}
 console.log(B.__proto___ === A); // true
 B.prototype.__proto__ === A.prototype; //>> true
 ```
+
+### Symbol
+
+#### `Symbol.iterator`
+
+```js
+const c = {
+    [Symbol.iterator]:function() {
+        let value = 1;
+        return {
+            next() {
+                return {
+                    value,
+                    done: value++ > 3
+                }
+            }
+        }
+    }
+}
+for (let b of c) {
+  console.log(b); // 1, 2, 3
+}
+```
+
+#### `Symbol.asyncIterator`
+
+```js
+const d = {
+    [Symbol.asyncIterator]() {
+        let value = 1;
+        return {
+            next() {
+                return new Promise((resolve) => {
+                    const result = {value, done: value++ >3};
+                    setTimeout(() => resolve(result), 1000);
+                    })
+                }
+            }
+        }
+    }
+for await (let b of c) {
+  console.log(b); // 1, 2, 3
+}
+```
+
+#### `Symbol.hasInstance`
+
+```js
+class A {}
+class B {}
+
+const a = new A();
+const b = new B();
+
+a instanceof A; // true
+b instanceof A; // false
+
+A[Symbol.hasInstance](a) // true
+
+A.hasOwnProperty(Symbol.hasInstance) // false
+
+A.__proto__.hasOwnProperty(Symbol.hasInstance) // true
+
+Object.defineProperty(A, Symbol.hasInstance, {
+    value: () => true;
+    });
+
+a instanceof A; // true
+b instanceof A; // true
+```
+
+#### `Symbol.isConcatSpreadable`
+
+```js
+const a = [1,2];
+a[Symbol.isConcatSpreadable] // undefine
+[].concat(1,2,[[3,4]],a);  // (5) [1, 2, Array(2), 1, 2]
+
+a[Symbol.isConcatSpreadable] = false
+[].concat(1,2,[[3,4]],a) // (4) [1, 2, Array(2), Array(2)]
+```
+
+#### `Symbol.match replace split...`
+
+```js
+'abc'.replace(/a/, '1'); // 'Tbc'
+/a/[Symbol.replace]('abc', 'T'); // 'Tbc'
+
+'abcbebf'.split(/b/); // ['a', 'c', 'e', 'f']
+/b/[Symbol.split]('abcbebf'); // ['a', 'c', 'e', 'f']
+
+'abcbfbe'.split({ [Symbol.split]: () => 'Hello world' }); // 'Hello world'
+```
+
+#### `Symbol.species`
+
+```js
+class MyArray extends Array {};
+let arr = new MyArray();
+arr.concat(1) // MyArray [1]
+
+Object.defineProperty(MyArray, Symbol.species, { value: Array } );
+
+arr.concat(1) // [1]
+```
+
+#### `Symbol.toPrimitive`
+
+```js
+const obj1 = {
+    toString() {
+        return 'obj1';
+    },
+    valueOf() {
+        return 1;
+    }
+};
+
+const obj2 = {
+    toString() {
+        return 'obj2';
+    }
+};
+const obj3 = {
+    valueOf() {
+        return 3;
+    }
+};
+
+`${obj1}${obj2}${obj3}` // 'obj1obj2[object Object]'
+
+
+const obj4 = Object.create(null);
+obj4.valueOf = () => 'hello obj4';
+`${obj4}` // 'hello obj4'
+
+const obj5 = Object.create(null);
+obj5.toString = () => '5';
+`${obj5}` // '5'
++obj5 // 5
+1+obj5 // '15'
+
+const obj7 = {
+  [Symbol.toPrimitive](hint) {
+      if (hint === 'string') return 'obj7';
+      return 7;
+  }
+}
+
++obj7 // 7
+1 + obj7 // 8
+`${obj7}` // 'obj7'
+```
+
+#### `Symbol.toStringTag`
+
+```js
+const obj = {}
+
+obj.toString() // '[object Object]'
+obj.toString === Object.prototype.toString // true
+Object.prototype.toString.call({}) // '[object Object]'
+Object.prototype.toString.call(obj) // '[object Object]'
+
+class B {}
+const b = new B()
+
+Object.prototype.toString(b) // '[object Object]'
+Object.prototype.toString.call(b) // '[object Object]'
+obj[Symbol.toStringTag] = 'WHATEVER'
+Object.prototype.toString.call(obj) // '[object WHATEVER]'
+
+
+class C {
+    [Symbol.toStringTag] = 'CLASS C'
+}
+const c = new C()
+Object.prototype.toString.call(c) // '[object CLASS C]'
+```
+
+#### `Symbol.unscopables`
+
+```js
+const obj = {
+a: 1,
+b: 2
+}
+with (obj) {
+     console.log(a,b)
+}
+// 1 2
+
+obj[Symbol.unscopables] = { a: true }
+
+with (obj) {
+     console.log(a,b)
+}
+// VM4684:2 Uncaught ReferenceError: a is not defined
+//     at <anonymous>:2:18
+// (anonymous) @ VM4684:2
+```
+
 
 ### Generator and Iterator
 
