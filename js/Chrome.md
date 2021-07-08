@@ -6,6 +6,7 @@
 - [webpage tester](https://www.webpagetest.org/)
 - [crux](https://web.dev/chrome-ux-report-data-studio-dashboard/)
 - [url viewer](https://view.hugo-decoded.be/)
+- [Remote debug Android devices](https://developer.chrome.com/docs/devtools/remote-debugging/)
 
 - [Browser related javascript](#browser-related-javascript)
   - [Event and CustomEvent](#event-and-customevent)
