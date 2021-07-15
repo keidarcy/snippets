@@ -668,22 +668,18 @@ for (let i = 0; i < CssFiles.media.length; i++) {
 
 ## srcset
 
+```html
 <img src="https://via.placeholder.com/1000x1000" />
 <br />
 <img
   src="https://via.placeholder.com/1000x1000"
-  srcset="https://via.placeholder.com/2000x2000 2000w,
-          https://via.placeholder.com/1000x1000 1000w
-          https://via.placeholder.com/600x600 600w"
-/>
-
-```html
-<img src="https://via.placeholder.com/2000x2000" />
-<br />
-<img
-  src="https://via.placeholder.com/2000x2000"
-  srcset="https://via.placeholder.com/2000x2000 2000w,
-          https://via.placeholder.com/1000x1000 1000w
-          https://via.placeholder.com/600x600 600w"
+  srcset="
+    https://via.placeholder.com/400x400    400w,
+    https://via.placeholder.com/600x600    600w,
+    https://via.placeholder.com/1000x1000 1000w
+  "
+  sizes="(max-width: 600px) 480px,
+        800px"
+  alt="image placeholder"
 />
 ```
