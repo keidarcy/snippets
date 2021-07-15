@@ -676,3 +676,14 @@ for (let i = 0; i < CssFiles.media.length; i++) {
           https://via.placehoder.com/1000x1000 1000w
           https://via.placehoder.com/600x600 600w"
 />
+
+```html
+<img src="https://via.placehoder.com/2000x2000" />
+<br />
+<img
+  src="https://via.placehoder.com/2000x2000"
+  srcset="https://via.placehoder.com/2000x2000 2000w,
+          https://via.placehoder.com/1000x1000 1000w
+          https://via.placehoder.com/600x600 600w"
+/>
+```
