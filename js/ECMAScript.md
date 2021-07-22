@@ -1,5 +1,6 @@
 # Javascript Basic
 
+- [specification](https://262.ecma-international.org/)
 - videos
   - [What the heck is the event loop anyway](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
     - [javascript runtime simulation](http://latentflip.com/loupe)
@@ -14,61 +15,64 @@
   - [HTTP: The Definitive Guide](https://www.oreilly.com/library/view/http-the-definitive/1565925092/)
 
 - [Javascript Basic](#javascript-basic)
-  - [core](#core)
+  - [Objects](#objects)
     - [`this`](#this)
-      - [Global context](#global-context)
+    - [bind, call, apply](#bind-call-apply)
+    - [Global context](#global-context)
     - [Function context](#function-context)
       - [Function invocation](#function-invocation)
       - [Method invocation](#method-invocation)
         - [Constructor invocation](#constructor-invocation)
       - [Indirect invocation](#indirect-invocation)
       - [Arrow functions](#arrow-functions)
-    - [**Prototype**, **__proto__**, prototype inheritance](#prototype-proto-prototype-inheritance)
+    - [prototypes](#prototypes)
+  - [Features](#features)
     - [Symbol](#symbol)
-      - [`Symbol.iterator`](#symboliterator)
-      - [`Symbol.asyncIterator`](#symbolasynciterator)
-      - [`Symbol.hasInstance`](#symbolhasinstance)
-      - [`Symbol.isConcatSpreadable`](#symbolisconcatspreadable)
-      - [`Symbol.match replace split...`](#symbolmatch-replace-split)
-      - [`Symbol.species`](#symbolspecies)
-      - [`Symbol.toPrimitive`](#symboltoprimitive)
-      - [`Symbol.toStringTag`](#symboltostringtag)
-      - [`Symbol.unscopables`](#symbolunscopables)
     - [Generator and Iterator](#generator-and-iterator)
-      - [loop though array object](#loop-though-array-object)
-      - [iterator](#iterator)
-      - [generator](#generator)
-      - [use generator to create own Object.entries function](#use-generator-to-create-own-objectentries-function)
     - [Async javascript](#async-javascript)
-      - [Callback](#callback)
-      - [Promise](#promise)
-        - [Promise.all, Promise.race](#promiseall-promiserace)
-      - [async/await](#asyncawait)
-  - [data structure](#data-structure)
+    - [Promise.all, Promise.race](#promiseall-promiserace)
+    - [async/await](#asyncawait)
     - [Map](#map)
-      - [WeakMap](#weakmap)
+    - [WeakMap](#weakmap)
     - [Set](#set)
-      - [WeakSet](#weakset)
+    - [WeakSet](#weakset)
     - [`BigInt`](#bigint)
     - [typed arrays](#typed-arrays)
-  - [APIs & methods](#apis--methods)
     - [`slice` `splice` `split`](#slice-splice-split)
     - [Proxy](#proxy)
     - [With](#with)
-  - [other features](#other-features)
     - [IIFE(Immediately Invoked Function Expression)](#iifeimmediately-invoked-function-expression)
-    - [bind, call, apply](#bind-call-apply)
-    - [constructor](#constructor)
-    - [Private class fields](#private-class-fields)
 
 
-## core
+## Objects
+
+- [deep js foundations](https://static.frontendmasters.com/resources/2019-03-07-deep-javascript-v2/deep-js-foundations-v2.pdf)
 
 ### `this`
 
 - [this](https://web.dev/javascript-this/)
 
 - `this` === current execution context
+
+- this: determination
+
+```
+1. Is the function called by new?
+2. Is the function called by call() or apply()? Note: bind() effectively uses apply()
+3. Is the function called on a context object?
+4. DEFAULT: global object (except strict mode)
+note: An arrow function doesn't define a this
+```
+
+- new: steps
+
+```
+const b = new A();
+1. Create a brand new empty object
+2.* Link that object to another object (b.__proto__ -> A.prototype)
+3. Call function with this set to the new object
+4. If function does not return an object, assume return of this
+```
 
 ```js
 const user = {
@@ -80,7 +84,25 @@ const user = {
 };
 ```
 
-#### Global context
+### bind, call, apply
+
+```js
+function showFace() {
+  return this.face;
+}
+const user = {
+  face: 'smile'
+};
+
+const showUserFace = showFace.bind(user);
+
+console.log(showUserFace());
+console.log(showFace.call(user, 1, 2, 3));
+console.log(showFace.call(user, ...[1, 2, 3]));
+console.log(showFace.apply(user, [1, 2, 3]));
+```
+
+### Global context
 
 ```js
 console.log(this === globalThis); // true
@@ -236,7 +258,7 @@ var car = new Car();
 car.getSpeed(); // TypeError
 ```
 
-### **Prototype**, **__proto__**, prototype inheritance
+### prototypes
 
 `.prototype` only exist on function
 
@@ -326,9 +348,11 @@ console.log(B.__proto___ === A); // true
 B.prototype.__proto__ === A.prototype; //>> true
 ```
 
+## Features
+
 ### Symbol
 
-#### `Symbol.iterator`
+- `Symbol.iterator`
 
 ```js
 const c = {
@@ -349,7 +373,7 @@ for (let b of c) {
 }
 ```
 
-#### `Symbol.asyncIterator`
+- `Symbol.asyncIterator`
 
 ```js
 const d = {
@@ -370,7 +394,7 @@ for await (let b of c) {
 }
 ```
 
-#### `Symbol.hasInstance`
+- `Symbol.hasInstance`
 
 ```js
 class A {}
@@ -396,7 +420,7 @@ a instanceof A; // true
 b instanceof A; // true
 ```
 
-#### `Symbol.isConcatSpreadable`
+- `Symbol.isConcatSpreadable`
 
 ```js
 const a = [1,2];
@@ -407,7 +431,7 @@ a[Symbol.isConcatSpreadable] = false
 [].concat(1,2,[[3,4]],a) // (4) [1, 2, Array(2), Array(2)]
 ```
 
-#### `Symbol.match replace split...`
+- `Symbol.match replace split...`
 
 ```js
 'abc'.replace(/a/, '1'); // 'Tbc'
@@ -419,7 +443,7 @@ a[Symbol.isConcatSpreadable] = false
 'abcbfbe'.split({ [Symbol.split]: () => 'Hello world' }); // 'Hello world'
 ```
 
-#### `Symbol.species`
+- `Symbol.species`
 
 ```js
 class MyArray extends Array {};
@@ -431,7 +455,7 @@ Object.defineProperty(MyArray, Symbol.species, { value: Array } );
 arr.concat(1) // [1]
 ```
 
-#### `Symbol.toPrimitive`
+- `Symbol.toPrimitive`
 
 ```js
 const obj1 = {
@@ -479,7 +503,7 @@ const obj7 = {
 `${obj7}` // 'obj7'
 ```
 
-#### `Symbol.toStringTag`
+- `Symbol.toStringTag`
 
 ```js
 const obj = {}
@@ -505,7 +529,7 @@ const c = new C()
 Object.prototype.toString.call(c) // '[object CLASS C]'
 ```
 
-#### `Symbol.unscopables`
+- `Symbol.unscopables`
 
 ```js
 const obj = {
@@ -530,7 +554,7 @@ with (obj) {
 
 ### Generator and Iterator
 
-#### loop though array object
+- loop though array object
 
 ```js
 const person = { name: 'eriii', phone: '123-2312' };
@@ -541,7 +565,7 @@ for (const [key, value] of Object.entries(person)) {
 // > "key: phoneis 123-2312"
 ```
 
-#### iterator
+- iterator
 
 ```js
 const names = ['john', 'joe', 'mm'];
@@ -574,7 +598,7 @@ console.log(iterator.next());
 console.log(iterator.next());
 ```
 
-#### generator
+- generator
 
 ```js
 function* generator() {
@@ -636,7 +660,8 @@ g.next('yoyo'); // > {value: "hi", done: false}
 const m = g.next(); // > {value: undefined, done: true}
 m.done;
 ```
-#### use generator to create own Object.entries function
+
+- use generator to create own Object.entries function
 
 ```js
 
@@ -658,7 +683,7 @@ for(const [key, value] of entries(person)){
 
 ### Async javascript
 
-#### Callback
+- Callback
 
 ```js
 let greeting = (name) => cosnole.log(`Hello ${name}!`);
@@ -671,7 +696,7 @@ const userInfo = (firstName, lastName, callback) => {
 userInfo('John', 'Doe', greeting);
 ```
 
-#### Promise
+- Promise
 
 ```js
 const hasMeeting = false;
@@ -705,7 +730,7 @@ meeting
   .catch((err) => console.error(err));
 ```
 
-##### Promise.all, Promise.race
+### Promise.all, Promise.race
 
 ```js
 const promise1 = Promise.resolve('Promise 1 complete');
@@ -725,7 +750,7 @@ Promise.race([promise1, promise2]).then((res) => console.log(res));
 // Promise 1 complete
 ```
 
-#### async/await
+### async/await
 
 ```js
 const myMeeting = async () => {
@@ -739,11 +764,9 @@ const myMeeting = async () => {
 };
 myMeeting();
 ```
-## data structure
+
 
 ### Map
-
-- Map
 
 The Map object holds key-value pairs and **remembers** the original insertion order of the keys. Any value (both **objects** and primitive values) may be used as either a key or a value.
 
@@ -766,7 +789,7 @@ const arr = [...map]; // convert to array
 console.log(map);
 ```
 
-#### WeakMap
+### WeakMap
 
 > [info](https://javascript.info/weakmap-weakset)
 
@@ -821,7 +844,7 @@ const newArr = [...new Set(arr)]; //[1,2,3]
 const newArr = [Array.from(new Set[arr]())]; //[1,2,3]
 ```
 
-#### WeakSet
+### WeakSet
 
 > [info](https://javascript.info/weakmap-weakset)
 
@@ -849,7 +872,9 @@ parseInt(b);
 b.toString(2);
 ```
 
-### [typed arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays)
+### typed arrays
+
+[typed arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays)
 
 ```js
 let buffer = new ArrayBuffer(24);
@@ -861,9 +886,6 @@ let usernameView = new Uint8Array(buffer, 4, 16);
 let amountDueView = new Float32Array(buffer, 20, 1);
 ```
 
-
-
-## APIs & methods
 
 ### `slice` `splice` `split`
 
@@ -934,8 +956,6 @@ with (person) {
 }
 ```
 
-## other features
-
 ### IIFE(Immediately Invoked Function Expression)
 
 - normal function
@@ -993,54 +1013,3 @@ let name = 'JOE';
 console.log(name); // JOE
 ```
 
-
-### bind, call, apply
-
-```js
-function showFace() {
-  return this.face;
-}
-const user = {
-  face: 'smile'
-};
-
-const showUserFace = showFace.bind(user);
-
-console.log(showUserFace());
-console.log(showFace.call(user, 1, 2, 3));
-console.log(showFace.call(user, ...[1, 2, 3]));
-console.log(showFace.apply(user, [1, 2, 3]));
-```
-
-### constructor
-
-```js
-function Horse(name) {
-  this.name = name;
-  this.voice = function () {
-    console.log('yoyo');
-    return this;
-  };
-}
-
-const myHorse = new Horse('yuyu');
-myHorse.voice().voice();
-```
-
-### [Private class fields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields)
-
-```js
-class ClassWithPrivateField {
-  #privateField
-}
-
-class ClassWithPrivateMethod {
-  #privateMethod() {
-    return 'hello world'
-  }
-}
-
-class ClassWithPrivateStaticField {
-  static #PRIVATE_STATIC_FIELD
-}
-```

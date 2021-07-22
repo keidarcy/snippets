@@ -11,7 +11,7 @@
   - [fundamental](./js/Fundamental.md)
   - [reactivity](./js/Reactivity.md)
   - [chrome](./js/Chrome.md)
-  - [javascript](./js/Javascript.md)
+  - [ecmascript](./js/ECMAScript.md)
   - [jest](./js/Jest.md)
   - [react](./js/React.md)
   - [nodejs](./js/Nodejs.md)
