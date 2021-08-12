@@ -1,4 +1,4 @@
-# Javascript Basic
+# ECMAScript
 
 - [specification](https://262.ecma-international.org/)
 - videos
@@ -14,7 +14,7 @@
   - [High Performance Browser Networking](https://hpbn.co/)
   - [HTTP: The Definitive Guide](https://www.oreilly.com/library/view/http-the-definitive/1565925092/)
 
-- [Javascript Basic](#javascript-basic)
+- [ECMAScript](#ecmascript)
   - [Objects](#objects)
     - [`this`](#this)
     - [bind, call, apply](#bind-call-apply)
@@ -42,6 +42,10 @@
     - [Proxy](#proxy)
     - [With](#with)
     - [IIFE(Immediately Invoked Function Expression)](#iifeimmediately-invoked-function-expression)
+  - [javascript-hard-parts](#javascript-hard-parts)
+    - [core JavaScript engine](#core-javascript-engine)
+    - [closure](#closure)
+    - [Asynchronous and event loop](#asynchronous-and-event-loop)
 
 
 ## Objects
@@ -1013,3 +1017,154 @@ let name = 'JOE';
 console.log(name); // JOE
 ```
 
+
+## javascript-hard-parts
+
+### core JavaScript engine
+
+- Thread of execution
+- Memory/variable environment
+- Call stack
+
+### closure
+
+```js
+function outer (){
+ let counter = 0;
+ function incrementCounter (){ // The ‘backpack’ (or ‘closure’) of live data is attached incrementCounter (then to myNewFunction) through a hidden property known as [[scope]] which persists when the inner function is returned out
+ counter ++;
+ }
+ return incrementCounter;
+}
+
+const myNewFunction = outer();
+myNewFunction();
+myNewFunction();
+
+// Let’s run outer again
+const anotherFunction = outer(); // new incrementCounter function was created in a new execution context and therefore has a brand new independent backpack
+anotherFunction();
+anotherFunction();
+```
+
+> Closure gives our functions persistent memories and entirely new toolkit for writing professional code
+
+- *Helper functions*: Everyday professional helper functions like ‘once’ and ‘memoize’
+- *Iterators and generators*: Which use lexical scoping and closure to achieve the most contemporary patterns for handling data in JavaScript
+- *Module pattern*: Preserve state for the life of an application without polluting the global namespace
+- *Asynchronous JavaScript*: Callbacks and Promises rely on closure to persist state in an asynchronous environment
+
+### Asynchronous and event loop
+
+- [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+
+Our core JavaScript engine has 3 main parts:
+  - Thread of execution
+  - Memory/variable environment
+  - Call stack
+
+We need to add some new components:
+  - Web Browser APIs/Node background APIs
+  - Promises
+  - Event loop, Callback/Task queue and micro task queue
+
+- ES5 callback
+  - Problems
+    - Our response data is only available in the callback function - Callback hell
+    - Maybe it feels a little odd to think of passing a function into another function only for it to run much later
+  - Benefits
+    - Super explicit once you understand how it works under-the-hood
+
+```js
+function printHello(){ console.log("Hello"); }
+function blockFor1Sec(){ /*blocks in the JavaScript thread for 1 sec */}
+
+function blockFor1Sec(){
+  for (let i = 0; i < 1000000000;i++){
+    const b = [i];
+  }
+}
+setTimeout(printHello,0);
+blockFor1Sec()
+console.log("Me first!");
+
+// ------ console
+// 1 second later
+// Me first!
+// Hello
+```
+
+- ES6 promise
+  - Using two-pronged ‘facade’ functions that both:
+    - Initiate background web browser work and Return a placeholder object (promise) immediately in JavaScript
+
+```js
+function display(data){
+ console.log(data)
+}
+const futureData = fetch('https://twitter.com/user/tweets/1')
+// what does fetch do under the hood
+// 1. javascript side: create an object {value:..., onFulfilled: []}, assign to futureData, then(display) called push into onFulfilled array
+// 2. web browser side: network request             complete?          onCompletion
+//                           | URL                    | 0ms no             |
+//                           | http method            | 280ms yes 'hi'     | futureData.value = API.data, when future.value updates, trigger onFulfilled array functions -> display('hi')
+futureData.then(display); // storage function to run later
+
+console.log("Me first!");
+```
+
+- we need to know how our promise-deferred functionality gets back into JavaScript to be run
+
+```js
+function display(data){console.log(data); console.log('hi');}
+function printHello(){console.log("Hello");}
+function blockFor300ms(){ // 800ms
+for (let i = 0; i < 1000000000;i++){
+    const b = [i];
+  }
+}
+setTimeout(printHello, 0);
+const futureData = fetch('https://jsonplaceholder.typicode.com/todos/1')
+futureData.then(display)
+blockFor300ms()
+console.log("Me first!");
+```
+
+```js
+function display(data){console.log(data); console.log('hi');}
+function printHello(){console.log("Hello");}
+function blockFor300ms(){ // 800ms
+for (let i = 0; i < 1000000000;i++){
+    const b = [i];
+  }
+}
+setTimeout(printHello, 0);
+const futureData = new Promise(resolve => { resolve('hi') })
+
+futureData.then(display)
+ queueMicrotask(() => {
+      console.log('hihi')
+    });
+blockFor300ms()
+console.log("Me first!");
+```
+
+- Problems
+  - 99% of developers have no idea how they’re working under the hood
+  - Debugging becomes super-hard as a result
+- Benefits
+  - Cleaner readable style with pseudo-synchronous style code
+  - Nice error handling process
+
+<img src="./promise-eventloop.svg" alt="promise-eventloop" width="800" height="600">
+
+- We have rules for the execution of our asynchronously delayed code
+  - Hold promise-deferred functions in a microtask queue and callback function in a task queue (Callback queue) when the Web Browser Feature (API) finishes
+  - Add the function to the Call stack (i.e. run the function) when:
+    - Call stack is empty & all global code run (Have the Event Loop check this condition)
+    - Prioritize functions in the microtask queue over the Callback queue
+
+- Promises, Web APIs, the Callback & Microtask Queues and Event loop enable:
+  - *Non-blocking applications*: This means we don’t have to wait in the single thread and don’t block further code from running
+  - *However long it takes*: We cannot predict when our Browser feature’s work will finish so we let JS handle automatically running the function on its completion
+  - *Web applications*: Asynchronous JavaScript is the backbone of the modern web - letting us build fast 'non-blocking' applications
