@@ -46,6 +46,7 @@
     - [core JavaScript engine](#core-javascript-engine)
     - [closure](#closure)
     - [Asynchronous and event loop](#asynchronous-and-event-loop)
+    - [prototypes](#prototypes-1)
 
 
 ## Objects
@@ -1168,3 +1169,95 @@ console.log("Me first!");
   - *Non-blocking applications*: This means we don’t have to wait in the single thread and don’t block further code from running
   - *However long it takes*: We cannot predict when our Browser feature’s work will finish so we let JS handle automatically running the function on its completion
   - *Web applications*: Asynchronous JavaScript is the backbone of the modern web - letting us build fast 'non-blocking' applications
+
+### prototypes
+
+```js
+const prototype1 = {};
+const object1 = Object.create(prototype1);
+
+console.log(Object.getPrototypeOf(object1) === object1.__proto__); // true
+console.log(Object.getPrototypeOf(object1) === prototype1); // true
+```
+
+
+- Solution 1. Generate objects using a function
+
+```js
+function userCreator(name, score) {
+ const newUser = {};
+ newUser.name = name;
+ newUser.score = score;
+ newUser.increment = function() {
+ newUser.score++;
+ };
+ return newUser;
+};
+const user1 = userCreator("Will", 3);
+const user2 = userCreator("Tim", 5);
+user1.increment()
+```
+
+- Solution 2: Using the prototype chain
+
+```js
+function userCreator (name, score) {
+ const newUser = Object.create(userFunctionStore);
+ newUser.name = name;
+ newUser.score = score;
+ return newUser;
+};
+const userFunctionStore = {
+ increment: function(){this.score++;},
+ login: function(){console.log("Logged in");}
+};
+const user1 = userCreator("Will", 3);
+const user2 = userCreator("Tim", 5);
+user1.increment();
+```
+
+```js
+user1.__proto__ === userFunctionStore
+```
+
+- Solution 3 - Introducing the keyword that automates the hard work: new
+- `new` keyword
+
+1. Create a new user object
+2. Return the new user object
+3. Refer to the auto-created object? // `this`
+4. Know where to put our single copies of functions? `prototype`
+
+```js
+function userCreator(name, score) {
+ this.name = name;
+ this.score = score;
+};
+userCreator.prototype // {};
+userCreator.prototype.increment = function(){
+ this.score++;
+}
+const user1 = new userCreator("Will", 3);
+```
+
+- Solution 4: The class ‘syntactic sugar’
+
+```js
+class UserCreator {
+ constructor (name, score){
+ this.name = name;
+ this.score = score;
+ }
+  //  function userCreator(name, score){
+  //  this.name = name;
+  //  this.score = score;
+  // }
+ increment (){ this.score++; }
+ login (){ console.log("login"); }
+  // userCreator.prototype.increment = function(){ this.score++; };
+  // userCreator.prototype.login = function(){ console.log("login"); };
+}
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+```
+<img src="./prototype-class.svg" alt="prototype-class" width="1000" height="800">
