@@ -47,6 +47,8 @@
     - [closure](#closure)
     - [Asynchronous and event loop](#asynchronous-and-event-loop)
     - [prototypes](#prototypes-1)
+  - [javascript-hard-parts-oop](#javascript-hard-parts-oop)
+  - [javascript-hard-parts-node](#javascript-hard-parts-node)
 
 
 ## Objects
@@ -1261,3 +1263,7 @@ const user1 = new UserCreator("Eva", 9);
 user1.increment();
 ```
 <img src="./prototype-class.svg" alt="prototype-class" width="1000" height="800">
+
+## javascript-hard-parts-oop
+
+## javascript-hard-parts-node
