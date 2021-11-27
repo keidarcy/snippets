@@ -17,7 +17,7 @@
   - [finding contributors using shortlog](#finding-contributors-using-shortlog)
   - [viewing history of a file](#viewing-history-of-a-file)
   - [restoring a deleting file](#restoring-a-deleting-file)
-  - [finding the author of line using blame](#finding-the-author-of-line-using-blame)
+  - [git blame and finding the author line by line](#git-blame-and-finding-the-author-line-by-line)
   - [tagging](#tagging)
 - [Branching](#branching)
   - [working with branches](#working-with-branches)
@@ -258,7 +258,7 @@ git checkout a642e12 toc.txt
 git commit -m "Restored toc.txt"
 ```
 
-### finding the author of line using blame
+### git blame and finding the author line by line
 
 ```bash
 git blame .gitignore
