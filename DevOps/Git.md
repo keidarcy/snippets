@@ -334,14 +334,26 @@ git branch --no-merged
 
 ### merge conflicts
 
-graphical merge tools
-1. p4merge
-2. kdiff
+graphical merge tools and difftool to vscode
 
 ```bash
-git config --global merge.tool p4merge
-git config --global mergetool.p4merge.path "/Applications/p4merge.app/Contents/MacOS/p4merge"
+git config --global merge.tool vscode
+git config --global mergetool.vscode.cmd 'code --wait $MERGED'
 git config --global mergetool.keepBackup false
+
+git config --global diff.tool vscode
+git config --global difftool.vscode.cmd 'code --wait --diff $LOCAL $REMOTE'
+```
+
+```
+[merge]
+        tool = vscode
+[mergetool "vscode"]
+        cmd = code -n --wait $MERGED
+[diff]
+        tool = vscode
+[difftool "vscode"]
+        cmd = code -n --wait --diff $LOCAL $REMOTE
 ```
 
 ### aborting a merge
