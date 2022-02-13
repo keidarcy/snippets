@@ -1,0 +1,3 @@
+[submodule "redux"]
+	path = redux
+	url = git@github.com:keidarcy/redux-all-in-one.git
