@@ -1,0 +1,9 @@
+{
+  "volta": {
+    "node": "18.12.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^3.3.5"
+  }
+}
