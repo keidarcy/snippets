@@ -179,7 +179,7 @@ const {rows} = await pool.query(`SELECT * FROM ingredients WHERE id=${id}`);
 const {rows} = await pool.query(`SELECT * FROM ingredients WHERE id=$1`, [id]);
 // WHERE text ILIKE '%star wars%' => 'WHERE text ILIKE $1', ['%star wars%'])
  ```
- 
+
  - Relationships & Joins
 
  ```sql
@@ -249,7 +249,7 @@ ORDER BY photo.photo_id;
 ```
 recipeguru=# SELECT * FROM recipes NATURAL JOIN recipes_photos;
 
-recipeguru=# SELECT r.title, r.body, rp.url 
+recipeguru=# SELECT r.title, r.body, rp.url
 FROM recipes_photos rp
 CROSS JOIN recipes r;
 ```
@@ -320,11 +320,11 @@ SELECT
 	r.body AS recipe_body,
 	r.recipe_id AS rid,
 	i.id AS iid
-FROM 
-	recipe_ingredients ri 
+FROM
+	recipe_ingredients ri
 INNER JOIN
 	ingredients i
-ON 
+ON
 	i.id = ri.ingredient_id
 INNER JOIN
 	recipes r
@@ -362,7 +362,7 @@ FROM
 	recipes r
 LEFT JOIN
 	recipes_photos rp
-ON 
+ON
 	r.recipe_id = rp.recipe_id;
 
 
@@ -375,4 +375,395 @@ LEFT JOIN
 ON
 	r.recipe_id = rp.recipe_id;
 WHERE ri.recipe_id = 1
+```
+
+- JSONB
+
+```sql
+recipeguru=# ALTER TABLE recipes
+ADD COLUMN meta JSONB;
+
+recipeguru=# UPDATE recipes
+SET
+meta = '{ "tag": ["chocolate", "dessert", "cake"] }'
+WHERE
+recipe_id=16;
+UPDATE 1
+
+UPDATE
+  recipes
+SET
+  meta='{ "tags": ["dessert", "cake"] }'
+WHERE
+  recipe_id=20;
+
+UPDATE
+  recipes
+SET
+  meta='{ "tags": ["dessert", "fruit"] }'
+WHERE
+  recipe_id=45;
+
+UPDATE
+  recipes
+SET
+  meta='{ "tags": ["dessert", "fruit"] }'
+WHERE
+  recipe_id=47;
+
+```
+
+```sql
+recipeguru=# SELECT meta, recipe_id  FROM recipes WHERE meta IS NOT NULL;
+
+recipeguru=# SELECT meta -> 'tags' -> 0 AS tag, recipe_id  FROM recipes WHERE meta IS NOT NULL;
+
+recipeguru=# SELECT meta -> 'tags' ->> 0 AS tag, recipe_id  FROM recipes WHERE meta IS NOT NULL; -- get string
+
+recipeguru=# SELECT recipe_id, title, meta -> 'tags' AS has_cake_tag FROM recipes
+WHERE meta -> 'tags' ? 'cake'; -- does tags contains 'cake';
+
+recipeguru=# SELECT recipe_id, title, meta -> 'tags' AS has_cake_tag FROM recipes
+WHERE meta -> 'tags' @> '"cake"';
+```
+
+- Aggregation
+
+```sql
+recipeguru=# SELECT COUNT(DISTINCT type), type  FROM ingredients;
+
+recipeguru=# SELECT COUNT(DISTINCT type) FROM ingredients;
+
+recipeguru=# SELECT
+    type, COUNT(type)
+FROM
+    ingredients
+GROUP BY
+    type;
+
+```
+
+- Filtering Aggregation
+
+```sql
+recipeguru=# SELECT
+type, COUNT(type)
+FROM
+ingredients
+WHERE
+image IS NOT NULL
+GROUP BY
+type
+HAVING COUNT(type) > 10;
+```
+
+- Storing Queries with Functions
+
+```sql
+SELECT
+  r.title
+FROM recipe_ingredients ri
+
+INNER JOIN
+  recipes r
+ON
+  r.recipe_id = ri.recipe_id
+
+GROUP BY
+  r.title
+HAVING
+  COUNT(r.title) BETWEEN 4 AND 6
+
+
+CREATE OR REPLACE FUNCTION
+  get_recipes_with_ingredients(low INT, high INT)
+RETURNS
+  SETOF VARCHAR
+LANGUAGE
+  plpgsql
+AS
+$$
+BEGIN
+  RETURN QUERY SELECT
+    r.title
+  FROM
+    recipe_ingredients ri
+
+  INNER JOIN
+    recipes r
+  ON
+    r.recipe_id = ri.recipe_id
+  GROUP BY
+    r.title
+  HAVING
+    COUNT(r.title) between low and high;
+END;
+$$;
+
+SELECT * FROM get_recipes_with_ingredients(1, 1);
+
+\df
+```
+
+- Functions vs Procedures
+
+```sql
+SELECT * FROM ingredients WHERE images IS NULL;
+
+INSERT INTO ingredients (title, type) VALUES ('version', 'meat');
+
+
+
+CREATE PROCEDURE
+  set_null_ingredient_images_to_default()
+LANGUAGE
+  SQL
+AS
+$$
+  UPDATE
+    ingredients
+  SET
+    image = 'default.jpg'
+  WHERE
+    image IS NULL;
+$$;
+
+CALL set_null_ingredient_images_to_default();
+```
+
+- Calling Functions with Triggers
+
+```sql
+recipeguru=# CREATE TABLE updated_recipes (
+  id INT GENERATED ALWAYS AS IDENTITY,
+  recipe_id INT,
+  old_title VARCHAR(255),
+  new_title VARCHAR(255),
+  time_of_update TIMESTAMP
+);
+
+CREATE OR REPLACE FUNCTION log_updated_recipe_name()
+  RETURNS
+    TRIGGER
+  LANGUAGE
+    plpgsql
+AS
+$$
+BEGIN
+  IF OLD.title <> NEW.title THEN
+    INSERT INTO
+      updated_recipes (recipe_id, old_title, new_title, time_of_update)
+    VALUES
+      (NEW.recipe_id, OLD.title, NEW.title, NOW());
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+
+CREATE OR REPLACE TRIGGER updated_recipe_trigger
+AFTER UPDATE ON recipes
+  FOR EACH ROW EXECUTE PROCEDURE log_updated_recipe_name();
+```
+
+- The Movie Database
+
+```sql
+-- How much revenue did the movies Keanu Reeves act in make?
+SELECT
+  SUM(revenue) AS total
+FROM
+  movies m
+
+JOIN
+  casts c
+ON
+  m.id = c.movie_id
+
+JOIN
+  people p
+ON
+  c.person_id = p.id
+WHERE
+  p.name = 'Keanu Reeves';
+```
+
+```sql
+-- Which 5 people were in the movies that had the most revenue?
+SELECT
+  p.name, SUM(COALESCE(revenue, 0)) AS money
+FROM
+  movies m
+
+JOIN
+  casts c
+ON
+  c.movie_id = m.id
+
+JOIN
+  people p
+ON
+  c.person_id = p.id
+GROUP BY
+p.name
+ORDER BY
+  money DESC
+
+LIMIT
+5;
+```
+
+```sql
+-- Which 10 movies have the most keywords?
+SELECT
+  m.name AS movie_name, COUNT(c.id) AS keywords_number
+FROM
+  movies m
+
+JOIN
+  movie_keywords k
+ON
+  m.id = k.movie_id
+
+JOIN
+  categories c
+ON
+  c.id = k.category_id
+GROUP BY
+  movie_name
+ORDER BY
+  keywords_number DESC
+
+LIMIT
+  10;
+```
+
+```sql
+-- Which category is associated with the most movies
+SELECT
+  c.name AS keyword, COUNT(c.id) AS keyword_count
+FROM
+  categories c
+
+JOIN
+  movie_keywords k
+ON
+  k.category_id = c.id
+
+GROUP BY
+  keyword, k.category_id
+ORDER BY
+  keyword_count DESC
+LIMIT
+  10;
+
+```
+
+- Analyzing Queries with EXPLAIN
+
+```sql
+SELECT * FROM movies WHERE name='Tron Legacy';
+SELECT * FROM movies WHERE id=21103;
+
+EXPLAIN SELECT * FROM movies WHERE name='Tron Legacy';
+EXPLAIN SELECT * FROM movies WHERE id=21103;
+
+EXPLAIN ANALYZE SELECT * FROM movies WHERE name='Tron Legacy';
+EXPLAIN ANALYZE SELECT * FROM movies WHERE id=21103;
+```
+
+
+- Creating an Index
+
+```sql
+omdb=# EXPLAIN ANALYZE SELECT * FROM movies WHERE name='Tron Legacy';
+                                              QUERY PLAN
+-------------------------------------------------------------------------------------------------------
+ Seq Scan on movies  (cost=0.00..5060.27 rows=2 width=75) (actual time=42.193..430.487 rows=1 loops=1)
+   Filter: (name = 'Tron Legacy'::text)
+   Rows Removed by Filter: 178395
+ Planning Time: 4.741 ms
+ Execution Time: 430.847 ms
+(5 rows)
+
+omdb=# CREATE INDEX idx_name ON movies(name);
+CREATE INDEX
+omdb=# EXPLAIN ANALYZE SELECT * FROM movies WHERE name='Tron Legacy';
+                                                   QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on movies  (cost=4.44..12.30 rows=2 width=75) (actual time=2.393..2.532 rows=1 loops=1)
+   Recheck Cond: (name = 'Tron Legacy'::text)
+   Heap Blocks: exact=1
+   ->  Bitmap Index Scan on idx_name  (cost=0.00..4.43 rows=2 width=0) (actual time=1.065..1.067 rows=1 loops=1)
+         Index Cond: (name = 'Tron Legacy'::text)
+ Planning Time: 5.747 ms
+ Execution Time: 4.750 ms
+(7 rows)
+
+omdb=# DROP INDEX idx_name;
+DROP INDEX
+```
+
+- Using a GIN Index(generalized inverted index)
+
+```sql
+CREATE TABLE movie_reviews (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  movie_id INTEGER,
+  scores JSONB NOT NULL
+);
+
+INSERT INTO
+  movie_reviews
+  (movie_id, scores)
+VALUES
+  (21103, '{ "rotten_tomatoes": 94, "washington_post": 50, "nytimes": 45 }'),
+  (97, '{ "rotten_tomatoes": 87, "washington_post": 40 }'),
+  (18235, '{ "rolling_stone": 85, "washington_post": 60, "nytimes": 35 }'),
+  (10625, '{ "rotten_tomatoes": 100, "washington_post": 100, "nytimes": 100, "rolling_stone": 100 }'),
+  (85014, '{ "nytimes": 67 }'),
+  (2493, '{ "rotten_tomatoes": 67, "rolling_stone": 89, "nytimes": 85 }'),
+  (11362, '{ "rotten_tomatoes": 76, "washington_post": 14, "nytimes": 98 }'),
+  (674, '{ "rotten_tomatoes": 78, "washington_post": 40, "nytimes": 77, "rolling_stone": 54 }');
+
+CREATE INDEX ON movie_reviews USING gin(scores);
+
+EXPLAIN ANALYZE SELECT * FROM movie_reviews WHERE scores @> '{"nytimes": 98}';
+
+omdb=# SELECT SHOW_TRGM('star wars');
+
+omdb=# CREATE INDEX ON movies USING gin(name gin_trgm_ops);
+```
+
+- Creating a Partial Index
+
+```sql
+SELECT DISTINCT language, COUNT(*) FROM category_names GROUP BY language;
+
+CREATE INDEX idx_en_category_names ON category_names(language) WHERE language='en';
+
+EXPLAIN ANALYZE SELECT * FROM category_names WHERE language='ge' AND name ILIKE '%animation%' LIMIT 5;
+```
+
+- Indexing a Derivative Value;
+
+```sql
+EXPLAIN ANALYZE SELECT
+  name, date, revenue, budget, COALESCE((revenue - budget), 0) AS profit
+FROM
+  movies
+ORDER BY
+  profit DESC
+LIMIT 10;
+
+
+CREATE INDEX idx_movies_profit ON movies (COALESCE((revenue - budget), 0));
+```
+
+- Creating Views & Inserting Data
+
+```sql
+CREATE VIEW english_category_names AS SELECT category_id, name, language FROM category_names WHERE language='en' LIMIT 5;
+
+SELECT * FROM english_category_names LIMIT 15;
 ```
