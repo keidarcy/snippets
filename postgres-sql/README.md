@@ -767,3 +767,252 @@ CREATE VIEW english_category_names AS SELECT category_id, name, language FROM ca
 
 SELECT * FROM english_category_names LIMIT 15;
 ```
+
+- Joining Between Views
+
+```sql
+CREATE VIEW
+  actors_roles_movies
+AS
+SELECT
+  p.name AS person_name, c.role, m.name AS movie_name, p.id AS person_id, m.id AS movie_id
+FROM
+  people p
+
+INNER JOIN
+  casts c
+ON
+  p.id = c.person_id
+
+INNER JOIN
+  movies m
+ON
+  c.movie_id = m.id
+
+WHERE
+  c.role <> ''
+-- LIMIT 5
+;
+
+
+SELECT
+  arm.person_name, ecn.name AS keyword, COUNT(*) as count
+FROM
+  actors_roles_movies arm
+
+INNER JOIN
+  movie_keywords mk
+ON
+  mk.movie_id = arm.movie_id
+
+INNER JOIN
+  english_category_names ecn
+ON
+  ecn.category_id = mk.category_id
+
+-- WHERE arm.person_name = 'Julia Roberts'
+
+GROUP BY
+  arm.person_name, ecn.name
+
+ORDER BY
+  count DESC
+
+LIMIT 20;
+```
+
+- Optimizing Queries with Materialized Views
+
+```sql
+CREATE MATERIALIZED VIEW
+  actor_categories
+AS
+
+SELECT
+  arm.person_name, ecn.name AS keyword, COUNT(*) as count
+FROM
+  actors_roles_movies arm
+
+INNER JOIN
+  movie_keywords mk
+ON
+  mk.movie_id = arm.movie_id
+
+INNER JOIN
+  english_category_names ecn
+ON
+  ecn.category_id = mk.category_id
+
+-- WHERE arm.person_name = 'Julia Roberts'
+
+GROUP BY
+  arm.person_name, ecn.name
+
+ORDER BY
+  count DESC
+
+WITH NO DATA;
+
+
+omdb=# REFRESH MATERIALIZED VIEW actor_categories; -- lock the view table
+```
+
+- Indexing Materialized Views
+
+```sql
+CREATE INDEX idx_actor_categories ON actor_categories(count DESC NULLS LAST);
+```
+
+- Using Subqueries
+
+```sql
+SELECT
+  p.name
+FROM
+  casts c
+
+INNER JOIN
+  people p
+ON
+  c.person_id = p.id
+
+WHERE
+  c.movie_id = (
+    SELECT
+      id
+    FROM
+      movies
+    WHERE
+      name = 'Tron Legacy'
+  );
+
+SELECT
+  p.name
+FROM
+  casts c
+
+INNER JOIN
+  people p
+ON
+  c.person_id = p.id
+
+INNER JOIN
+  movies m
+ON
+  c.movie_id = m.id
+AND
+  m.name='Tron Legacy';
+```
+
+- Creating an Array from a Subquery
+
+```sql
+SELECT
+  m.name,
+  ARRAY (
+    SELECT
+      ecn.name
+    FROM
+      english_category_names ecn
+    INNER JOIN
+      movie_keywords mk
+    ON
+      mk.category_id = ecn.category_id
+    WHERE
+      m.id = mk.movie_id
+    LIMIT 5
+  ) AS keywords
+FROM
+  movies m
+WHERE
+  name ILIKE '%star wars%';
+```
+
+- Transactions
+
+```sql
+BEGIN;
+
+INSERT INTO ingredients (title, type) VALUES ('whiskey', 'other');
+INSERT INTO ingredients (title, type) VALUES ('simple syrup', 'other');
+
+INSERT INTO recipes (title, body) VALUES ('old fashioned', 'mmmmmmm old fashioned');
+
+INSERT INTO recipe_ingredients
+  (recipe_id, ingredient_id)
+VALUES
+  (
+    (SELECT recipe_id FROM recipes where title='old fashioned'),
+    (SELECT id FROM ingredients where title='whiskey')
+  ),
+  (
+    (SELECT recipe_id FROM recipes where title='old fashioned'),
+    (SELECT id FROM ingredients where title='simple syrup')
+  );
+
+-- ROLLBACK rollback transaction
+COMMIT; -- finish transaction
+
+
+----
+
+
+BEGIN WORK; -- begin of transaction
+
+DO $$ -- it's going to use function
+DECLARE champagne INTEGER; -- declare variable
+DECLARE orange_juice INTEGER;
+DECLARE mimosa INTEGER;
+BEGIN -- begin of function
+
+INSERT INTO ingredients (title, type) VALUES ('champagne', 'other') RETURNING id INTO champagne; -- assign value to variable
+INSERT INTO ingredients (title, type) VALUES ('orange_juice', 'other') RETURNING id INTO orange_juice;
+
+INSERT INTO recipes (title, body) VALUES ('mimosa', 'brunch anyone?') RETURNING recipe_id INTO mimosa;
+
+INSERT INTO recipe_ingredients
+  (recipe_id, ingredient_id)
+VALUES
+  (mimosa, champagne), -- use variable
+  (mimosa, orange_juice);
+
+END $$;
+
+COMMIT WORK;
+```
+
+- Window Function
+
+```sql
+omdb=# SELECT
+  name, kind, vote_average, AVG(vote_average) OVER () AS all_average
+FROM movies
+LIMIT 15;
+
+omdb=# SELECT DISTINCT
+kind, AVG(vote_average) OVER (PARTITION BY kind) AS kind_vote_average
+FROM movies;
+```
+
+- Self Join
+
+```sql
+omdb=# SELECT
+  c1.category_id, c1.language AS de_lang, c1.name as de_name, c2.language AS en_lang, c2.name AS en_name
+FROM
+  category_names c1
+
+LEFT JOIN
+  category_names c2
+ON
+  c1.category_id = c2.category_id
+AND
+  c2.language = 'en'
+
+WHERE
+  c2.language IS NULL
+AND
+  c1.language = 'de'
+
+LIMIT 50;
+```
