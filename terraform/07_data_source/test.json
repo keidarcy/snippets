@@ -1,0 +1,3 @@
+{
+  "cidr-from-tmp": "${cidr_block}"
+}

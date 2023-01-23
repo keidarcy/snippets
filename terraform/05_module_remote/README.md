@@ -1,0 +1,1 @@
+Create EC2 with httpd user data and ssh key enabled from aws-vpc module
