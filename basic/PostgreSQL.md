@@ -1016,3 +1016,20 @@ AND
 
 LIMIT 50;
 ```
+
+### Understand isolation levels & read phenomena
+
+- https://www.postgresql.org/docs/current/transaction-iso.html
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html
+
+```
+simple_bank=# SHOW TRANSACTION ISOLATION LEVEL;
+ read committed
+simple_bank=# BEGIN;
+BEGIN
+simple_bank=*# set transaction isolation level read uncommitted;
+SET
+simple_bank=*# show transaction isolation level;
+ read uncommitted
+simple_bank=*# COMMIT;
+```
